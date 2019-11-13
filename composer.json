@@ -1,0 +1,16 @@
+{
+    "name": "froq/froq-component",
+    "homepage": "https://github.com/froq/froq-component",
+    "description": "Component module of Froq!",
+    "keywords": ["froq", "component"],
+    "license": "MIT",
+    "authors": [
+        {"name": "Kerem Güneş", "email": "k-gun@mail.com"}
+    ],
+    "require": {
+        "php": "^7.4"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}
