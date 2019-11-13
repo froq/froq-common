@@ -1,8 +1,8 @@
 {
-    "name": "froq/froq-component",
-    "homepage": "https://github.com/froq/froq-component",
-    "description": "Component module of Froq!",
-    "keywords": ["froq", "component"],
+    "name": "froq/froq-core",
+    "homepage": "https://github.com/froq/froq-core",
+    "description": "Froq! Core.",
+    "keywords": ["froq", "core"],
     "license": "MIT",
     "authors": [
         {"name": "Kerem Güneş", "email": "k-gun@mail.com"}
