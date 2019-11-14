@@ -39,7 +39,7 @@ trait OptionTrait
      * Options.
      * @var array<string, any>
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Has option.

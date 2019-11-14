@@ -49,7 +49,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
      * Data.
      * @var array<int|string, any>
      */
-    protected $data = [];
+    protected array $data = [];
 
     /**
      * Constructor.
@@ -239,7 +239,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
     /**
      * @inheritDoc Countable
      */
-    public function count()
+    public function count(): int
     {
         return count($this->data);
     }
@@ -247,7 +247,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
     /**
      * @inheritDoc IteratorAggregate
      */
-    public function getIterator()
+    public function getIterator(): iterable
     {
         return new ArrayIterator($this->data);
     }

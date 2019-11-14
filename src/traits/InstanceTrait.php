@@ -39,7 +39,7 @@ trait InstanceTrait
      * Instance.
      * @var object
      */
-    private static $__instance;
+    private static object $__instance;
 
     /**
      * Init.
@@ -48,10 +48,9 @@ trait InstanceTrait
      */
     public static final function init(...$arguments): object
     {
-        if (self::$__instance == null) {
-            self::$__instance = new static(...$arguments);
-        }
-        return self::$__instance;
+        return self::$__instance ?? (
+               self::$__instance = new static(...$arguments)
+        );
     }
 
     /**

@@ -39,7 +39,7 @@ trait MutationMagicTrait
      * Strict.
      * @var bool
      */
-    protected $__strict = false;
+    protected bool $__strict = false;
 
     /**
      * Set.

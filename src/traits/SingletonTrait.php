@@ -39,9 +39,9 @@ trait SingletonTrait
 {
     /**
      * Instances.
-     * @var array
+     * @var array<object>
      */
-    private static $__instances = [];
+    private static array $__instances = [];
 
     /**
      * Forbids.

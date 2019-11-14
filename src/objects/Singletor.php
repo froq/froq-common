@@ -39,7 +39,7 @@ final class Singletor
      * Instances.
      * @var array<object>
      */
-    private static $instances = [];
+    private static array $instances = [];
 
     /**
      * Init.
@@ -49,10 +49,9 @@ final class Singletor
      */
     public static function init(string $class, ...$classArgs): object
     {
-        if (empty(self::$instances[$class])) {
-            self::$instances[$class] = new $class(...$classArgs);
-        }
-        return self::$instances[$class];
+        return self::$instances[$class] ?? (
+               self::$instances[$class] = new $class(...$classArgs)
+        );
     }
 
     /**

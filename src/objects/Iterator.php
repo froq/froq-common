@@ -41,15 +41,15 @@ final class Iterator implements Arrayable, Countable, IteratorAggregate
 {
     /**
      * Data.
-     * @var array
+     * @var array<any>
      */
-    private $data = [];
+    private array $data = [];
 
     /**
      * Data count.
      * @var int
      */
-    private $dataCount = 0;
+    private int $dataCount = 0;
 
     /**
      * Constructor.
@@ -92,7 +92,7 @@ final class Iterator implements Arrayable, Countable, IteratorAggregate
     /**
      * @inheritDoc Countable
      */
-    public function count()
+    public function count(): int
     {
         return $this->dataCount;
     }
@@ -100,7 +100,7 @@ final class Iterator implements Arrayable, Countable, IteratorAggregate
     /**
      * @inheritDoc IteratorAggregate
      */
-    public function getIterator()
+    public function getIterator(): iterable
     {
         return new ArrayIterator($this->data);
     }

@@ -35,7 +35,11 @@ namespace froq\core\traits;
  */
 trait MutationTrait
 {
-    protected $__strict = false;
+    /**
+     * Strict.
+     * @var bool
+     */
+    protected bool $__strict = false;
 
     /**
      * Set.
