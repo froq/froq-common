@@ -39,7 +39,7 @@ trait AttributeTrait
      * Attribute.
      * @var array<string, any>
      */
-    protected $attributes = [];
+    protected array $attributes = [];
 
     /**
      * Has attribute.
