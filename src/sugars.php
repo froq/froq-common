@@ -45,6 +45,41 @@ function ini(string $name, bool $bool = false)
 }
 
 /**
+ * Env.
+ * @param  string|array  $key
+ * @param  ?string|null  $value
+ * @return ?string
+ */
+function env(string $key, ?string $value = null): ?string
+{
+    if ($value !== null) { // Set.
+        $_ENV[$name] = $value;
+    } else {               // Get.
+        if (is_array($key)) {
+            $keys = $key; $values = [];
+            foreach ($keys as $key) {
+                $values[] = env($key);
+            }
+            return $values;
+        }
+
+        // Uppers for nginx (in some cases).
+        $value = $_ENV[$name] ?? $_ENV[strtoupper($name)] ??
+                 $_SERVER[$name] ?? $_SERVER[strtoupper($name)] ?? $valueDefault;
+
+        if ($value === null) {
+            if (false === ($value = getenv($name))) {
+                if (false === ($value = getenv(strtolower($name)))) {
+                    $value = $valueDefault;
+                }
+            }
+        }
+
+        return $value;
+    }
+}
+
+/**
  * Error.
  * @param  bool $extract
  * @return ?string
