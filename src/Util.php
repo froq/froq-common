@@ -66,7 +66,7 @@ final /* fuckic static */ class Util extends StaticClass
      */
     public static function loadSugars(array $names): void
     {
-        foreach ($names as $name) self::loadSugar(...$names);
+        foreach ($names as $name) self::loadSugar($name);
     }
 
     /**
