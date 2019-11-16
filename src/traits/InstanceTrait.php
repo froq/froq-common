@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\traits;
+namespace froq\traits;
 
 /**
  * Instance Trait.
- * @package froq\core\traits
- * @object  froq\core\traits\instanceTrait
+ * @package froq\traits
+ * @object  froq\traits\instanceTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

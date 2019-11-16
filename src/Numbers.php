@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\core;
+namespace froq;
 
-use froq\core\StaticClass;
+use froq\StaticClass;
 
 /**
  * Numbers.
- * @package froq\core
- * @object  froq\core\Numbers
+ * @package froq
+ * @object  froq\Numbers
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   1.0, 4.0
  * @static

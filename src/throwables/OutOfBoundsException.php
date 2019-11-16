@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\throwables;
+namespace froq\throwables;
 
-use froq\core\throwables\RuntimeException;
+use froq\throwables\RuntimeException;
 
 /**
  * Out Of Bounds Exception.
- * @package froq\core\throwables
- * @object  froq\core\throwables\OutOfBoundsException
+ * @package froq\throwables
+ * @object  froq\throwables\OutOfBoundsException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

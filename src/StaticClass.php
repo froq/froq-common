@@ -24,17 +24,17 @@
  */
 declare(strict_types=1);
 
-namespace froq\core;
+namespace froq;
 
-use froq\core\throwables\Exception;
+use froq\Exception;
 
 /**
  * Static Class.
  *
  * Represents an uninitializable static class that forbid initializations of the extender classes.
  *
- * @package froq\core
- * @object  froq\core\StaticClass
+ * @package froq
+ * @object  froq\StaticClass
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  * @static  Not abstract'ed, letting the Exception in Constructor.
@@ -43,7 +43,7 @@ class StaticClass
 {
     /**
      * Constructor.
-     * @throws froq\core\throwables\Exception
+     * @throws froq\Exception
      */
     public final function __construct()
     {

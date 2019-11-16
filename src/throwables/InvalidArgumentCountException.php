@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\throwables;
+namespace froq\throwables;
 
-use froq\core\throwables\RuntimeException;
+use froq\throwables\RuntimeException;
 
 /**
  * Invalid Argument Count Exception.
- * @package froq\core\throwables
- * @object  froq\core\throwables\InvalidArgumentCountException
+ * @package froq\throwables
+ * @object  froq\throwables\InvalidArgumentCountException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

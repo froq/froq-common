@@ -24,10 +24,10 @@
  */
 declare(strict_types=1);
 
-namespace froq\core;
+namespace froq;
 
-use froq\core\Objects;
-use froq\core\interfaces\{Cloneable, Stringable};
+use froq\Objects;
+use froq\interfaces\{Cloneable, Stringable};
 use ReflectionClass;
 
 /**
@@ -36,8 +36,8 @@ use ReflectionClass;
  * Represents an Abstract but extended object that provides couple of utility methods which access
  * and checks object's attributes.
  *
- * @package froq\core
- * @object  froq\core\AbstractObject
+ * @package froq
+ * @object  froq\AbstractObject
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
@@ -130,7 +130,7 @@ abstract class AbstractObject implements Cloneable, Stringable
     }
 
     /**
-     * @inheritDoc froq\core\interfaces\Cloneable
+     * @inheritDoc froq\interfaces\Cloneable
      */
     public function toClone(): object
     {
@@ -138,7 +138,7 @@ abstract class AbstractObject implements Cloneable, Stringable
     }
 
     /**
-     * @inheritDoc froq\core\interfaces\Stringable
+     * @inheritDoc froq\interfaces\Stringable
      */
     public function toString(): string
     {

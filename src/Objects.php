@@ -24,15 +24,15 @@
  */
 declare(strict_types=1);
 
-namespace froq\core;
+namespace froq;
 
-use froq\core\StaticClass;
-use froq\core\throwables\InvalidArgumentException;
+use froq\StaticClass;
+use froq\throwables\InvalidArgumentException;
 
 /**
  * Objects.
- * @package froq\core
- * @object  froq\core\Objects
+ * @package froq
+ * @object  froq\Objects
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  * @static
@@ -43,7 +43,7 @@ final class Objects extends StaticClass
      * Get name.
      * @param  string|object $class
      * @return string
-     * @throws froq\core\throwables\InvalidArgumentException
+     * @throws froq\throwables\InvalidArgumentException
      */
     public static function getName($class): string
     {

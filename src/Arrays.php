@@ -24,16 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\core;
+namespace froq;
 
-use froq\core\StaticClass;
-use froq\core\throwables\{InvalidKeyException, InvalidArgumentException};
+use froq\StaticClass;
+use froq\throwables\{InvalidKeyException, InvalidArgumentException};
 use Closure;
 
 /**
  * Arrays.
- * @package froq\core
- * @object  froq\core\Arrays
+ * @package froq
+ * @object  froq\Arrays
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   1.0, 4.0
  * @static
@@ -251,7 +251,7 @@ final class Arrays extends StaticClass
      * @param  int    $size
      * @param  bool   $useKeys
      * @return ?any
-     * @throws froq\core\throwables\InvalidArgumentException
+     * @throws froq\throwables\InvalidArgumentException
      */
     public static function rand(array $items, int $size = 1, bool $useKeys = false)
     {
@@ -320,7 +320,7 @@ final class Arrays extends StaticClass
      * @param  callable|null  $ufunc
      * @param  int            $flags
      * @return array
-     * @throws froq\core\throwables\InvalidArgumentException
+     * @throws froq\throwables\InvalidArgumentException
      */
     public static function sort(array &$array, callable $func = null, callable $ufunc = null,
         int $flags = 0): array
@@ -449,7 +449,7 @@ final class Arrays extends StaticClass
      * Key check.
      * @param  int|string $key
      * @return void
-     * @throws froq\core\throwables\InvalidKeyException
+     * @throws froq\throwables\InvalidKeyException
      */
     private static function keyCheck($key): void
     {

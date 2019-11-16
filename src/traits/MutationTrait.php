@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\traits;
+namespace froq\traits;
 
 /**
  * Mutation Trait.
- * @package froq\core\traits
- * @object  froq\core\traits\MutationTrait
+ * @package froq\traits
+ * @object  froq\traits\MutationTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

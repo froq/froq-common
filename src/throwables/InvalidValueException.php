@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\throwables;
+namespace froq\throwables;
 
-use froq\core\throwables\LogicException;
+use froq\throwables\LogicException;
 
 /**
  * Invalid Value Exception.
- * @package froq\core\throwables
- * @object  froq\core\throwables\InvalidValueException
+ * @package froq\throwables
+ * @object  froq\throwables\InvalidValueException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

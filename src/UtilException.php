@@ -24,16 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\throwables;
+namespace froq;
 
 use froq\Exception;
 
 /**
- * Logic Exception.
- * @package froq\throwables
- * @object  froq\throwables\LogicException
+ * Util Exception.
+ * @package froq
+ * @object  froq\UtilException
  * @author  Kerem Güneş <k-gun@mail.com>
- * @since   4.0
+ * @since   1.0
  */
-class LogicException extends Exception
+final class UtilException extends Exception
 {}

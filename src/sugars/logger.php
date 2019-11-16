@@ -24,16 +24,72 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\throwables;
+use froq\UtilException;
+use froq\logger\Logger;
 
-use Exception as _Exception;
+// Check dependencies.
+if (!class_exists('froq\app\App', false)) {
+    throw new UtilException('Http sugars dependent to froq\app module which not found');
+}
+if (!class_exists('froq\logger\Logger', false)) {
+    throw new UtilException('Logger sugars dependent to froq\logger module which not found');
+}
 
 /**
- * Exception.
- * @package froq\core\throwables
- * @object  froq\core\throwables\Exception
- * @author  Kerem Güneş <k-gun@mail.com>
- * @since   4.0
+ * Logger.
+ * @return froq\logger\Logger.
  */
-class Exception extends _Exception
-{}
+function logger(): Logger
+{
+    return app()->logger();
+}
+
+/**
+ * Log any.
+ * @param  any $message
+ * @return bool
+ */
+function log_any($message): bool
+{
+    return app()->logger()->logAny($message);
+}
+
+/**
+ * Log fail.
+ * @param  any $message
+ * @return bool
+ */
+function log_fail($message): bool
+{
+    return app()->logger()->logFail($message);
+}
+
+/**
+ * Log warn.
+ * @param  any $message
+ * @return bool
+ */
+function log_warn($message): bool
+{
+    return app()->logger()->logWarn($message);
+}
+
+/**
+ * Log info.
+ * @param  any $message
+ * @return bool
+ */
+function log_info($message): bool
+{
+    return app()->logger()->logInfo($message);
+}
+
+/**
+ * Log debug.
+ * @param  any $message
+ * @return bool
+ */
+function log_debug($message): bool
+{
+    return app()->logger()->logDebug($message);
+}

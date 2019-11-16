@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\interfaces;
+namespace froq\interfaces;
 
 /**
  * Cloneable.
- * @package froq\core\interfaces
- * @object  froq\core\interfaces\Cloneable
+ * @package froq\interfaces
+ * @object  froq\interfaces\Cloneable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

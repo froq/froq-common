@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\interfaces;
+namespace froq\interfaces;
 
 /**
  * Runnable.
- * @package froq\core\interfaces
- * @object  froq\core\interfaces\Runnable
+ * @package froq\interfaces
+ * @object  froq\interfaces\Runnable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

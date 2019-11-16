@@ -24,11 +24,11 @@
  */
 declare(strict_types=1);
 
-namespace froq\core;
+namespace froq;
 
-use froq\core\AbstractObject;
-use froq\core\interfaces\{Arrayable, Objectable, Yieldable};
-use froq\core\throwables\InvalidArgumentException;
+use froq\AbstractObject;
+use froq\interfaces\{Arrayable, Objectable, Yieldable};
+use froq\throwables\InvalidArgumentException;
 use Countable, IteratorAggregate, ArrayIterator, Traversable, stdClass;
 
 /**
@@ -37,8 +37,8 @@ use Countable, IteratorAggregate, ArrayIterator, Traversable, stdClass;
  * Represents an abstract but extended array object that provides couple of utility methods which
  * access, modify or iterate $data items.
  *
- * @package froq\core
- * @object  froq\core\AbstractArray
+ * @package froq
+ * @object  froq\AbstractArray
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
@@ -54,7 +54,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
     /**
      * Constructor.
      * @param  array|object|iterable|null $data
-     * @throws froq\core\throwables\InvalidArgumentException
+     * @throws froq\throwables\InvalidArgumentException
      */
     public function __construct($data = null)
     {
@@ -82,7 +82,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
     }
 
     /**
-     * Serialize (with PHP/7.4).
+     * Serialize.
      * @return array
      */
     public function __serialize()
@@ -91,7 +91,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
     }
 
     /**
-     * Unserialize (with PHP/7.4).
+     * Unserialize.
      * @param  array $data
      * @return void
      */
@@ -103,7 +103,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
     /**
      * Set data.
      * @param  array $data
-     * @return self
+     * @return self (static)
      */
     public function setData(array $data): self
     {
@@ -123,7 +123,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
 
     /**
      * Copy.
-     * @return object
+     * @return object (static)
      */
     public function copy(): object
     {
@@ -131,15 +131,42 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
     }
 
     /**
-     * Merge.
+     * Copy to.
      * @param  self $collection
-     * @return self
+     * @return object (static)
      */
-    public function merge(self $collection): self
+    public function copyTo(self $collection): object
+    {
+        $collection->setData($this->data);
+
+        return $collection;
+    }
+
+    /**
+     * Merge.
+     * @param  iterable $collection
+     * @return self (static)
+     */
+    public function merge(iterable $collection): self
     {
         foreach ($collection as $key => $value) {
             $this->data[$key] = $value;
         }
+
+        return $this;
+    }
+
+    /**
+     * Merge with.
+     * @param  self $collection
+     * @return self (static)
+     */
+    public function mergeWith(self $collection): self
+    {
+        foreach ($collection as $key => $value) {
+            $this->data[$key] = $value;
+        }
+
         return $this;
     }
 
@@ -211,7 +238,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
     }
 
     /**
-     * @inheritDoc froq\core\interfaces\Yieldable
+     * @inheritDoc froq\interfaces\Yieldable
      */
     public function yield(): iterable
     {
@@ -221,7 +248,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
     }
 
     /**
-     * @inheritDoc froq\core\interfaces\Arrayable
+     * @inheritDoc froq\interfaces\Arrayable
      */
     public function toArray(): array
     {
@@ -229,7 +256,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
     }
 
     /**
-     * @inheritDoc froq\core\interfaces\Objectable
+     * @inheritDoc froq\interfaces\Objectable
      */
     public function toObject(): object
     {

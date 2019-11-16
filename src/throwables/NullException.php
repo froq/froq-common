@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\throwables;
+namespace froq\throwables;
 
-use froq\core\throwables\RuntimeException;
+use froq\throwables\RuntimeException;
 
 /**
  * Null Exception.
- * @package froq\core\throwables
- * @object  froq\core\throwables\NullException
+ * @package froq\throwables
+ * @object  froq\throwables\NullException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

@@ -24,16 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\throwables;
+namespace froq;
 
-use ErrorException as _ErrorException;
+use Error as _Error;
 
 /**
- * Error Exception.
- * @package froq\core\throwables
- * @object  froq\core\throwables\ErrorException
+ * Error.
+ * @package froq
+ * @object  froq\Error
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-class ErrorException extends _ErrorException
+class Error extends _Error
 {}

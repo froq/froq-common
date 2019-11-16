@@ -24,16 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\objects;
+namespace froq\objects;
 
-use froq\core\interfaces\Arrayable;
-use froq\core\throwables\InvalidArgumentException;
+use froq\interfaces\Arrayable;
+use froq\throwables\InvalidArgumentException;
 use Countable, IteratorAggregate, ArrayIterator, Traversable;
 
 /**
  * Iterator.
- * @package froq\core\objects
- * @object  froq\core\objects\Iterator
+ * @package froq\objects
+ * @object  froq\objects\Iterator
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   3.0, 4.0
  */
@@ -54,7 +54,7 @@ final class Iterator implements Arrayable, Countable, IteratorAggregate
     /**
      * Constructor.
      * @param  array|object|iterable $data
-     * @throws froq\core\throwables\InvalidArgumentException
+     * @throws froq\throwables\InvalidArgumentException
      */
     public function __construct($data)
     {
@@ -82,7 +82,7 @@ final class Iterator implements Arrayable, Countable, IteratorAggregate
     }
 
     /**
-     * @inheritDoc froq\core\interfaces\Arrayable
+     * @inheritDoc froq\interfaces\Arrayable
      */
     public function toArray(): array
     {

@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\traits;
+namespace froq\traits;
 
 use ReflectionClass;
 
 /**
  * Singleton Trait.
- * @package froq\core\traits
- * @object  froq\core\traits\SingletonTrait
+ * @package froq\traits
+ * @object  froq\traits\SingletonTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   1.0, 4.0
  */

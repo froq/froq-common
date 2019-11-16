@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\interfaces;
+namespace froq\interfaces;
 
 /**
  * Nameable.
- * @package froq\core\interfaces
- * @object  froq\core\interfaces\Nameable
+ * @package froq\interfaces
+ * @object  froq\interfaces\Nameable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   3.14, 4.0
  */

@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\objects;
+namespace froq\objects;
 
 /**
  * Singletor.
- * @package froq\core\objects
- * @object  froq\core\objects\Singletor
+ * @package froq\objects
+ * @object  froq\objects\Singletor
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

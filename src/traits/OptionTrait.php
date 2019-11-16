@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\traits;
+namespace froq\traits;
 
 /**
  * Option Trait.
- * @package froq\core\traits
- * @object  froq\core\traits\OptionTrait
+ * @package froq\traits
+ * @object  froq\traits\OptionTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

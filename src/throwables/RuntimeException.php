@@ -24,16 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\throwables;
+namespace froq\throwables;
 
-use RuntimeException as _RuntimeException;
+use froq\Exception;
 
 /**
- * RuntimeException.
- * @package froq\core\throwables
- * @object  froq\core\throwables\RuntimeException
+ * Runtime Exception.
+ * @package froq\throwables
+ * @object  froq\throwables\RuntimeException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-class RuntimeException extends _RuntimeException
+class RuntimeException extends Exception
 {}

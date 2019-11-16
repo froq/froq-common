@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\traits;
+namespace froq\traits;
 
-use froq\core\Objects;
+use froq\Objects;
 
 /**
  * Method Trait.
- * @package froq\core\traits
- * @object  froq\core\traits\MethodTrait
+ * @package froq\traits
+ * @object  froq\traits\MethodTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

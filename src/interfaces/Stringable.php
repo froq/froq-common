@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\core\interfaces;
+namespace froq\interfaces;
 
 /**
  * Stringable.
- * @package froq\core\interfaces
- * @object  froq\core\interfaces\Stringable
+ * @package froq\interfaces
+ * @object  froq\interfaces\Stringable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   3.12, 4.0
  */
