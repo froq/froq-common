@@ -49,15 +49,14 @@ final /* fuckic static */ class Util extends StaticClass
         $file = sprintf('%s/sugars/%s.php', __dir__, $name);
 
         if (!file_exists($file)) {
-            $names = array_map(function ($path) {
-                return preg_replace('~.+/(\w+)\.php$~', '\1', $path);
-            }, glob(__dir__ .'/*.php'));
+            $names = array_map(function($path) {
+                return preg_replace('~.+/(\w+)\.php$~', '\1', $path); }, glob(__dir__ .'/*.php'));
 
-            throw new UtilException(sprintf('Absent sugar name %s, available names : %s',
+            throw new UtilException(sprintf('Absent sugar name %s, available names: %s',
                 $name, join(', ', $names)));
         }
 
-        require_once $file;
+        include_once $file;
     }
 
     /**
@@ -67,7 +66,7 @@ final /* fuckic static */ class Util extends StaticClass
      */
     public static function loadSugars(array $names): void
     {
-        self::loadSugar(...$names);
+        foreach ($names as $name) self::loadSugar(...$names);
     }
 
     /**
