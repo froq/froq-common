@@ -1,8 +1,8 @@
 {
     "name": "froq/froq",
     "homepage": "https://github.com/froq/froq",
-    "description": "Core dependencies of Froq!",
-    "keywords": ["froq", "core", "dependencies"],
+    "description": "Core module of Froq!",
+    "keywords": ["froq", "core"],
     "license": "MIT",
     "authors": [
         {"name": "Kerem Güneş", "email": "k-gun@mail.com"}
