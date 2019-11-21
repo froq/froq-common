@@ -96,12 +96,13 @@ defined('local') or define('local', in_array(
     /**
      * Ini.
      * @param  string $name
+     * @param  string $value_default
      * @param  bool   $bool
      * @return string|bool|null
      */
-    function ini(string $name, bool $bool = false)
+    function ini(string $name, string $value_default = '', bool $bool = false)
     {
-        $value = ini_get($name);
+        $value = (($value = (string) ini_get($name)) !== '') ? $value : $value_default;
         if (!$bool) {
             return $value;
         }
@@ -134,12 +135,12 @@ defined('local') or define('local', in_array(
 
             // Uppers for nginx (in some cases).
             $value = $_ENV[$name] ?? $_ENV[strtoupper($name)] ??
-                     $_SERVER[$name] ?? $_SERVER[strtoupper($name)] ?? $valueDefault;
+                     $_SERVER[$name] ?? $_SERVER[strtoupper($name)] ?? null;
 
             if ($value === null) {
                 if (false === ($value = getenv($name))) {
                     if (false === ($value = getenv(strtolower($name)))) {
-                        $value = $valueDefault;
+                        $value = null;
                     }
                 }
             }
