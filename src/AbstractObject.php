@@ -26,7 +26,6 @@ declare(strict_types=1);
 
 namespace froq;
 
-use froq\Objects;
 use froq\interfaces\{Cloneable, Stringable};
 use ReflectionClass;
 
@@ -58,17 +57,21 @@ abstract class AbstractObject implements Cloneable, Stringable
      */
     public final function getShortName(): string
     {
-        return Objects::getShortName($this);
+        $name = $this->getName();
+
+        return substr($name, strrpos($name, '\\') + 1);
     }
 
     /**
      * Get namespace.
-     * @param  bool $base
+     * @param  bool $baseOnly
      * @return string
      */
-    public final function getNamespace(bool $base = false): string
+    public final function getNamespace(bool $baseOnly = false): string
     {
-        return Objects::getNamespace($this, $base);
+        $name = $this->getName();
+
+        return substr($name, 0, $baseOnly ? strpos($name, '\\') : strrpos($name, '\\'));
     }
 
     /**

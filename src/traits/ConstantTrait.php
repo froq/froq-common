@@ -26,7 +26,7 @@ declare(strict_types=1);
 
 namespace froq\traits;
 
-use froq\Objects;
+use froq\util\Objects;
 
 /**
  * Constant Trait.
