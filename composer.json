@@ -2,7 +2,7 @@
     "name": "froq/froq",
     "homepage": "https://github.com/froq/froq",
     "description": "Core tools of Froq!",
-    "keywords": ["froq", "core"],
+    "keywords": ["froq", "core", "tools"],
     "license": "MIT",
     "authors": [
         {"name": "Kerem Güneş", "email": "k-gun@mail.com"}
