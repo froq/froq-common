@@ -138,6 +138,8 @@ final class Autoload
      */
     private function getObjectFile(string $name): ?string
     {
+        $translateSlashes = true;
+
         // User service objects (eg: FooService => app/service/FooService/FooService.php).
         if (0 === strpos($name, self::DEFAULT_NAMESPACES[0]) && substr($name, -7) == 'Service') {
             $base = $this->getObjectBase($name);
@@ -167,14 +169,16 @@ final class Autoload
 
             // Eg: <app-dir>/vendor/froq/froq-http/src/response/Payload.php
             $file = APP_DIR .'/vendor/froq/'. $pkgDir .'/src/'. $srcDir .'.php';
+
+            $translateSlashes = false;
         }
 
-        $file = $this->translateSlashes($file);
+        $translateSlashes && $file = $this->translateSlashes($file);
 
-        if (!file_exists($file)) {
-            return null;
+        if (file_exists($file)) {
+            return $file;
         }
-        return $file;
+        return null;
     }
 
     /**
@@ -187,9 +191,17 @@ final class Autoload
         $dir = dirname($name);
 
         $offset = 2;
-        // This is exceptional.
+        // Exceptionals.
         if (0 === strpos($dir, 'froq/http/client')) {
             $offset = 3;
+        } else {
+            // Base stuffs.
+            static $subdirs = ['interfaces', 'objects', 'throwables', 'traits'];
+
+            sscanf($dir, 'froq/%[^/]', $subdir);
+            if (in_array($subdir, $subdirs)) {
+                $offset = 1;
+            }
         }
 
         return implode('-', array_slice(explode('/', $dir), 0, $offset));
