@@ -99,6 +99,7 @@ defined('local') or define('local', in_array(
      * @param  string $value_default
      * @param  bool   $bool
      * @return string|bool|null
+     * @since  4.0
      */
     function ini(string $name, string $value_default = '', bool $bool = false)
     {
@@ -119,6 +120,7 @@ defined('local') or define('local', in_array(
      * @param  string|array  $key
      * @param  ?string|null  $value
      * @return ?string
+     * @since  4.0
      */
     function env(string $key, ?string $value = null): ?string
     {
