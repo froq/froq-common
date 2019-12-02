@@ -89,7 +89,9 @@ final class Autoload
      */
     public static function init(): self
     {
-        return self::$instance ? self::$instance : (self::$instance = new self());
+        return self::$instance ? self::$instance : (
+               self::$instance = new self()
+        );
     }
 
     /**
