@@ -57,9 +57,9 @@ defined('local') or define('local', in_array(
 
     /**
      * Get global.
-     * @param  string $key
-     * @param  any    $value_default
-     * @return any
+     * @param  string   $key
+     * @param  any|null $value_default
+     * @return any|null
      */
     function get_global(string $key, $value_default = null)
     {
