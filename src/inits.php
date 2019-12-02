@@ -50,7 +50,7 @@ defined('local') or define('local', in_array(
      * @param  any    $value
      * @return void
      */
-    function set_global($key, $value)
+    function set_global(string $key, $value)
     {
         $GLOBALS['@froq'][$key] = $value;
     }
@@ -61,7 +61,7 @@ defined('local') or define('local', in_array(
      * @param  any    $value_default
      * @return any
      */
-    function get_global($key, $value_default = null)
+    function get_global(string $key, $value_default = null)
     {
         $subs = ($key[-1] === '*'); // Is all?
         if ($subs) {
@@ -85,7 +85,7 @@ defined('local') or define('local', in_array(
      * @return void
      * @since  3.0
      */
-    function delete_global($key)
+    function delete_global(string $key)
     {
         unset($GLOBALS['@froq'][$key]);
     }
@@ -258,17 +258,18 @@ defined('local') or define('local', in_array(
      * @return array|object
      * @since  3.0
      */
-    function map($input, $func, $keys = null)
+    function map($input, callable $func, $keys = null)
     {
         // Object check.
-        $check = ($input instanceof stdClass);
+        $check = $input instanceof stdClass;
         if ($check) {
             $input = (array) $input;
         }
 
         if ($keys === null) {
             $input = array_map($func, $input);
-        } else { // Use key,value notation.
+        } else {
+            // Use key,value notation.
             $keys = ($keys == '*') ? array_keys($input) : $keys;
             foreach ($input as $key => $value) {
                 if (in_array($key, $keys)) {
@@ -288,21 +289,23 @@ defined('local') or define('local', in_array(
      * @return array|object
      * @since  3.0
      */
-    function filter($input, $func = null, $keys = null)
+    function filter($input, callable $func = null, $keys = null)
     {
+        // Default function.
         $func = $func ?? function ($value) {
             return strlen((string) $value);
         };
 
         // Object check.
-        $check = ($input instanceof stdClass);
+        $check = $input instanceof stdClass;
         if ($check) {
             $input = (array) $input;
         }
 
         if ($keys === null) {
             $input = array_filter($input, $func);
-        } else { // Use key,value notation.
+        } else {
+            // Use key,value notation.
             $keys = ($keys == '*') ? array_keys($input) : $keys;
             foreach ($input as $key => $value) {
                 if ($func($key, $value)) {
