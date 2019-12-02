@@ -32,6 +32,7 @@ namespace froq\objects;
  * @object  froq\objects\Singletor
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
+ * @static
  */
 final class Singletor
 {
