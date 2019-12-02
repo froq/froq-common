@@ -24,19 +24,19 @@
  */
 declare(strict_types=1);
 
-namespace froq\objects;
+namespace froq;
 
 /**
- * Singletor.
- * @package froq\objects
- * @object  froq\objects\Singletor
+ * Factory.
+ * @package froq
+ * @object  froq\Factory
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-final class Singletor
+final class Factory
 {
     /**
-     * Instances.
+     * Instances (singleton stack).
      * @var array<object>
      */
     private static array $instances = [];
@@ -49,26 +49,19 @@ final class Singletor
      */
     public static function init(string $class, ...$classArgs): object
     {
+        return new $class(...$classArgs);
+    }
+
+    /**
+     * Init single.
+     * @param  string $class
+     * @param  ...    $classArgs
+     * @return object
+     */
+    public static function initSingle(string $class, ...$classArgs): object
+    {
         return self::$instances[$class] ?? (
                self::$instances[$class] = new $class(...$classArgs)
         );
-    }
-
-    /**
-     * Get instance.
-     * @aliasOf init()
-     */
-    public static function getInstance(...$arguments)
-    {
-        return self::init(...$arguments);
-    }
-
-    /**
-     * Get instances.
-     * @return array<object>
-     */
-    public static function getInstances(): array
-    {
-        return self::$instances;
     }
 }
