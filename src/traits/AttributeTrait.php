@@ -52,14 +52,26 @@ trait AttributeTrait
     }
 
     /**
+     * Has null attribute.
+     * @param  string $name
+     * @return bool
+     */
+    public final function hasNullAttribute(string $name): bool
+    {
+        return array_key_exists($name, $this->attributes) && $this->attributes[$name] === null;
+    }
+
+    /**
      * Set attribute.
      * @param  string $name
      * @param  any    $value
-     * @return void
+     * @return self
      */
-    public final function setAttribute(string $name, $value): void
+    public final function setAttribute(string $name, $value): self
     {
         $this->attributes[$name] = $value;
+
+        return $this;
     }
 
     /**
@@ -75,23 +87,27 @@ trait AttributeTrait
     /**
      * Remove attribute.
      * @param  string $name
-     * @return void
+     * @return self
      */
-    public final function removeAttribute(string $name): void
+    public final function removeAttribute(string $name): self
     {
         unset($this->attributes[$name]);
+
+        return $this;
     }
 
     /**
      * Set attributes.
      * @param  array<string, any> $attributes
-     * @return void
+     * @return self
      */
-    public final function setAttributes(array $attributes): void
+    public final function setAttributes(array $attributes): self
     {
         foreach ($attributes as $name => $value) {
             $this->setAttribute($name, $value);
         }
+
+        return $this;
     }
 
     /**
@@ -101,7 +117,8 @@ trait AttributeTrait
      */
     public final function getAttributes(array $names = null): array
     {
-        if ($names == null) {
+        // All wanted.
+        if ($names === null) {
             return $this->attributes;
         }
 
@@ -115,12 +132,14 @@ trait AttributeTrait
     /**
      * Remove attributes.
      * @param  array<string> $names
-     * @return bool
+     * @return self
      */
-    public final function removeAttributes(array $names): void
+    public final function removeAttributes(array $names): self
     {
         foreach ($names as $name) {
             $this->removeAttribute($name);
         }
+
+        return $this;
     }
 }

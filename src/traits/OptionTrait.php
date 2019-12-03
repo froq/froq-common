@@ -52,14 +52,26 @@ trait OptionTrait
     }
 
     /**
+     * Has null option.
+     * @param  string $key
+     * @return bool
+     */
+    public final function hasNullOption(string $key): bool
+    {
+        return array_key_exists($key, $this->options) && $this->options[$key] === null;
+    }
+
+    /**
      * Set option.
      * @param  string $key
      * @param  any    $value
-     * @return void
+     * @return self
      */
-    public final function setOption(string $key, $value): void
+    public final function setOption(string $key, $value): self
     {
         $this->options[$key] = $value;
+
+        return $this;
     }
 
     /**
@@ -75,23 +87,27 @@ trait OptionTrait
     /**
      * Remove option.
      * @param  string $key
-     * @return void
+     * @return self
      */
-    public final function removeOption(string $key): void
+    public final function removeOption(string $key): self
     {
         unset($this->options[$key]);
+
+        return $this;
     }
 
     /**
      * Set options.
      * @param  array<string, any> $options
-     * @return void
+     * @return self
      */
-    public final function setOptions(array $options): void
+    public final function setOptions(array $options): self
     {
         foreach ($options as $key => $value) {
             $this->setOption($key, $value);
         }
+
+        return $this;
     }
 
     /**
@@ -101,7 +117,8 @@ trait OptionTrait
      */
     public final function getOptions(array $keys = null): array
     {
-        if ($keys == null) {
+        // All wanted.
+        if ($keys === null) {
             return $this->options;
         }
 
@@ -115,12 +132,14 @@ trait OptionTrait
     /**
      * Remove options.
      * @param  array<string> $keys
-     * @return void
+     * @return self
      */
-    public final function removeOptions(string $keys): void
+    public final function removeOptions(string $keys): self
     {
         foreach ($keys as $key) {
             $this->removeOption($key);
         }
+
+        return $this;
     }
 }
