@@ -48,17 +48,17 @@ trait OptionTrait
      */
     public final function hasOption(string $key): bool
     {
-        return isset($this->options[$key]);
+        return array_key_exists($key, $this->options);
     }
 
     /**
-     * Has null option.
+     * Has option value.
      * @param  string $key
      * @return bool
      */
-    public final function hasNullOption(string $key): bool
+    public final function hasOptionValue(string $key): bool
     {
-        return array_key_exists($key, $this->options) && $this->options[$key] === null;
+        return array_key_exists($key, $this->options) && $this->options[$key] !== null;
     }
 
     /**
@@ -76,12 +76,13 @@ trait OptionTrait
 
     /**
      * Get option.
-     * @param  string $key
+     * @param  string   $key
+     * @param  any|null $valueDefault
      * @return any|null
      */
-    public final function getOption(string $key)
+    public final function getOption(string $key, $valueDefault = null)
     {
-        return $this->options[$key] ?? null;
+        return $this->options[$key] ?? $valueDefault;
     }
 
     /**

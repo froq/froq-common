@@ -48,17 +48,17 @@ trait AttributeTrait
      */
     public final function hasAttribute(string $name): bool
     {
-        return isset($this->attributes[$name]);
+        return array_key_exists($name, $this->attributes);
     }
 
     /**
-     * Has null attribute.
+     * Has attribute value.
      * @param  string $name
      * @return bool
      */
-    public final function hasNullAttribute(string $name): bool
+    public final function hasAttributeValue(string $name): bool
     {
-        return array_key_exists($name, $this->attributes) && $this->attributes[$name] === null;
+        return array_key_exists($name, $this->attributes) && $this->attributes[$name] !== null;
     }
 
     /**
@@ -76,12 +76,13 @@ trait AttributeTrait
 
     /**
      * Get attribute.
-     * @param  string $name
+     * @param  string   $name
+     * @param  any|null $valueDefault
      * @return any|null
      */
-    public final function getAttribute(string $name)
+    public final function getAttribute(string $name, $valueDefault = null)
     {
-        return $this->attributes[$name] ?? null;
+        return $this->attributes[$name] ?? $valueDefault;
     }
 
     /**
