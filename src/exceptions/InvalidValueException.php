@@ -24,16 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\throwables;
+namespace froq\exceptions;
 
-use froq\Exception;
+use froq\exceptions\LogicException;
 
 /**
- * Runtime Exception.
- * @package froq\throwables
- * @object  froq\throwables\RuntimeException
+ * Invalid Value Exception.
+ * @package froq\exceptions
+ * @object  froq\exceptions\InvalidValueException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-class RuntimeException extends Exception
+class InvalidValueException extends LogicException
 {}

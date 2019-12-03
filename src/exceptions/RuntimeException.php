@@ -24,20 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\interfaces;
+namespace froq\exceptions;
+
+use froq\Exception;
 
 /**
- * Sizeable.
- * @package froq\interfaces
- * @object  froq\interfaces\Sizeable
+ * Runtime Exception.
+ * @package froq\exceptions
+ * @object  froq\exceptions\RuntimeException
  * @author  Kerem Güneş <k-gun@mail.com>
- * @since   1.0, 4.0
+ * @since   4.0
  */
-interface Sizeable
-{
-    /**
-     * Size.
-     * @return int
-     */
-    public function size(): int;
-}
+class RuntimeException extends Exception
+{}

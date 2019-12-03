@@ -24,20 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\interfaces;
+namespace froq\exceptions;
+
+use froq\exceptions\LogicException;
 
 /**
- * Singleable.
- * @package froq\interfaces
- * @object  froq\interfaces\Singleable
+ * Out Of Range Exception.
+ * @package froq\exceptions
+ * @object  froq\exceptions\OutOfRangeException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-interface Singleable
-{
-    /**
-     * Init.
-     * @return self
-     */
-    public static function init(...$arguments): self;
-}
+class OutOfRangeException extends LogicException
+{}

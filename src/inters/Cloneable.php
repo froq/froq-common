@@ -24,16 +24,20 @@
  */
 declare(strict_types=1);
 
-namespace froq\throwables;
-
-use froq\throwables\RuntimeException;
+namespace froq\inters;
 
 /**
- * Underflow Exception.
- * @package froq\throwables
- * @object  froq\throwables\UnderflowException
+ * Cloneable.
+ * @package froq\inters
+ * @object  froq\inters\Cloneable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-class UnderflowException extends RuntimeException
-{}
+interface Cloneable
+{
+    /**
+     * To clone.
+     * @return object
+     */
+    public function toClone(): object;
+}

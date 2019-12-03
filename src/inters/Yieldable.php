@@ -24,20 +24,20 @@
  */
 declare(strict_types=1);
 
-namespace froq\interfaces;
+namespace froq\inters;
 
 /**
- * Cloneable.
- * @package froq\interfaces
- * @object  froq\interfaces\Cloneable
+ * Yieldable.
+ * @package froq\inters
+ * @object  froq\inters\Yieldable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-interface Cloneable
+interface Yieldable
 {
     /**
-     * To clone.
-     * @return object
+     * Yield.
+     * @return iterable
      */
-    public function toClone(): object;
+    public function yield(): iterable;
 }

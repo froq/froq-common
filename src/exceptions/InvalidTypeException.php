@@ -24,20 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\interfaces;
+namespace froq\exceptions;
+
+use froq\exceptions\LogicException;
 
 /**
- * Jsonable.
- * @package froq\interfaces
- * @object  froq\interfaces\Jsonable
+ * Invalid Type Exception.
+ * @package froq\exceptions
+ * @object  froq\exceptions\InvalidTypeException
  * @author  Kerem Güneş <k-gun@mail.com>
- * @since   1.0, 4.0
+ * @since   4.0
  */
-interface Jsonable
-{
-    /**
-     * To json.
-     * @return string
-     */
-    public function toJson(): string;
-}
+class InvalidTypeException extends LogicException
+{}

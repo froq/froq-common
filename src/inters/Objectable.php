@@ -24,20 +24,20 @@
  */
 declare(strict_types=1);
 
-namespace froq\interfaces;
+namespace froq\inters;
 
 /**
- * Yieldable.
- * @package froq\interfaces
- * @object  froq\interfaces\Yieldable
+ * Objectable.
+ * @package froq\inters
+ * @object  froq\inters\Objectable
  * @author  Kerem Güneş <k-gun@mail.com>
- * @since   4.0
+ * @since   1.0, 4.0
  */
-interface Yieldable
+interface Objectable
 {
     /**
-     * Yield.
-     * @return iterable
+     * To object.
+     * @return object
      */
-    public function yield(): iterable;
+    public function toObject(): object;
 }

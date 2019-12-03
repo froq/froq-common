@@ -26,7 +26,7 @@ declare(strict_types=1);
 
 namespace froq;
 
-use froq\interfaces\{Cloneable, Stringable};
+use froq\inters\{Cloneable, Stringable};
 use ReflectionClass;
 
 /**
@@ -133,7 +133,7 @@ abstract class AbstractObject implements Cloneable, Stringable
     }
 
     /**
-     * @inheritDoc froq\interfaces\Cloneable
+     * @inheritDoc froq\inters\Cloneable
      */
     public function toClone(): object
     {
@@ -141,7 +141,7 @@ abstract class AbstractObject implements Cloneable, Stringable
     }
 
     /**
-     * @inheritDoc froq\interfaces\Stringable
+     * @inheritDoc froq\inters\Stringable
      */
     public function toString(): string
     {

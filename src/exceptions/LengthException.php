@@ -24,16 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\throwables;
+namespace froq\exceptions;
 
-use froq\throwables\RuntimeException;
+use froq\exceptions\LogicException;
 
 /**
- * Invalid Argument Count Exception.
- * @package froq\throwables
- * @object  froq\throwables\InvalidArgumentCountException
+ * Length Exception.
+ * @package froq\exceptions
+ * @object  froq\exceptions\LengthException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-class InvalidArgumentCountException extends RuntimeException
+class LengthException extends LogicException
 {}

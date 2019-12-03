@@ -24,20 +24,20 @@
  */
 declare(strict_types=1);
 
-namespace froq\interfaces;
+namespace froq\inters;
 
 /**
- * Initable.
- * @package froq\interfaces
- * @object  froq\interfaces\Initable
+ * Singleable.
+ * @package froq\inters
+ * @object  froq\inters\Singleable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-interface Initable
+interface Singleable
 {
     /**
      * Init.
-     * @return object
+     * @return self
      */
-    public static function init(): object;
+    public static function init(...$arguments): self;
 }

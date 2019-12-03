@@ -24,16 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\throwables;
+namespace froq\exceptions;
 
-use froq\Exception;
+use froq\exceptions\LogicException;
 
 /**
- * Logic Exception.
- * @package froq\throwables
- * @object  froq\throwables\LogicException
+ * Invalid Key Exception.
+ * @package froq\exceptions
+ * @object  froq\exceptions\InvalidKeyException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-class LogicException extends Exception
+class InvalidKeyException extends LogicException
 {}

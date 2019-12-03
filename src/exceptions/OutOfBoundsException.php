@@ -24,16 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\throwables;
+namespace froq\exceptions;
 
-use froq\throwables\RuntimeException;
+use froq\exceptions\RuntimeException;
 
 /**
- * Overflow Exception.
- * @package froq\throwables
- * @object  froq\throwables\OverflowException
+ * Out Of Bounds Exception.
+ * @package froq\exceptions
+ * @object  froq\exceptions\OutOfBoundsException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-class OverflowException extends RuntimeException
+class OutOfBoundsException extends RuntimeException
 {}

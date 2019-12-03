@@ -24,16 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\throwables;
+namespace froq\exceptions;
 
-use froq\throwables\LogicException;
+use froq\Exception;
 
 /**
- * Domain Exception.
- * @package froq\throwables
- * @object  froq\throwables\DomainException
+ * Logic Exception.
+ * @package froq\exceptions
+ * @object  froq\exceptions\LogicException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-class DomainException extends LogicException
+class LogicException extends Exception
 {}

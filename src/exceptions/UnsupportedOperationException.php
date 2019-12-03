@@ -24,16 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\throwables;
+namespace froq\exceptions;
 
-use froq\throwables\RuntimeException;
+use froq\exceptions\RuntimeException;
 
 /**
- * Out Of Bounds Exception.
- * @package froq\throwables
- * @object  froq\throwables\OutOfBoundsException
+ * Unsupported Operation Exception.
+ * @package froq\exceptions
+ * @object  froq\exceptions\UnsupportedOperationException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-class OutOfBoundsException extends RuntimeException
+class UnsupportedOperationException extends RuntimeException
 {}

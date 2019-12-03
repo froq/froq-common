@@ -24,16 +24,20 @@
  */
 declare(strict_types=1);
 
-namespace froq\throwables;
-
-use froq\throwables\RuntimeException;
+namespace froq\inters;
 
 /**
- * Unsupported Call Exception.
- * @package froq\throwables
- * @object  froq\throwables\UnsupportedCallException
+ * Jsonable.
+ * @package froq\inters
+ * @object  froq\inters\Jsonable
  * @author  Kerem Güneş <k-gun@mail.com>
- * @since   4.0
+ * @since   1.0, 4.0
  */
-class UnsupportedCallException extends RuntimeException
-{}
+interface Jsonable
+{
+    /**
+     * To json.
+     * @return string
+     */
+    public function toJson(): string;
+}

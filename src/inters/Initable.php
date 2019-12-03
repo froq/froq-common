@@ -24,20 +24,20 @@
  */
 declare(strict_types=1);
 
-namespace froq\interfaces;
+namespace froq\inters;
 
 /**
- * Objectable.
- * @package froq\interfaces
- * @object  froq\interfaces\Objectable
+ * Initable.
+ * @package froq\inters
+ * @object  froq\inters\Initable
  * @author  Kerem Güneş <k-gun@mail.com>
- * @since   1.0, 4.0
+ * @since   4.0
  */
-interface Objectable
+interface Initable
 {
     /**
-     * To object.
+     * Init.
      * @return object
      */
-    public function toObject(): object;
+    public static function init(): object;
 }

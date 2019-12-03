@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\interfaces;
+namespace froq\inters;
 
 /**
  * Arrayable.
- * @package froq\interfaces
- * @object  froq\interfaces\Arrayable
+ * @package froq\inters
+ * @object  froq\inters\Arrayable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   1.0, 4.0
  */

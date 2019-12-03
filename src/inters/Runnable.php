@@ -24,16 +24,20 @@
  */
 declare(strict_types=1);
 
-namespace froq\throwables;
-
-use froq\throwables\LogicException;
+namespace froq\inters;
 
 /**
- * Invalid Value Exception.
- * @package froq\throwables
- * @object  froq\throwables\InvalidValueException
+ * Runnable.
+ * @package froq\inters
+ * @object  froq\inters\Runnable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-class InvalidValueException extends LogicException
-{}
+interface Runnable
+{
+    /**
+     * Run.
+     * @return void
+     */
+    public function run(): void;
+}

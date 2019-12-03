@@ -24,20 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\interfaces;
+namespace froq\exceptions;
+
+use froq\exceptions\RuntimeException;
 
 /**
- * Stringable.
- * @package froq\interfaces
- * @object  froq\interfaces\Stringable
+ * Invalid Argument Count Exception.
+ * @package froq\exceptions
+ * @object  froq\exceptions\InvalidArgumentCountException
  * @author  Kerem Güneş <k-gun@mail.com>
- * @since   3.12, 4.0
+ * @since   4.0
  */
-interface Stringable
-{
-    /**
-     * To string.
-     * @return string
-     */
-    public function toString(): string;
-}
+class InvalidArgumentCountException extends RuntimeException
+{}

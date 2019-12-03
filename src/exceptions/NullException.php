@@ -24,16 +24,16 @@
  */
 declare(strict_types=1);
 
-namespace froq\throwables;
+namespace froq\exceptions;
 
-use froq\throwables\RuntimeException;
+use froq\exceptions\RuntimeException;
 
 /**
- * Unexpected ValueException.
- * @package froq\throwables
- * @object  froq\throwables\UnexpectedValueException
+ * Null Exception.
+ * @package froq\exceptions
+ * @object  froq\exceptions\NullException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-class UnexpectedValueException extends RuntimeException
+class NullException extends RuntimeException
 {}

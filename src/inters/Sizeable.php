@@ -24,20 +24,20 @@
  */
 declare(strict_types=1);
 
-namespace froq\interfaces;
+namespace froq\inters;
 
 /**
- * Runnable.
- * @package froq\interfaces
- * @object  froq\interfaces\Runnable
+ * Sizeable.
+ * @package froq\inters
+ * @object  froq\inters\Sizeable
  * @author  Kerem Güneş <k-gun@mail.com>
- * @since   4.0
+ * @since   1.0, 4.0
  */
-interface Runnable
+interface Sizeable
 {
     /**
-     * Run.
-     * @return void
+     * Size.
+     * @return int
      */
-    public function run(): void;
+    public function size(): int;
 }

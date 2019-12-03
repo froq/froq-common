@@ -24,16 +24,20 @@
  */
 declare(strict_types=1);
 
-namespace froq\throwables;
-
-use froq\throwables\LogicException;
+namespace froq\inters;
 
 /**
- * Out Of Range Exception.
- * @package froq\throwables
- * @object  froq\throwables\OutOfRangeException
+ * Stringable.
+ * @package froq\inters
+ * @object  froq\inters\Stringable
  * @author  Kerem Güneş <k-gun@mail.com>
- * @since   4.0
+ * @since   3.12, 4.0
  */
-class OutOfRangeException extends LogicException
-{}
+interface Stringable
+{
+    /**
+     * To string.
+     * @return string
+     */
+    public function toString(): string;
+}
