@@ -95,46 +95,40 @@ defined('local') or define('local', in_array(
 {
     /**
      * Ini.
-     * @param  string $name
-     * @param  string $value_default
-     * @param  bool   $bool
+     * @param  string      $name
+     * @param  string|null $value_default
+     * @param  bool        $bool
      * @return string|bool|null
      * @since  4.0
      */
-    function ini(string $name, string $value_default = '', bool $bool = false)
+    function ini(string $name, string $value_default = null, bool $bool = false)
     {
-        $value = (($value = (string) ini_get($name)) !== '') ? $value : $value_default;
-        if (!$bool) {
-            return $value;
+        $value = (string) ini_get($name);
+        if ($value === '') {
+            $value = $value_default;
         }
 
-        static $bool_values = ['on', 'yes', 'true', '1'];
+        static $bools = ['on', 'yes', 'true', '1'];
 
-        $value = strtolower((string) $value);
+        if ($bool) {
+            $value = in_array(strtolower($value), $bools);
+        }
 
-        return in_array($value, $bool_values, true);
+        return $value;
     }
 
     /**
      * Env.
-     * @param  string|array  $key
-     * @param  ?string|null  $value
+     * @param  string       $name
+     * @param  string|null  $value
      * @return ?string
      * @since  4.0
      */
-    function env(string $key, ?string $value = null): ?string
+    function env(string $name, string $value = null): ?string
     {
         if ($value !== null) { // Set.
             $_ENV[$name] = $value;
         } else {               // Get.
-            if (is_array($key)) {
-                $keys = $key; $values = [];
-                foreach ($keys as $key) {
-                    $values[] = env($key);
-                }
-                return $values;
-            }
-
             // Uppers for nginx (in some cases).
             $value = $_ENV[$name] ?? $_ENV[strtoupper($name)] ??
                      $_SERVER[$name] ?? $_SERVER[strtoupper($name)] ?? null;
@@ -158,7 +152,7 @@ defined('local') or define('local', in_array(
      */
     function error(bool $extract = false): ?string
     {
-        $error = error_get_last()['message'] ?? 'Unknown';
+        $error = error_get_last()['message'] ?? null;
 
         if ($error != null && $extract) {
             $error = strtolower($error);
@@ -172,7 +166,7 @@ defined('local') or define('local', in_array(
     }
 }
 
-// Util functions that could be used in cases if wanted, eg: int($var) instead (int) $var etc.
+// Util functions that may be used like, eg: int($var) instead (int) $var etc.
 {
     /**
      * Int.
