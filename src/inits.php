@@ -111,7 +111,7 @@ defined('local') or define('local', in_array(
         static $bools = ['on', 'yes', 'true', '1'];
 
         if ($bool) {
-            $value = in_array(strtolower($value), $bools);
+            $value = $value && in_array(strtolower($value), $bools);
         }
 
         return $value;
