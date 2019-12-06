@@ -24,9 +24,9 @@
  */
 declare(strict_types=1);
 
-namespace froq;
+namespace froq\common;
 
-use froq\AbstractObject;
+use froq\common\AbstractObject;
 use froq\inters\{Arrayable, Objectable, Yieldable};
 use froq\exceptions\InvalidArgumentException;
 use Countable, IteratorAggregate, ArrayIterator, Traversable, stdClass;
@@ -37,8 +37,8 @@ use Countable, IteratorAggregate, ArrayIterator, Traversable, stdClass;
  * Represents an abstract but extended array object that provides couple of utility methods which
  * access, modify or iterate $data items.
  *
- * @package froq
- * @object  froq\AbstractArray
+ * @package froq\common
+ * @object  froq\common\AbstractArray
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
@@ -63,12 +63,11 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
         if (is_array($data)) {
             $this->data = $data;
         } elseif ($data instanceof stdClass) {
-            $this->data = (array) $data;
+            $this->data = get_object_vars($data);
         } elseif ($data instanceof Traversable) {
             $this->data = iterator_to_array($data);
         } else {
-            throw new InvalidArgumentException('Invalid argument, valids are '.
-                'array|object|iterable|null');
+            throw new InvalidArgumentException('Invalid argument, valids are array|object|iterable|null');
         }
     }
 
@@ -260,7 +259,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
      */
     public function toObject(): object
     {
-        return $this->data;
+        return (object) $this->data;
     }
 
     /**

@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq;
+namespace froq\common;
 
-use froq\RegistryException;
+use froq\Exception;
 
 /**
  * Registry.
- * @package froq
- * @object  froq\Registry
+ * @package froq\common
+ * @object  froq\common\Registry
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
@@ -68,13 +68,13 @@ final class Registry
      * @param  object $object
      * @param  bool   $replaceable
      * @return void
-     * @throws froq\RegistryException
+     * @throws froq\Exception
      */
     public static function set(string $id, object $object, bool $replaceable = false): void
     {
         $current = self::$stack[$id] ?? null;
         if ($current && $current['replaceable'] == false) {
-            throw new RegistryException(sprintf('Object "%s" is already registered and not '.
+            throw new Exception(sprintf('Object "%s" is already registered and not '.
                 'replaceable, call replace() instead to force it to change.', $id));
         }
 
@@ -85,7 +85,7 @@ final class Registry
      * Get.
      * @param  string $id
      * @return object
-     * @throws froq\RegistryException
+     * @throws froq\Exception
      */
     public static function get(string $id): object
     {
@@ -93,7 +93,7 @@ final class Registry
             return self::$stack[$id]['object'];
         }
 
-        throw new RegistryException(sprintf('Object "%s" is not exists in registry', $id));
+        throw new Exception(sprintf('Object "%s" is not exists in registry', $id));
     }
 
     /**

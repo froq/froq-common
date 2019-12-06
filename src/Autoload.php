@@ -198,7 +198,7 @@ final class Autoload
             $offset = 3;
         } else {
             // Base stuffs.
-            static $subdirs = ['exceptions', 'inters', 'traits'];
+            static $subdirs = ['common', 'exceptions', 'inters', 'traits'];
 
             sscanf($dir, 'froq/%[^/]', $subdir);
             if (in_array($subdir, $subdirs)) {

@@ -24,44 +24,29 @@
  */
 declare(strict_types=1);
 
-namespace froq;
+namespace froq\common;
+
+use froq\Exception;
 
 /**
- * Factory.
- * @package froq
- * @object  froq\Factory
+ * Static Class.
+ *
+ * Represents an uninitializable static class that forbid initializations of the extender classes.
+ *
+ * @package froq\common
+ * @object  froq\common\StaticClass
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
+ * @static  Not abstract'ed, letting the Exception in Constructor.
  */
-final class Factory
+class StaticClass
 {
     /**
-     * Instances (singleton stack).
-     * @var array<object>
+     * Constructor.
+     * @throws froq\Exception
      */
-    private static array $instances = [];
-
-    /**
-     * Init.
-     * @param  string $class
-     * @param  ...    $classArgs
-     * @return object
-     */
-    public static function init(string $class, ...$classArgs): object
+    public final function __construct()
     {
-        return new $class(...$classArgs);
-    }
-
-    /**
-     * Init single.
-     * @param  string $class
-     * @param  ...    $classArgs
-     * @return object
-     */
-    public static function initSingle(string $class, ...$classArgs): object
-    {
-        return self::$instances[$class] ?? (
-               self::$instances[$class] = new $class(...$classArgs)
-        );
+        throw new Exception('Cannot initialize static class '. static::class);
     }
 }

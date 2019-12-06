@@ -24,29 +24,56 @@
  */
 declare(strict_types=1);
 
-namespace froq;
+namespace froq\common;
 
-use froq\Exception;
+use ReflectionClass;
 
 /**
- * Static Class.
+ * Enum.
  *
- * Represents an uninitializable static class that forbid initializations of the extender classes.
+ * Represents an enumerable set of named values.
  *
- * @package froq
- * @object  froq\StaticClass
+ * @package froq\common
+ * @object  froq\common\Enum
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
- * @static  Not abstract'ed, letting the Exception in Constructor.
  */
-class StaticClass
+class Enum
 {
     /**
-     * Constructor.
-     * @throws froq\Exception
+     * Cache.
+     * @var array
      */
-    public final function __construct()
+    private static array $cache;
+
+    /**
+     * All.
+     * @return array<string, any>
+     */
+    public static function all(): array
     {
-        throw new Exception('Cannot initialize static class '. static::class);
+        $class = static::class;
+
+        return self::$cache[$class] ?? (
+               self::$cache[$class] = (new ReflectionClass($class))->getConstants()
+        );
+    }
+
+    /**
+     * Names.
+     * @return array<string>
+     */
+    public static function names(): array
+    {
+        return array_keys(self::all());
+    }
+
+    /**
+     * Values.
+     * @return array<any>
+     */
+    public static function values(): array
+    {
+        return array_values(self::all());
     }
 }

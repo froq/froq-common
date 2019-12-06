@@ -24,16 +24,56 @@
  */
 declare(strict_types=1);
 
-namespace froq;
+namespace froq\common;
 
 use froq\Exception;
 
 /**
- * Registry Exception.
- * @package froq
- * @object  froq\RegistryException
+ * Factory.
+ * @package froq\common
+ * @object  froq\common\Factory
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-final class RegistryException extends Exception
-{}
+final class Factory
+{
+    /**
+     * Instances (singleton stack).
+     * @var array<object>
+     */
+    private static array $instances = [];
+
+    /**
+     * Init.
+     * @param  string $class
+     * @param  ...    $classArgs
+     * @return object
+     * @throws froq\Exception
+     */
+    public static function init(string $class, ...$classArgs): object
+    {
+        if ($class == '') {
+            throw new Exception('Empty class name given');
+        }
+
+        return new $class(...$classArgs);
+    }
+
+    /**
+     * Init single.
+     * @param  string $class
+     * @param  ...    $classArgs
+     * @return object
+     * @throws froq\Exception
+     */
+    public static function initSingle(string $class, ...$classArgs): object
+    {
+        if ($class == '') {
+            throw new Exception('Empty class name given');
+        }
+
+        return self::$instances[$class] ?? (
+               self::$instances[$class] = new $class(...$classArgs)
+        );
+    }
+}
