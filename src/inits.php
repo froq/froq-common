@@ -182,16 +182,13 @@ defined('local') or define('local', in_array(
     /**
      * Float.
      * @param  numeric  $input
-     * @param  int|null $decimals
+     * @param  int|null $precision
      * @return float
      * @since  3.0
      */
-    function float($input, int $decimals = null): float
+    function float($input, int $precision = null): float
     {
-        if ($decimals === null) {
-            return (float) $input;
-        }
-        return round($input, $decimals);
+        return ($precision === null) ? (float) $input : round((float) $input, $precision);
     }
 
     /**
@@ -203,7 +200,7 @@ defined('local') or define('local', in_array(
      */
     function string($input, bool $trim = false): string
     {
-        return $trim ? trim((string) $input) : (string) $input;
+        return ($trim === false) ? (string) $input : trim((string) $input);
     }
 
     /**
