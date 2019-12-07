@@ -188,10 +188,10 @@ defined('local') or define('local', in_array(
      */
     function float($input, int $decimals = null): float
     {
-        if ($decimals !== null) {
-            $input = round($input, $decimals);
+        if ($decimals === null) {
+            return (float) $input;
         }
-        return (float) $input;
+        return round($input, $decimals);
     }
 
     /**
