@@ -56,6 +56,12 @@ final class Autoload
     private static $instance;
 
     /**
+     * Map.
+     * @var array<string, string>
+     */
+    private static array $map = [];
+
+    /**
      * Constructor.
      * @throws RuntimeException
      */
@@ -125,9 +131,14 @@ final class Autoload
             return;
         }
 
-        $file = $this->getObjectFile($name);
+        $file = self::$map[$name] ?? null;
         if ($file == null) {
-            return;
+            $file = $this->getObjectFile($name);
+            if ($file == null) {
+                return;
+            }
+
+            self::$map[$name] = $file;
         }
 
         require $file;
