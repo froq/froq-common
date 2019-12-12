@@ -39,7 +39,7 @@ final class Factory
 {
     /**
      * Instances (singleton stack).
-     * @var array<object>
+     * @var array<string, object>
      */
     private static array $instances = [];
 
