@@ -53,7 +53,7 @@ final class Autoload
      * Instance.
      * @var self
      */
-    private static $instance;
+    private static self $instance;
 
     /**
      * Map.
@@ -95,7 +95,7 @@ final class Autoload
      */
     public static function init(): self
     {
-        return self::$instance ? self::$instance : (
+        return self::$instance ?? (
                self::$instance = new self()
         );
     }
