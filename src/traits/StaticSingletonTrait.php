@@ -27,19 +27,19 @@ declare(strict_types=1);
 namespace froq\traits;
 
 /**
- * Instance Trait.
+ * Static Singleton Trait.
  * @package froq\traits
- * @object  froq\traits\instanceTrait
+ * @object  froq\traits\StaticSingletonTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-trait InstanceTrait
+trait StaticSingletonTrait
 {
     /**
      * Instance.
-     * @var object
+     * @var object (static)
      */
-    private static object $__instance;
+    private static object $instance;
 
     /**
      * Init.
@@ -48,8 +48,8 @@ trait InstanceTrait
      */
     public static final function init(...$arguments): object
     {
-        return self::$__instance ?? (
-               self::$__instance = new static(...$arguments)
+        return self::$instance ?? (
+               self::$instance = new static(...$arguments)
         );
     }
 

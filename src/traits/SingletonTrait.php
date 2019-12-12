@@ -26,8 +26,6 @@ declare(strict_types=1);
 
 namespace froq\traits;
 
-use ReflectionClass;
-
 /**
  * Singleton Trait.
  * @package froq\traits
@@ -41,7 +39,7 @@ trait SingletonTrait
      * Instance.
      * @var self
      */
-    private static $instance;
+    private static self $instance;
 
     /**
      * Init.
@@ -50,8 +48,18 @@ trait SingletonTrait
      */
     public static final function init(...$arguments): self
     {
-        return self::$instance ? self::$instance : (
+        return self::$instance ?? (
                self::$instance = new self(...$arguments)
         );
+    }
+
+    /**
+     * Get instance.
+     * @aliasOf init()
+     * @since   4.0
+     */
+    public static final function getInstance(...$arguments)
+    {
+        return self::init(...$arguments);
     }
 }
