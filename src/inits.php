@@ -157,8 +157,8 @@ defined('local') or define('local', in_array(
         if ($error != null && $extract) {
             $error = strtolower($error);
             // Extract message part only.
-            if (strpos($error, '(')) {
-                $error = preg_replace('~(?:.*?:)?.*?:\s*(.+)~', '\1', $error);
+            if (strpos($error, '):')) {
+                $error = preg_replace('~^(?:.+):\s*(.+)~', '\1', $error);
             }
         }
 
