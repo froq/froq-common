@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\exceptions;
+namespace froq\common\exceptions;
 
-use froq\exceptions\LogicException;
+use froq\common\exceptions\LogicException;
 
 /**
  * Domain Exception.
- * @package froq\exceptions
- * @object  froq\exceptions\DomainException
+ * @package froq\common\exceptions
+ * @object  froq\common\exceptions\DomainException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

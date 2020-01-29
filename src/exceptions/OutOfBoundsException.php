@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\exceptions;
+namespace froq\common\exceptions;
 
-use froq\exceptions\RuntimeException;
+use froq\common\exceptions\RuntimeException;
 
 /**
  * Out Of Bounds Exception.
- * @package froq\exceptions
- * @object  froq\exceptions\OutOfBoundsException
+ * @package froq\common\exceptions
+ * @object  froq\common\exceptions\OutOfBoundsException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\exceptions;
+namespace froq\common\exceptions;
 
-use froq\exceptions\LogicException;
+use froq\common\exceptions\LogicException;
 
 /**
  * Length Exception.
- * @package froq\exceptions
- * @object  froq\exceptions\LengthException
+ * @package froq\common\exceptions
+ * @object  froq\common\exceptions\LengthException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

@@ -27,7 +27,7 @@ declare(strict_types=1);
 namespace froq\common;
 
 use froq\interfaces\{Arrayable, Objectable, Yieldable};
-use froq\exceptions\InvalidArgumentException;
+use froq\common\exceptions\InvalidArgumentException;
 use Countable, IteratorAggregate, ArrayIterator, Traversable, stdClass;
 
 /**
@@ -52,7 +52,7 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
     /**
      * Constructor.
      * @param  array|object|iterable|null $data
-     * @throws froq\exceptions\InvalidArgumentException
+     * @throws froq\common\exceptions\InvalidArgumentException
      */
     public function __construct($data = null)
     {

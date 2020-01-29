@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\exceptions;
+namespace froq\common\exceptions;
 
-use froq\exceptions\LogicException;
+use froq\common\exceptions\LogicException;
 
 /**
  * Out Of Range Exception.
- * @package froq\exceptions
- * @object  froq\exceptions\OutOfRangeException
+ * @package froq\common\exceptions
+ * @object  froq\common\exceptions\OutOfRangeException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\exceptions;
+namespace froq\common\exceptions;
 
-use froq\Exception;
+use froq\common\Exception;
 
 /**
  * Runtime Exception.
- * @package froq\exceptions
- * @object  froq\exceptions\RuntimeException
+ * @package froq\common\exceptions
+ * @object  froq\common\exceptions\RuntimeException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
