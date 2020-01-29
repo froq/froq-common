@@ -126,16 +126,17 @@ defined('local') or define('local', in_array(
      */
     function env(string $name, string $value = null): ?string
     {
-        if ($value !== null) { // Set.
+        if (func_num_args() == 2) { // Set.
             $_ENV[$name] = $value;
-        } else {               // Get.
+        } else {                    // Get.
             // Uppers for nginx (in some cases).
             $value = $_ENV[$name] ?? $_ENV[strtoupper($name)] ??
                      $_SERVER[$name] ?? $_SERVER[strtoupper($name)] ?? null;
 
             if ($value === null) {
-                if (false === ($value = getenv($name))) {
-                    if (false === ($value = getenv(strtolower($name)))) {
+                if (($value = getenv($name)) === false) {
+                    // Try lower name.
+                    if (($value = getenv(strtolower($name))) === false) {
                         $value = null;
                     }
                 }
