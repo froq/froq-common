@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\interfaces;
+namespace froq\common\interfaces;
 
 /**
  * Jsonable.
- * @package froq\interfaces
- * @object  froq\interfaces\Jsonable
+ * @package froq\common\interfaces
+ * @object  froq\common\interfaces\Jsonable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   1.0, 4.0
  */
