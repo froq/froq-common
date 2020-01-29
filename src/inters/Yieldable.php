@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\inters;
+namespace froq\interfaces;
 
 /**
  * Yieldable.
- * @package froq\inters
- * @object  froq\inters\Yieldable
+ * @package froq\interfaces
+ * @object  froq\interfaces\Yieldable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

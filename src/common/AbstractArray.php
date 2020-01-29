@@ -26,8 +26,7 @@ declare(strict_types=1);
 
 namespace froq\common;
 
-use froq\common\AbstractObject;
-use froq\inters\{Arrayable, Objectable, Yieldable};
+use froq\interfaces\{Arrayable, Objectable, Yieldable};
 use froq\exceptions\InvalidArgumentException;
 use Countable, IteratorAggregate, ArrayIterator, Traversable, stdClass;
 
@@ -42,8 +41,7 @@ use Countable, IteratorAggregate, ArrayIterator, Traversable, stdClass;
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-abstract class AbstractArray extends AbstractObject implements Arrayable, Objectable, Yieldable,
-    Countable, IteratorAggregate
+abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Countable, IteratorAggregate
 {
     /**
      * Data.
@@ -67,7 +65,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
         } elseif ($data instanceof Traversable) {
             $this->data = iterator_to_array($data);
         } else {
-            throw new InvalidArgumentException('Invalid argument, valids are array|object|iterable|null');
+            throw new InvalidArgumentException('Invalid argument, valids are "array, object, iterable, null"');
         }
     }
 
@@ -237,7 +235,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
     }
 
     /**
-     * @inheritDoc froq\inters\Yieldable
+     * @inheritDoc froq\interfaces\Yieldable
      */
     public function yield(): iterable
     {
@@ -247,7 +245,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
     }
 
     /**
-     * @inheritDoc froq\inters\Arrayable
+     * @inheritDoc froq\interfaces\Arrayable
      */
     public function toArray(): array
     {
@@ -255,7 +253,7 @@ abstract class AbstractArray extends AbstractObject implements Arrayable, Object
     }
 
     /**
-     * @inheritDoc froq\inters\Objectable
+     * @inheritDoc froq\interfaces\Objectable
      */
     public function toObject(): object
     {

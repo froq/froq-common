@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\inters;
+namespace froq\interfaces;
 
 /**
  * Singleable.
- * @package froq\inters
- * @object  froq\inters\Singleable
+ * @package froq\interfaces
+ * @object  froq\interfaces\Singleable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

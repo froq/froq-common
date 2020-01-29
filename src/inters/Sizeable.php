@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\inters;
+namespace froq\interfaces;
 
 /**
  * Sizeable.
- * @package froq\inters
- * @object  froq\inters\Sizeable
+ * @package froq\interfaces
+ * @object  froq\interfaces\Sizeable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   1.0, 4.0
  */
