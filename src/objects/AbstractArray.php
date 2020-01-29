@@ -26,8 +26,8 @@ declare(strict_types=1);
 
 namespace froq\common;
 
-use froq\interfaces\{Arrayable, Objectable, Yieldable};
 use froq\common\exceptions\InvalidArgumentException;
+use froq\common\interfaces\{Arrayable, Objectable, Yieldable};
 use Countable, IteratorAggregate, ArrayIterator, Traversable, stdClass;
 
 /**
@@ -235,7 +235,7 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
     }
 
     /**
-     * @inheritDoc froq\interfaces\Yieldable
+     * @inheritDoc froq\common\interfaces\Yieldable
      */
     public function yield(): iterable
     {
@@ -245,7 +245,7 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
     }
 
     /**
-     * @inheritDoc froq\interfaces\Arrayable
+     * @inheritDoc froq\common\interfaces\Arrayable
      */
     public function toArray(): array
     {
@@ -253,7 +253,7 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
     }
 
     /**
-     * @inheritDoc froq\interfaces\Objectable
+     * @inheritDoc froq\common\interfaces\Objectable
      */
     public function toObject(): object
     {
