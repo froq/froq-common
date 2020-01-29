@@ -1,8 +1,8 @@
 {
-    "name": "froq/froq",
-    "homepage": "https://github.com/froq/froq",
-    "description": "Core tools of Froq!",
-    "keywords": ["froq", "core", "tools"],
+    "name": "froq/froq-common",
+    "homepage": "https://github.com/froq/froq-common",
+    "description": "Froq! Common",
+    "keywords": ["froq", "common"],
     "license": "MIT",
     "authors": [
         {"name": "Kerem Güneş", "email": "k-gun@mail.com"}
