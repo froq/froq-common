@@ -24,16 +24,19 @@
  */
 declare(strict_types=1);
 
-namespace froq;
+namespace froq\common;
 
+use froq\common\traits\ThrowableTrait;
 use Exception as _Exception;
 
 /**
  * Exception.
- * @package froq
- * @object  froq\Exception
+ * @package froq\common
+ * @object  froq\common\Exception
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
 class Exception extends _Exception
-{}
+{
+    use ThrowableTrait;
+}

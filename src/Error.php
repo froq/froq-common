@@ -24,16 +24,19 @@
  */
 declare(strict_types=1);
 
-namespace froq;
+namespace froq\common;
 
+use froq\common\traits\ThrowableTrait;
 use Error as _Error;
 
 /**
  * Error.
- * @package froq
- * @object  froq\Error
+ * @package froq\common
+ * @object  froq\common\Error
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
 class Error extends _Error
-{}
+{
+    use ThrowableTrait;
+}
