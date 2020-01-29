@@ -1,7 +1,7 @@
 {
     "name": "froq/froq-common",
     "homepage": "https://github.com/froq/froq-common",
-    "description": "Froq! Common",
+    "description": "Froq! Common.",
     "keywords": ["froq", "common"],
     "license": "MIT",
     "authors": [
