@@ -24,7 +24,7 @@
  */
 declare(strict_types=1);
 
-namespace froq\common;
+namespace froq\common\objects;
 
 use froq\Exception;
 
@@ -33,8 +33,8 @@ use froq\Exception;
  *
  * Represents an uninitializable static class that forbid initializations of the extender classes.
  *
- * @package froq\common
- * @object  froq\common\StaticClass
+ * @package froq\common\objects
+ * @object  froq\common\objects\StaticClass
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  * @static  Not abstract'ed, letting the Exception in Constructor.
