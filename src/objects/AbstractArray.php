@@ -34,7 +34,7 @@ use Countable, IteratorAggregate, ArrayIterator, Traversable, stdClass;
  * Abstract Array.
  *
  * Represents an abstract but extended array object that provides couple of utility methods which
- * access, modify or iterate $data items.
+ * access, modify or iterate `$data` items.
  *
  * @package froq\common\objects
  * @object  froq\common\objects\AbstractArray

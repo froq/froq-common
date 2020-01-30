@@ -24,7 +24,7 @@
  */
 declare(strict_types=1);
 
-namespace froq\common;
+namespace froq\common\objects;
 
 use froq\common\interfaces\{Cloneable, Stringable};
 use ReflectionClass;
@@ -32,11 +32,11 @@ use ReflectionClass;
 /**
  * Abstract Object.
  *
- * Represents an Abstract but extended object that provides couple of utility methods which access
+ * Represents an abstract but extended object that provides couple of utility methods which access
  * and checks object's attributes.
  *
- * @package froq\common
- * @object  froq\common\AbstractObject
+ * @package froq\common\objects
+ * @object  froq\common\objects\AbstractObject
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
