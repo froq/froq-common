@@ -24,7 +24,7 @@
  */
 declare(strict_types=1);
 
-namespace froq\common;
+namespace froq\common\objects;
 
 use froq\common\exceptions\InvalidArgumentException;
 use froq\common\interfaces\{Arrayable, Objectable, Yieldable};
@@ -36,8 +36,8 @@ use Countable, IteratorAggregate, ArrayIterator, Traversable, stdClass;
  * Represents an abstract but extended array object that provides couple of utility methods which
  * access, modify or iterate $data items.
  *
- * @package froq\common
- * @object  froq\common\AbstractArray
+ * @package froq\common\objects
+ * @object  froq\common\objects\AbstractArray
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
