@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\common;
+namespace froq\common\objects;
 
 use froq\Exception;
 
 /**
  * Registry.
- * @package froq\common
- * @object  froq\common\Registry
+ * @package froq\common\objects
+ * @object  froq\common\objects\Registry
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
