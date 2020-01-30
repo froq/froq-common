@@ -26,7 +26,7 @@ declare(strict_types=1);
 
 namespace froq\common\objects;
 
-use froq\Exception;
+use froq\common\Exception;
 
 /**
  * Factory.
@@ -48,7 +48,7 @@ final class Factory
      * @param  string $class
      * @param  ...    $classArgs
      * @return object
-     * @throws froq\Exception
+     * @throws froq\common\Exception
      */
     public static function init(string $class, ...$classArgs): object
     {
@@ -64,7 +64,7 @@ final class Factory
      * @param  string $class
      * @param  ...    $classArgs
      * @return object
-     * @throws froq\Exception
+     * @throws froq\common\Exception
      */
     public static function initSingle(string $class, ...$classArgs): object
     {

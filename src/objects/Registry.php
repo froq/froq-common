@@ -26,7 +26,7 @@ declare(strict_types=1);
 
 namespace froq\common\objects;
 
-use froq\Exception;
+use froq\common\Exception;
 
 /**
  * Registry.
@@ -68,7 +68,7 @@ final class Registry
      * @param  object $object
      * @param  bool   $replaceable
      * @return void
-     * @throws froq\Exception
+     * @throws froq\common\Exception
      */
     public static function set(string $id, object $object, bool $replaceable = false): void
     {
@@ -85,7 +85,7 @@ final class Registry
      * Get.
      * @param  string $id
      * @return object
-     * @throws froq\Exception
+     * @throws froq\common\Exception
      */
     public static function get(string $id): object
     {

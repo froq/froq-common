@@ -26,7 +26,7 @@ declare(strict_types=1);
 
 namespace froq\common\objects;
 
-use froq\Exception;
+use froq\common\Exception;
 
 /**
  * Static Class.
@@ -43,7 +43,7 @@ class StaticClass
 {
     /**
      * Constructor.
-     * @throws froq\Exception
+     * @throws froq\common\Exception
      */
     public final function __construct()
     {
