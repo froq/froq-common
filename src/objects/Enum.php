@@ -24,7 +24,7 @@
  */
 declare(strict_types=1);
 
-namespace froq\common;
+namespace froq\common\objects;
 
 use ReflectionClass;
 
@@ -33,8 +33,8 @@ use ReflectionClass;
  *
  * Represents an enumerable set of named values.
  *
- * @package froq\common
- * @object  froq\common\Enum
+ * @package froq\common\objects
+ * @object  froq\common\objects\Enum
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
