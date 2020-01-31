@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\traits;
+namespace froq\common\traits;
 
 /**
  * Singleton Trait.
- * @package froq\traits
- * @object  froq\traits\SingletonTrait
+ * @package froq\common\traits
+ * @object  froq\common\traits\SingletonTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   1.0, 4.0
  */

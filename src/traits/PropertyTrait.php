@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\traits;
+namespace froq\common\traits;
 
 use froq\util\Objects;
 
 /**
  * Property Trait.
- * @package froq\traits
- * @object  froq\traits\PropertyTrait
+ * @package froq\common\traits
+ * @object  froq\common\traits\PropertyTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\traits;
+namespace froq\common\traits;
 
 /**
  * Static Singleton Trait.
- * @package froq\traits
- * @object  froq\traits\StaticSingletonTrait
+ * @package froq\common\traits
+ * @object  froq\common\traits\StaticSingletonTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

@@ -24,14 +24,14 @@
  */
 declare(strict_types=1);
 
-namespace froq\traits;
+namespace froq\common\traits;
 
 use froq\util\Objects;
 
 /**
  * Constant Trait.
- * @package froq\traits
- * @object  froq\traits\ConstantTrait
+ * @package froq\common\traits
+ * @object  froq\common\traits\ConstantTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

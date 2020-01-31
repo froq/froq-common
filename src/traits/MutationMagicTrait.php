@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\traits;
+namespace froq\common\traits;
 
 /**
  * Mutation Magic Trait.
- * @package froq\traits
- * @object  froq\traits\MutationMagicTrait
+ * @package froq\common\traits
+ * @object  froq\common\traits\MutationMagicTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

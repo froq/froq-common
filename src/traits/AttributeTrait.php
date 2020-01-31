@@ -24,12 +24,12 @@
  */
 declare(strict_types=1);
 
-namespace froq\traits;
+namespace froq\common\traits;
 
 /**
  * Attribute Trait.
- * @package froq\traits
- * @object  froq\traits\AttributeTrait
+ * @package froq\common\traits
+ * @object  froq\common\traits\AttributeTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
