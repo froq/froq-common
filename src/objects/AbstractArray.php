@@ -65,7 +65,8 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
         } elseif ($data instanceof Traversable) {
             $this->data = iterator_to_array($data);
         } else {
-            throw new InvalidArgumentException('Invalid argument, valids are "array, object, iterable, null"');
+            throw new InvalidArgumentException('Invalid argument given, valids are: '.
+                '"array, object, iterable, null"');
         }
     }
 
