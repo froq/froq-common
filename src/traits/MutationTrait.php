@@ -81,7 +81,7 @@ trait MutationTrait
             return;
         }
 
-        return (null !== $this->{$name});
+        return $this->{$name} !== null;
     }
 
     /**
