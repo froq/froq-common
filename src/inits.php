@@ -178,7 +178,7 @@ declare(strict_types=1);
      */
     function float($input, int $precision = null): float
     {
-        return ($precision === null) ? (float) $input : round((float) $input, $precision);
+        return !$precision ? (float) $input : round((float) $input, $precision);
     }
 
     /**
@@ -190,7 +190,7 @@ declare(strict_types=1);
      */
     function string($input, bool $trim = false): string
     {
-        return ($trim === false) ? (string) $input : trim((string) $input);
+        return !$trim ? (string) $input : trim((string) $input);
     }
 
     /**
