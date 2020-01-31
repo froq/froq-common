@@ -24,17 +24,6 @@
  */
 declare(strict_types=1);
 
-// Ensure request scheme.
-$_SERVER['REQUEST_SCHEME'] ??= 'http'. (($_SERVER['SERVER_PORT'] ?? '') == '443' ? 's' : '');
-
-/**
- * Used to detect local env.
- * @const bool
- */
-defined('local') || define('local', in_array(
-    strrchr($_SERVER['SERVER_NAME'] ?? '', '.'), ['.local', '.localhost']
-));
-
 // Global stuff.
 {
     /**
