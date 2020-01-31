@@ -206,21 +206,25 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
     /**
      * Map.
      * @param  callable $callback
+     * @param  bool     $useKeys
      * @return static
      */
-    public function map(callable $callback)
+    public function map(callable $callback, bool $useKeys = false)
     {
-        return new static(array_map($callback, $this->data));
+        return !$useKeys
+            ? new static(array_map($callback, $this->data))
+            : new static(array_map($callback, $this->data, array_keys($this->data)));
     }
 
     /**
      * Filter.
      * @param  callable $callback
+     * @param  bool     $useKeys
      * @return static
      */
-    public function filter(callable $callback)
+    public function filter(callable $callback, bool $useKeys = false)
     {
-        return new static(array_filter($this->data, $callback));
+        return new static(array_filter($this->data, $callback, $useKeys ? 1 : 0));
     }
 
     /**
