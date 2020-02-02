@@ -59,10 +59,12 @@ trait ThrowableTrait
                 }
                 // Eg: throw new Exception('Error: %s', ['@error']).
                 elseif ($message && $messageParams) {
-                    if ($messageParams === ['@error']) {
-                        $error         = self::getLastError();
-                        $code          = $code ?? $error['code'];
-                        $messageParams = [$error['message']];
+                    foreach ($messageParams as $i => $messageParam) {
+                        if ($messageParam === '@error') {
+                            $error             = self::getLastError();
+                            $code              = $code ?? $error['code'];
+                            $messageParams[$i] = $error['message'];
+                        }
                     }
                     $message = vsprintf($message, $messageParams);
                 }
