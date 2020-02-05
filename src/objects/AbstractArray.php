@@ -72,7 +72,7 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
 
     /**
      * Clone.
-     * @return object (static)
+     * @return self (static)
      */
     public function __clone()
     {
@@ -121,9 +121,9 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
 
     /**
      * Copy.
-     * @return object (static)
+     * @return self (static)
      */
-    public function copy(): object
+    public function copy(): self
     {
         return new static($this->data);
     }
@@ -131,9 +131,9 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
     /**
      * Copy to.
      * @param  self $collection
-     * @return object (static)
+     * @return self (static)
      */
-    public function copyTo(self $collection): object
+    public function copyTo(self $collection): self
     {
         $collection->setData($this->data);
 
@@ -208,9 +208,9 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
      * Map.
      * @param  callable $callback
      * @param  bool     $useKeys
-     * @return object (static)
+     * @return self (static)
      */
-    public function map(callable $callback, bool $useKeys = false): object
+    public function map(callable $callback, bool $useKeys = false): self
     {
         return !$useKeys
             ? new static(array_map($callback, $this->data))
@@ -221,9 +221,9 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
      * Filter.
      * @param  callable $callback
      * @param  bool     $useKeys
-     * @return object (static)
+     * @return self (static)
      */
-    public function filter(callable $callback, bool $useKeys = false): object
+    public function filter(callable $callback, bool $useKeys = false): self
     {
         return !$useKeys
             ? new static(array_filter($this->data, $callback))
