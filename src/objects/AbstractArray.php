@@ -72,7 +72,7 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
 
     /**
      * Clone.
-     * @return static
+     * @return object (static)
      */
     public function __clone()
     {
@@ -208,9 +208,9 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
      * Map.
      * @param  callable $callback
      * @param  bool     $useKeys
-     * @return static
+     * @return object (static)
      */
-    public function map(callable $callback, bool $useKeys = false)
+    public function map(callable $callback, bool $useKeys = false): object
     {
         return !$useKeys
             ? new static(array_map($callback, $this->data))
@@ -221,11 +221,13 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
      * Filter.
      * @param  callable $callback
      * @param  bool     $useKeys
-     * @return static
+     * @return object (static)
      */
-    public function filter(callable $callback, bool $useKeys = false)
+    public function filter(callable $callback, bool $useKeys = false): object
     {
-        return new static(array_filter($this->data, $callback, $useKeys ? 1 : 0));
+        return !$useKeys
+            ? new static(array_filter($this->data, $callback))
+            : new static(array_filter($this->data, $callback, 1));
     }
 
     /**
