@@ -242,16 +242,6 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
     }
 
     /**
-     * @inheritDoc froq\common\interfaces\Yieldable
-     */
-    public function yield(): iterable
-    {
-        foreach ($this->data as $key => $value) {
-            yield $key => $value;
-        }
-    }
-
-    /**
      * @inheritDoc froq\common\interfaces\Arrayable
      */
     public function toArray(): array
@@ -265,6 +255,16 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
     public function toObject(): object
     {
         return (object) $this->data;
+    }
+
+    /**
+     * @inheritDoc froq\common\interfaces\Yieldable
+     */
+    public function yield(): iterable
+    {
+        foreach ($this->data as $key => $value) {
+            yield $key => $value;
+        }
     }
 
     /**
