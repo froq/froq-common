@@ -255,9 +255,8 @@ declare(strict_types=1);
             // Use key,value notation.
             $keys = ($keys == '*') ? array_keys($input) : $keys;
             foreach ($input as $key => $value) {
-                if (in_array($key, $keys)) {
-                    $input[$key] = $func($key, $value);
-                }
+                in_array($key, $keys, true)
+                    && $input[$key] = $func($key, $value);
             }
         }
 
@@ -291,13 +290,26 @@ declare(strict_types=1);
             // Use key,value notation.
             $keys = ($keys == '*') ? array_keys($input) : $keys;
             foreach ($input as $key => $value) {
-                if ($func($key, $value)) {
-                    $input[$key] = $value;
-                }
+                in_array($key, $keys, true)
+                    && $func($key, $value)
+                        && $input[$key] = $value;
             }
         }
 
         return $check ? (object) $input : $input;
+    }
+
+    /**
+     * Reduce.
+     * @param  array|object $input
+     * @param  any          $ret
+     * @param  callable     $func
+     * @return any
+     * @since  4.0
+     */
+    function reduce($input, $ret = null, callable $func)
+    {
+        return array_reduce((array) $input, $func, $ret);
     }
 }
 
