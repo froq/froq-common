@@ -26,9 +26,8 @@ declare(strict_types=1);
 
 namespace froq\common\objects;
 
-use froq\common\exceptions\InvalidArgumentException;
 use froq\common\interfaces\{Arrayable, Objectable, Yieldable};
-use Countable, IteratorAggregate, ArrayIterator, Traversable, stdClass;
+use Traversable, Countable, IteratorAggregate, ArrayIterator;
 
 /**
  * Abstract Array.
@@ -51,23 +50,16 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
 
     /**
      * Constructor.
-     * @param  array|object|iterable|null $data
+     * @param  iterable|null $data
      * @throws froq\common\exceptions\InvalidArgumentException
      */
-    public function __construct($data = null)
+    public function __construct(iterable $data = null)
     {
-        $data = $data ?? [];
-
-        if (is_array($data)) {
-            $this->data = $data;
-        } elseif ($data instanceof stdClass) {
-            $this->data = get_object_vars($data);
-        } elseif ($data instanceof Traversable) {
-            $this->data = iterator_to_array($data);
-        } else {
-            throw new InvalidArgumentException('Invalid argument given, valids are: '.
-                '"array, object, iterable, null"');
+        if ($data && $data instanceof Traversable) {
+            $data = iterator_to_array($data);
         }
+
+        $this->data = $data ?? [];
     }
 
     /**
@@ -130,7 +122,7 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
 
     /**
      * Copy to.
-     * @param  self $collection
+     * @param  self (static) $collection
      * @return self (static)
      */
     public function copyTo(self $collection): self
@@ -156,7 +148,7 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
 
     /**
      * Merge with.
-     * @param  self $collection
+     * @param  self (static) $collection
      * @return self (static)
      */
     public function mergeWith(self $collection): self
@@ -205,40 +197,53 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
     }
 
     /**
+     * Each.
+     * @param  callable $func
+     * @return void
+     */
+    public function each(callable $func): void
+    {
+        foreach ($this->data as $key => $value) {
+            $func($key, $value);
+        }
+    }
+
+    /**
      * Map.
-     * @param  callable $callback
+     * @param  callable $func
      * @param  bool     $useKeys
      * @return self (static)
      */
-    public function map(callable $callback, bool $useKeys = false): self
+    public function map(callable $func, bool $useKeys = false): self
     {
         return !$useKeys
-            ? new static(array_map($callback, $this->data))
-            : new static(array_map($callback, $this->data, array_keys($this->data)));
+            ? new static(array_map($func, $this->data))
+            // Preserving keys (assoc keys will be corrupted with array_map()).
+            : new static(array_combine($keys = array_keys($this->data), array_map($func, $this->data, $keys)));
     }
 
     /**
      * Filter.
-     * @param  callable $callback
+     * @param  callable $func
      * @param  bool     $useKeys
      * @return self (static)
      */
-    public function filter(callable $callback, bool $useKeys = false): self
+    public function filter(callable $func, bool $useKeys = false): self
     {
         return !$useKeys
-            ? new static(array_filter($this->data, $callback))
-            : new static(array_filter($this->data, $callback, 1));
+            ? new static(array_filter($this->data, $func))
+            : new static(array_filter($this->data, $func, 1));
     }
 
     /**
      * Reduce.
-     * @param  any|null $initialValue
-     * @param  callable $callback
+     * @param  any|null $return
+     * @param  callable $func
      * @return any
      */
-    public function reduce($initialValue = null, callable $callback)
+    public function reduce($return = null, callable $func)
     {
-        return array_reduce($this->data, $callback, $initialValue);
+        return array_reduce($this->data, $func, $return);
     }
 
     /**
@@ -281,5 +286,15 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
     public function getIterator(): iterable
     {
         return new ArrayIterator($this->data);
+    }
+
+    /**
+     * From.
+     * @param  iterable $data
+     * @return self (static)
+     */
+    public static function from(iterable $data): self
+    {
+        return new static($data);
     }
 }
