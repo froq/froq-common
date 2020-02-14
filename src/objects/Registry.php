@@ -73,9 +73,9 @@ final class Registry
     public static function set(string $id, object $object, bool $replaceable = false): void
     {
         $current = self::$stack[$id] ?? null;
-        if ($current && $current['replaceable'] == false) {
-            throw new Exception(sprintf('Object "%s" is already registered and not '.
-                'replaceable, call replace() instead to force it to change.', $id));
+        if ($current && !$current['replaceable']) {
+            throw new Exception('Object "%s" is already registered and not replaceable, call
+                replace() instead to force it to change with set().', [$id]);
         }
 
         self::register($id, $object, $replaceable);
@@ -93,7 +93,7 @@ final class Registry
             return self::$stack[$id]['object'];
         }
 
-        throw new Exception(sprintf('Object "%s" is not exists in registry', $id));
+        throw new Exception('Object "%s" is not exists in registry', [$id]);
     }
 
     /**

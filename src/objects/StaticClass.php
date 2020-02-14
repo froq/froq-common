@@ -47,6 +47,6 @@ class StaticClass
      */
     public final function __construct()
     {
-        throw new Exception('Cannot initialize static class '. static::class);
+        throw new Exception('Cannot initialize static class "%s"', [static::class]);
     }
 }
