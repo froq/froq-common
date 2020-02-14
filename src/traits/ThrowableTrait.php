@@ -46,7 +46,7 @@ trait ThrowableTrait
      * @param Throwable|null   $previous
      */
     public function __construct($message = null, array $messageParams = null, int $code = null,
-        ?Throwable $previous = null)
+        Throwable $previous = null)
     {
         if ($message) {
             if (is_string($message)) {
