@@ -80,7 +80,7 @@ declare(strict_types=1);
     }
 }
 
-// System functions.
+// System stuff.
 {
     /**
      * Ini.
@@ -134,8 +134,9 @@ declare(strict_types=1);
             return $value;
         }
     }
+}
 
-// Util functions that may be used like, eg: int($var) instead (int) $var etc.
+// Utility stuff.
 {
     /**
      * Int.
@@ -210,7 +211,7 @@ declare(strict_types=1);
     }
 }
 
-// Map & filter
+// Map/filter/reduce.
 {
     /**
      * Map.
