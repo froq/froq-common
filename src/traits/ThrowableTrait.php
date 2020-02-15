@@ -64,6 +64,7 @@ trait ThrowableTrait
                             $error             = self::getLastError();
                             $code              = $code ?? $error['code'];
                             $messageParams[$i] = $error['message'];
+                            break;
                         }
                     }
                     $message = vsprintf($message, $messageParams);
