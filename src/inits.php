@@ -135,27 +135,6 @@ declare(strict_types=1);
         }
     }
 
-    /**
-     * Error.
-     * @param  bool $extract
-     * @return ?string
-     */
-    function error(bool $extract = false): ?string
-    {
-        $error = error_get_last()['message'] ?? null;
-
-        if ($error != null && $extract) {
-            $error = strtolower($error);
-            // Extract message part only.
-            if (strpos($error, '):')) {
-                $error = preg_replace('~^(?:.+):\s*(.+)~', '\1', $error);
-            }
-        }
-
-        return $error;
-    }
-}
-
 // Util functions that may be used like, eg: int($var) instead (int) $var etc.
 {
     /**
@@ -337,9 +316,3 @@ declare(strict_types=1);
         $e && exit;
     }
 }
-
-/**
- * Dump.
- * @aliasOf prd()
- */
-function dump(...$args) { prd(...$args); }
