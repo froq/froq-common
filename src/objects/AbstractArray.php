@@ -134,12 +134,12 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
 
     /**
      * Merge.
-     * @param  iterable $collection
+     * @param  iterable $data
      * @return self (static)
      */
-    public function merge(iterable $collection): self
+    public function merge(iterable $data): self
     {
-        foreach ($collection as $key => $value) {
+        foreach ($data as $key => $value) {
             $this->data[$key] = $value;
         }
 
