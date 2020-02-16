@@ -55,11 +55,12 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
      */
     public function __construct(iterable $data = null)
     {
-        if ($data && $data instanceof Traversable) {
-            $data = iterator_to_array($data);
+        if ($data != null) {
+            if ($data instanceof Traversable) {
+                $data = iterator_to_array($data);
+            }
+            $this->data = $data;
         }
-
-        $this->data = $data ?? [];
     }
 
     /**
