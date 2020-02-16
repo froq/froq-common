@@ -122,14 +122,14 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
 
     /**
      * Copy to.
-     * @param  self (static) $collection
+     * @param  self (static) $array
      * @return self (static)
      */
-    public function copyTo(self $collection): self
+    public function copyTo(self $array): self
     {
-        $collection->setData($this->data);
+        $array->setData($this->data);
 
-        return $collection;
+        return $array;
     }
 
     /**
@@ -148,12 +148,12 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
 
     /**
      * Merge with.
-     * @param  self (static) $collection
+     * @param  self (static) $array
      * @return self (static)
      */
-    public function mergeWith(self $collection): self
+    public function mergeWith(self $array): self
     {
-        foreach ($collection as $key => $value) {
+        foreach ($array as $key => $value) {
             $this->data[$key] = $value;
         }
 
