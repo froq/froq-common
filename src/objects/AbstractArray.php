@@ -59,7 +59,7 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
             if ($data instanceof Traversable) {
                 $data = iterator_to_array($data);
             }
-            $this->data = $data;
+            $this->setData($data);
         }
     }
 
