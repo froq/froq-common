@@ -26,8 +26,8 @@ declare(strict_types=1);
 
 namespace froq\common\objects;
 
-use froq\common\interfaces\{Arrayable, Objectable, Yieldable};
-use Traversable, Countable, IteratorAggregate, ArrayIterator;
+use froq\common\interfaces\{Arrayable, Objectable, Jsonable, Yieldable};
+use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
 
 /**
  * Abstract Array.
@@ -40,7 +40,8 @@ use Traversable, Countable, IteratorAggregate, ArrayIterator;
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Countable, IteratorAggregate
+abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldable,
+    Countable, JsonSerializable, IteratorAggregate
 {
     /**
      * Data.
@@ -264,6 +265,14 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
     }
 
     /**
+     * @inheritDoc froq\common\interfaces\Jsonable
+     */
+    public function toJson(int $flags = 0): string
+    {
+        return json_encode($this->data, $flags);
+    }
+
+    /**
      * @inheritDoc froq\common\interfaces\Yieldable
      */
     public function yield(): iterable
@@ -279,6 +288,14 @@ abstract class AbstractArray implements Arrayable, Objectable, Yieldable, Counta
     public function count(): int
     {
         return count($this->data);
+    }
+
+    /**
+     * @inheritDoc JsonSerializable
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->data;
     }
 
     /**
