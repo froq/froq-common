@@ -37,7 +37,8 @@ interface Jsonable
 {
     /**
      * To json.
+     * @param  int $flags
      * @return string
      */
-    public function toJson(): string;
+    public function toJson(int $flags = 0): string;
 }
