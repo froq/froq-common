@@ -50,7 +50,7 @@ class Enum
      * All.
      * @return array<string, any>
      */
-    public static function all(): array
+    public static final function all(): array
     {
         $class = static::class;
 
@@ -63,7 +63,7 @@ class Enum
      * Names.
      * @return array<string>
      */
-    public static function names(): array
+    public static final function names(): array
     {
         return array_keys(self::all());
     }
@@ -72,7 +72,7 @@ class Enum
      * Values.
      * @return array<any>
      */
-    public static function values(): array
+    public static final function values(): array
     {
         return array_values(self::all());
     }
