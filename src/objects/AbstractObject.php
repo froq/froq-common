@@ -104,12 +104,12 @@ abstract class AbstractObject implements Cloneable, Stringable
 
     /**
      * Is instance of.
-     * @param  object $object
+     * @param  string|object $class
      * @return bool
      */
-    public final function isInstanceOf(object $object): bool
+    public final function isInstanceOf($class): bool
     {
-        return ($this instanceof $object);
+        return ($this instanceof $class);
     }
 
     /**
