@@ -135,43 +135,6 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
     }
 
     /**
-     * Merge.
-     * @param  iterable $data
-     * @return self (static)
-     */
-    public function merge(iterable $data): self
-    {
-        foreach ($data as $key => $value) {
-            $this->data[$key] = $value;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Merge with.
-     * @param  self (static) $array
-     * @return self (static)
-     */
-    public function mergeWith(self $array): self
-    {
-        foreach ($array as $key => $value) {
-            $this->data[$key] = $value;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Empty.
-     * @return void
-     */
-    public function empty(): void
-    {
-        $this->data = [];
-    }
-
-    /**
      * Is empty.
      * @return bool
      */
