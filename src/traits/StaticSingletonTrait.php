@@ -44,7 +44,7 @@ trait StaticSingletonTrait
     /**
      * Init.
      * @param  ... $arguments
-     * @return object
+     * @return object (static)
      */
     public static final function init(...$arguments): object
     {
