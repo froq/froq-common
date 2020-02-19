@@ -225,8 +225,7 @@ declare(strict_types=1);
     function map($input, callable $func, $keys = null)
     {
         // Object check.
-        $check = $input instanceof stdClass;
-        if ($check) {
+        if ($check = ($input instanceof stdClass)) {
             $input = (array) $input;
         }
 
@@ -255,13 +254,10 @@ declare(strict_types=1);
     function filter($input, callable $func = null, $keys = null)
     {
         // Default function.
-        $func = $func ?? function ($value) {
-            return strlen((string) $value);
-        };
+        $func = $func ?? 'strlen';
 
         // Object check.
-        $check = $input instanceof stdClass;
-        if ($check) {
+        if ($check = ($input instanceof stdClass)) {
             $input = (array) $input;
         }
 
