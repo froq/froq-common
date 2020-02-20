@@ -115,21 +115,13 @@ abstract class AbstractObject implements Cloneable, Stringable
     /**
      * Is equal to.
      * @param  object $object
+     * @param  bool   $strict
      * @return bool
      */
-    public final function isEqualTo(object $object): bool
+    public final function isEqualTo(object $object, bool $strict = false): bool
     {
-        return ($this == $object);
-    }
-
-    /**
-     * Is equals to.
-     * @param  object $object
-     * @return bool
-     */
-    public final function isEqualsTo(object $object): bool
-    {
-        return ($this === $object);
+        return !$strict ? ($this == $object)
+                        : ($this === $object);
     }
 
     /**
