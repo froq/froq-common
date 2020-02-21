@@ -71,7 +71,7 @@ abstract class AbstractObject implements Cloneable, Stringable
     {
         $name = $this->getName();
 
-        return substr($name, 0, $baseOnly ? strpos($name, '\\') : strrpos($name, '\\'));
+        return substr($name, 0, !$baseOnly ? strrpos($name, '\\') : strpos($name, '\\'));
     }
 
     /**
