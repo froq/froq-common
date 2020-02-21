@@ -27,13 +27,14 @@ declare(strict_types=1);
 namespace froq\common\objects;
 
 use froq\common\interfaces\{Cloneable, Stringable};
-use ReflectionClass;
+use froq\util\Objects;
+use ReflectionObject;
 
 /**
  * Abstract Object.
  *
  * Represents an abstract but extended object that provides couple of utility methods which access
- * and checks object's attributes.
+ * and check object's attributes.
  *
  * @package froq\common\objects
  * @object  froq\common\objects\AbstractObject
@@ -48,7 +49,7 @@ abstract class AbstractObject implements Cloneable, Stringable
      */
     public final function getName(): string
     {
-        return static::class;
+        return Objects::getName($this);
     }
 
     /**
@@ -57,9 +58,7 @@ abstract class AbstractObject implements Cloneable, Stringable
      */
     public final function getShortName(): string
     {
-        $name = $this->getName();
-
-        return substr($name, strrpos($name, '\\') + 1);
+        return Objects::getShortName($this);
     }
 
     /**
@@ -69,18 +68,16 @@ abstract class AbstractObject implements Cloneable, Stringable
      */
     public final function getNamespace(bool $baseOnly = false): string
     {
-        $name = $this->getName();
-
-        return substr($name, 0, !$baseOnly ? strrpos($name, '\\') : strpos($name, '\\'));
+        return Objects::getNamespace($this, $baseOnly);
     }
 
     /**
      * Get reflection.
-     * @return ReflectionClass
+     * @return ReflectionObject
      */
-    public final function getReflection(): ReflectionClass
+    public final function getReflection(): ReflectionObject
     {
-        return new ReflectionClass($this);
+        return new ReflectionObject($this);
     }
 
     /**
@@ -120,8 +117,7 @@ abstract class AbstractObject implements Cloneable, Stringable
      */
     public final function isEqualTo(object $object, bool $strict = false): bool
     {
-        return !$strict ? ($this == $object)
-                        : ($this === $object);
+        return !$strict ? ($this == $object) : ($this === $object);
     }
 
     /**
