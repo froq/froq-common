@@ -44,6 +44,7 @@ trait ConstantTrait
      */
     public final function hasConstant(string $name): bool
     {
+        // Seems working for private/protected constants also due to called scope.
         return defined(static::class .'::'. $name);
     }
 
@@ -85,5 +86,15 @@ trait ConstantTrait
     public final function getConstantNames(bool $all = true): ?array
     {
         return Objects::getConstantNames($this, $all);
+    }
+
+    /**
+     * Get constant value.
+     * @param  bool $all
+     * @return ?array<int|string, any>
+     */
+    public final function getConstantValues(bool $all = true, bool $associative = false): ?array
+    {
+        return Objects::getConstantValues($this, $all, $associative);
     }
 }

@@ -86,4 +86,14 @@ trait PropertyTrait
     {
         return Objects::getPropertyNames($this, $all);
     }
+
+    /**
+     * Get property values.
+     * @param  bool $all
+     * @return ?array<string>
+     */
+    public final function getPropertyValues(bool $all = true, bool $associative = false): ?array
+    {
+        return Objects::getPropertyValues($this, $all, $associative);
+    }
 }
