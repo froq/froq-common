@@ -164,13 +164,17 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
     /**
      * Each.
      * @param  callable $func
-     * @return void
+     * @return self
      */
-    public function each(callable $func): void
+    public function each(callable $func): self
     {
+        $func = $func->bindTo($this, $this);
+
         foreach ($this->data as $key => $value) {
-            $func($key, $value);
+            $func($value, $key);
         }
+
+        return $this;
     }
 
     /**
@@ -202,14 +206,32 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
 
     /**
      * Reduce.
-     * @param  any|null $return
+     * @param  callable $func
+     * @return self
+     */
+    public function reduce(callable $func): self
+    {
+        $data = []; // Actually an accumulator.
+
+        foreach ($this->data as $key => $value) {
+            // Argument $data must be passed with ref (eg: (&$data, ...) => ...).
+            $func($data, $value, $key);
+        }
+
+        return new static($data);
+    }
+
+    /**
+     * Reduce value.
+     * @param  any|null $value
      * @param  callable $func
      * @return any
      */
-    public function reduce($return = null, callable $func)
+    public function reduceValue($value = null, callable $func)
     {
-        return array_reduce($this->data, $func, $return);
+        return array_reduce($this->data, $func, $value);
     }
+
 
     /**
      * @inheritDoc froq\common\interfaces\Arrayable
