@@ -135,7 +135,7 @@ trait OptionTrait
      * @param  array<string> $keys
      * @return self
      */
-    public final function removeOptions(string $keys): self
+    public final function removeOptions(array $keys): self
     {
         foreach ($keys as $key) {
             $this->removeOption($key);
