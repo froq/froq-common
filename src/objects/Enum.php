@@ -32,6 +32,7 @@ use ReflectionClass;
  * Enum.
  *
  * Represents an enumerable set of named values.
+ * We all wish it was a part of PHP but not (RFC: http://wiki.php.net/rfc/enum).
  *
  * @package froq\common\objects
  * @object  froq\common\objects\Enum
@@ -47,33 +48,83 @@ class Enum
     private static array $cache;
 
     /**
-     * All.
+     * Get names.
+     * @return array<string>
+     */
+    public static final function getNames(): array
+    {
+        return array_keys(self::toArray());
+    }
+
+    /**
+     * Get values.
+     * @return array<any>
+     */
+    public static final function getValues(): array
+    {
+        return array_values(self::toArray());
+    }
+
+    /**
+     * Is valid name.
+     * @param  string $name
+     * @return bool
+     */
+    public static final function isValidName(string $name): bool
+    {
+        return in_array($name, self::getNames(), true);
+    }
+
+    /**
+     * Is valid value.
+     * @param  string $value
+     * @param  bool   $strict
+     * @return bool
+     */
+    public static final function isValidValue(string $value, bool $strict = true): bool
+    {
+        return in_array($value, self::getValues(), $strict);
+    }
+
+    /**
+     * To array.
      * @return array<string, any>
      */
-    public static final function all(): array
+    public static final function toArray(): array
     {
         $class = static::class;
 
-        return self::$cache[$class] ?? (
-               self::$cache[$class] = (new ReflectionClass($class))->getConstants()
+        return self::$cache[$class] ?? self::$cache[$class] = (
+            (new ReflectionClass($class))->getConstants()
         );
     }
 
     /**
-     * Names.
-     * @return array<string>
+     * To string.
+     * @return string
      */
-    public static final function names(): array
+    public static final function toString(): string
     {
-        return array_keys(self::all());
-    }
+        $ret = "Enum(". static::class .") {\n";
 
-    /**
-     * Values.
-     * @return array<any>
-     */
-    public static final function values(): array
-    {
-        return array_values(self::all());
+        foreach (self::toArray() as $name => $value) {
+            $ret .= "  {$name} ";
+            if (is_null($value)) {
+                $ret .=  "= NULL\n";
+            } elseif (is_scalar($value)) {
+                $ret .=  "= {$value}\n";
+            } elseif (is_array($value)) {
+                $values = "";
+                foreach ($value as $k => $v) {
+                    is_int($k) ? $values .= "{$v}, "
+                               : $values .= "'{$k}' => {$v}, ";
+                }
+                $ret .=  "= [". trim($values, ", ") ."]\n";
+            }
+        }
+
+        $ret .= "}";
+
+        return $ret;
     }
 }

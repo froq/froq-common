@@ -32,6 +32,7 @@ use froq\common\Exception;
  * Static Class.
  *
  * Represents an uninitializable static class that forbid initializations of the extender classes.
+ * We all wish it was a part of PHP but not (RFC: http://wiki.php.net/rfc/static-classes).
  *
  * @package froq\common\objects
  * @object  froq\common\objects\StaticClass
