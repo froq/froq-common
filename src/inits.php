@@ -278,14 +278,24 @@ declare(strict_types=1);
 
     /**
      * Reduce.
-     * @param  array|object $input
-     * @param  any          $ret
-     * @param  callable     $func
+     * @param  array|object  $input
+     * @param  any           $ret
+     * @param  callable|null $func
      * @return any
      * @since  4.0
      */
-    function reduce($input, $ret = null, callable $func)
+    function reduce($input, $ret = null, callable $func = null)
     {
+        if (is_callable($ret)) {
+            // Using an array accumulator? Then swap arguments.
+            [$func, $ret] = [$ret, []];
+            foreach ($input as $key => $value) {
+                // Argument $ret must be passed with ref (eg: (&$ret, ...) => ...).
+                $func($ret, $value, $key);
+            }
+            return $ret;
+        }
+
         return array_reduce((array) $input, $func, $ret);
     }
 }
