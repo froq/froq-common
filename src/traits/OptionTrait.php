@@ -42,6 +42,18 @@ trait OptionTrait
     protected array $options = [];
 
     /**
+     * Option (set/get).
+     * @param  string   $key
+     * @param  any|null $value
+     * @return any
+     */
+    public final function option(string $key, $value = null)
+    {
+        return func_num_args() == 1 ? $this->getOption($key)
+                                    : $this->setOption($key, $value);
+    }
+
+    /**
      * Has option.
      * @param  string $key
      * @return bool

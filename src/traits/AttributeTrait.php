@@ -42,6 +42,18 @@ trait AttributeTrait
     protected array $attributes = [];
 
     /**
+     * Attribute (set/get).
+     * @param  string   $name
+     * @param  any|null $value
+     * @return any
+     */
+    public final function attribute(string $name, $value = null)
+    {
+        return func_num_args() == 1 ? $this->getAttribute($name)
+                                    : $this->setAttribute($name, $value);
+    }
+
+    /**
      * Has attribute.
      * @param  string $name
      * @return bool
