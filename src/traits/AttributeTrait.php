@@ -112,6 +112,18 @@ trait AttributeTrait
     }
 
     /**
+     * Set attributes default.
+     * @param array<string, any>|null $attributes
+     * @param array<string, any>      $attributesDefault
+     */
+    public final function setAttributesDefault(array $attributes = null, array $attributesDefault): self
+    {
+        $this->attributes = array_replace($attributesDefault, $attributes ?? []);
+
+        return $this;
+    }
+
+    /**
      * Get attributes.
      * @return array<string>|null $names
      * @return array<any>
@@ -125,7 +137,7 @@ trait AttributeTrait
 
         $values = [];
         foreach ($names as $name) {
-            $values[] = $this->attributes[$name] ?? null;
+            $values[] = $this->getAttribute($name);
         }
         return $values;
     }

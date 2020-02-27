@@ -112,6 +112,18 @@ trait OptionTrait
     }
 
     /**
+     * Set options default.
+     * @param array<string, any>|null $options
+     * @param array<string, any>      $optionsDefault
+     */
+    public final function setOptionsDefault(array $options = null, array $optionsDefault): self
+    {
+        $this->options = array_replace($optionsDefault, $options ?? []);
+
+        return $this;
+    }
+
+    /**
      * Get options.
      * @return array<string>|null $keys
      * @return array<any>
@@ -125,7 +137,7 @@ trait OptionTrait
 
         $values = [];
         foreach ($keys as $key) {
-            $values[] = $this->options[$key] ?? null;
+            $values[] = $this->getOption($key);
         }
         return $values;
     }
