@@ -109,10 +109,8 @@ class Enum
 
         foreach (self::toArray() as $name => $value) {
             $ret .= "  {$name} ";
-            if (is_null($value)) {
-                $ret .=  "= NULL\n";
-            } elseif (is_scalar($value)) {
-                $ret .=  "= {$value}\n";
+            if (is_null($value) || is_scalar($value)) {
+                $ret .=  "= ". var_export($value, true) ."\n";
             } elseif (is_array($value)) {
                 $values = "";
                 foreach ($value as $k => $v) {
