@@ -89,7 +89,7 @@ final class Registry
      */
     public static function get(string $id): object
     {
-        if (self::has($id)) {
+        if (isset(self::$stack[$id])) {
             return self::$stack[$id]['object'];
         }
 
