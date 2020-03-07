@@ -125,8 +125,7 @@ declare(strict_types=1);
 
             if ($value === null) {
                 if (($value = getenv($name)) === false) {
-                    // Try lower name.
-                    if (($value = getenv(strtolower($name))) === false) {
+                    if (($value = getenv(strtoupper($name))) === false) { // Try upper name.
                         $value = null;
                     }
                 }
