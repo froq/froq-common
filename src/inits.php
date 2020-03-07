@@ -85,13 +85,13 @@ declare(strict_types=1);
 {
     /**
      * Ini.
-     * @param  string      $name
-     * @param  string|null $value_default
-     * @param  bool        $bool
+     * @param  string   $name
+     * @param  any|null $value_default
+     * @param  bool     $bool
      * @return string|bool|null
      * @since  4.0
      */
-    function ini(string $name, string $value_default = null, bool $bool = false)
+    function ini(string $name, $value_default = null, bool $bool = false)
     {
         $value = (string) ini_get($name);
         if ($value === '') {
@@ -109,34 +109,30 @@ declare(strict_types=1);
 
     /**
      * Env.
-     * @param  string       $name
-     * @param  string|null  $value
-     * @return ?string
+     * @param  string   $name
+     * @param  any|null $value_default
+     * @return any
      * @since  4.0
      */
-    function env(string $name, string $value = null): ?string
+    function env(string $name, $value_default = null)
     {
-        if (func_num_args() == 2) { // Set.
-            $_ENV[$name] = $value;
-        } else {                    // Get.
-            // Uppers for nginx (in some cases).
-            $value = $_ENV[$name] ?? $_ENV[strtoupper($name)] ??
-                     $_SERVER[$name] ?? $_SERVER[strtoupper($name)] ?? null;
+        // Uppers for nginx (in some cases).
+        $value = $_ENV[$name] ?? $_ENV[strtoupper($name)] ??
+                 $_SERVER[$name] ?? $_SERVER[strtoupper($name)] ?? null;
 
-            if ($value === null) {
-                if (($value = getenv($name)) === false) {
-                    if (($value = getenv(strtoupper($name))) === false) { // Try upper name.
-                        $value = null;
-                    }
+        if ($value === null) {
+            if (($value = getenv($name)) === false) {
+                if (($value = getenv(strtoupper($name))) === false) {
+                    unset($value);
                 }
             }
-
-            return $value;
         }
+
+        return $value ?? $value_default;
     }
 }
 
-// Utility stuff.
+// Casting utility stuff.
 {
     /**
      * Int.
