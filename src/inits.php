@@ -295,6 +295,33 @@ declare(strict_types=1);
     }
 }
 
+// Append/prepend.
+{
+    /**
+     * Array append.
+     * @param  array &$array
+     * @param  ...    $values
+     * @return array
+     * @since  4.0
+     */
+    function append(array &$array, ...$values): array
+    {
+        return array_append($array, ...$values);
+    }
+
+    /**
+     * Array prepend.
+     * @param  array &$array
+     * @param  ...    $values
+     * @return array
+     * @since  4.0
+     */
+    function prepend(array &$array, ...$values): array
+    {
+        return array_prepend($array, ...$values);
+    }
+}
+
 // Dirty debug (dump) tools.. :(
 {
     function _ps($s) {
