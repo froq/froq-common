@@ -249,7 +249,7 @@ declare(strict_types=1);
     function filter($input, callable $func = null, $keys = null)
     {
         // Default function.
-        $func = $func ?? 'strlen';
+        $func = $func ?? fn($v) => ($v !== '' && $v !== null && $v !== []);
 
         // Object check.
         if ($check = ($input instanceof stdClass)) {
