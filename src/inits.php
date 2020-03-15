@@ -111,19 +111,26 @@ declare(strict_types=1);
      * Env.
      * @param  string   $name
      * @param  any|null $value_default
-     * @return any
+     * @param  bool     $server_lookup
+     * @return any|null
      * @since  4.0
      */
-    function env(string $name, $value_default = null)
+    function env(string $name, $value_default = null, bool $server_lookup = true)
     {
-        // Uppers for nginx (in some cases).
-        $value = $_ENV[$name] ?? $_ENV[strtoupper($name)] ??
-                 $_SERVER[$name] ?? $_SERVER[strtoupper($name)] ?? null;
+        $value = $_ENV[$name] ?? $_ENV[strtoupper($name)] ?? null;
 
         if ($value === null) {
-            if (($value = getenv($name)) === false) {
-                if (($value = getenv(strtoupper($name))) === false) {
-                    unset($value);
+            // Try with server global.
+            if ($server_lookup) {
+                $value = $_SERVER[$name] ?? $_SERVER[strtoupper($name)] ?? null;
+            }
+
+            if ($value === null) {
+                // Try with getenv() (ini variable order issue).
+                if (($value = getenv($name)) === false) {
+                    if (($value = getenv(strtoupper($name))) === false) {
+                        unset($value);
+                    }
                 }
             }
         }
