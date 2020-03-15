@@ -26,6 +26,7 @@ declare(strict_types=1);
 
 namespace froq\common\objects;
 
+use froq\common\Exception;
 use ReflectionClass;
 
 /**
@@ -48,7 +49,77 @@ class Enum
     private static array $cache;
 
     /**
-     * Get names.
+     * Value.
+     * @var any
+     */
+    protected $value;
+
+    /**
+     * Constructor.
+     *
+     * @param any $value
+     */
+    public function __construct($value)
+    {
+        $this->value = $value;
+    }
+
+    /**
+     * Provides call routines such as "$foo->isBar()", that prefixed with `is`.
+     *
+     * @param  string $name
+     * @param  array  $arguments
+     * @return bool
+     * @throws froq\common\Exception
+     */
+    public function __call($name, $arguments)
+    {
+        if (strpos($name, 'is') !== 0) {
+            throw new Exception('No valid call as "%s::%s()", call must be prefixed with "is" '.
+                'and followed by an existing constant name', [static::class, $name, __function__]);
+        }
+
+        $constants = self::toArray();
+
+        $name = strtoupper(substr($name, 2));
+        if (!array_key_exists($name, $constants)) {
+            throw new Exception('No constant exists such "%s::%s"', [static::class, $name]);
+        }
+
+        return ($this->value === $constants[$name]);
+    }
+
+    /**
+     * Provides static call routines such as "Foo::isBar()", that prefixed with `is`.
+     *
+     * @param  string $name
+     * @param  array  $arguments
+     * @return bool
+     * @throws froq\common\Exception
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        if (strpos($name, 'is') !== 0) {
+            throw new Exception('No valid call as "%s::%s()", call must be prefixed with "is" '.
+                'and followed by an existing constant name', [static::class, $name, __function__]);
+        }
+
+        $constants = self::toArray();
+
+        $name = strtoupper(substr($name, 2));
+        if (!array_key_exists($name, $constants)) {
+            throw new Exception('No constant exists such "%s::%s"', [static::class, $name]);
+        }
+        if (!array_key_exists(0, $arguments)) {
+            throw new Exception('No value given in arguments');
+        }
+
+        return ($arguments[0] === $constants[$name]);
+    }
+
+    /**
+     * Gets all constant names.
+     *
      * @return array<string>
      */
     public static final function getNames(): array
@@ -57,7 +128,8 @@ class Enum
     }
 
     /**
-     * Get values.
+     * Gets all constant values.
+     *
      * @return array<any>
      */
     public static final function getValues(): array
@@ -66,7 +138,8 @@ class Enum
     }
 
     /**
-     * Is valid name.
+     * Checks whether a name is valid or not.
+     *
      * @param  string $name
      * @return bool
      */
@@ -76,7 +149,8 @@ class Enum
     }
 
     /**
-     * Is valid value.
+     * Checks whether a value is valid or not.
+     *
      * @param  string $value
      * @param  bool   $strict
      * @return bool
@@ -87,7 +161,8 @@ class Enum
     }
 
     /**
-     * To array.
+     * Generates a array copy of defined constants with key/value pairs.
+     *
      * @return array<string, any>
      */
     public static final function toArray(): array
@@ -100,7 +175,8 @@ class Enum
     }
 
     /**
-     * To string.
+     * Generates a string copy of definer class with its constants.
+     *
      * @return string
      */
     public static final function toString(): string
