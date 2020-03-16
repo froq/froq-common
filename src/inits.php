@@ -226,6 +226,9 @@ declare(strict_types=1);
      */
     function map($input, callable $func, $keys = null)
     {
+        // Prevent null errors.
+        $input = $input ?? [];
+
         // Object check.
         if ($check = ($input instanceof stdClass)) {
             $input = (array) $input;
@@ -255,6 +258,9 @@ declare(strict_types=1);
      */
     function filter($input, callable $func = null, $keys = null)
     {
+        // Prevent null errors.
+        $input = $input ?? [];
+
         // Default function.
         $func = $func ?? fn($v) => ($v !== '' && $v !== null && $v !== []);
 
@@ -288,6 +294,9 @@ declare(strict_types=1);
      */
     function reduce($input, $ret = null, callable $func = null)
     {
+        // Prevent null errors.
+        $input = $input ?? [];
+
         if (is_callable($ret)) {
             // Using an array accumulator? Then swap arguments.
             [$func, $ret] = [$ret, []];
