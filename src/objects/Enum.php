@@ -101,7 +101,7 @@ class Enum
     {
         if (strpos($name, 'is') !== 0) {
             throw new Exception('No valid call as "%s::%s()", call must be prefixed with "is" '.
-                'and followed by an existing constant name', [static::class, $name, __function__]);
+                'and followed by an existing constant name', [static::class, $name]);
         }
 
         $constants = self::toArray();
