@@ -50,16 +50,16 @@ class Enum
 
     /**
      * Value.
-     * @var any
+     * @var any|null
      */
     protected $value;
 
     /**
      * Constructor.
      *
-     * @param any $value
+     * @param any|null $value
      */
-    public function __construct($value)
+    public function __construct($value = null)
     {
         $this->value = $value;
     }
@@ -115,6 +115,27 @@ class Enum
         }
 
         return ($arguments[0] === $constants[$name]);
+    }
+
+    /**
+     * Set value.
+     *
+     * @param  any $value
+     * @return void
+     */
+    public function setValue($value): void
+    {
+        $this->value = $value;
+    }
+
+    /**
+     * Get value.
+     *
+     * @return any|null
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 
     /**
