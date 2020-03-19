@@ -336,6 +336,18 @@ declare(strict_types=1);
     {
         return array_prepend($array, ...$values);
     }
+
+    /**
+     * Merge.
+     * @param  array  &$array
+     * @param  ...     $values
+     * @return array
+     * @since  4.0
+     */
+    function merge(array &$array, ...$values): array
+    {
+        return ($array = array_merge($array, ...array_map(fn($v) => (array) $v, $values)));
+    }
 }
 
 // Dirty debug (dump) tools.. :(
