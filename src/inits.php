@@ -339,14 +339,14 @@ declare(strict_types=1);
 
     /**
      * Merge.
-     * @param  array  &$array
-     * @param  ...     $values
+     * @param  array $array
+     * @param  ...   $values
      * @return array
      * @since  4.0
      */
-    function merge(array &$array, ...$values): array
+    function merge(array $array, ...$values): array
     {
-        return ($array = array_merge($array, ...array_map(fn($v) => (array) $v, $values)));
+        return array_merge($array, ...array_map(fn($v) => (array) $v, $values));
     }
 }
 
