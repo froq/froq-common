@@ -85,6 +85,41 @@ trait ThrowableTrait
     }
 
     /**
+     * Gets the class of.
+     *
+     * @return string
+     */
+    public function getClass(): string
+    {
+        return get_class($this);
+    }
+
+    /**
+     * Gets the trace string of (alias for getTraceAsString()).
+     *
+     * @return string
+     */
+    public function getTraceString(): string
+    {
+        return $this->getTraceAsString();
+    }
+
+    /**
+     * Gets a string representation of.
+     *
+     * @return string
+     */
+    public function toString(): string
+    {
+        return sprintf(
+            "%s(%d): %s at %s:%s\n%s", get_class($this),
+            $this->code, $this->message,
+            $this->file, $this->line,
+            $this->getTraceAsString()
+        );
+    }
+
+    /**
      * Gets last internal error if exists.
      *
      * @return array<string, string|int>
