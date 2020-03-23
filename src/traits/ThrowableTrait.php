@@ -112,27 +112,11 @@ trait ThrowableTrait
     public function toString(): string
     {
         return sprintf(
-            "%s(%d): %s at %s:%s\n%s", get_class($this),
+            "%s(%d): %s at %s:%s\n%s", $this->getClass(),
             $this->code, $this->message,
             $this->file, $this->line,
             $this->getTraceAsString()
         );
-    }
-
-    /**
-     * Gets last internal error if exists.
-     *
-     * @return array<string, string|int>
-     */
-    public static final function getLastError(): array
-    {
-        // Better calling when sure there is an error happened.
-        $error = error_get_last();
-
-        return [
-            'code'    => $error['type'] ?? null,
-            'message' => strtolower($error['message'] ?? 'unknown')
-        ];
     }
 
     /**
@@ -153,5 +137,21 @@ trait ThrowableTrait
     public function isException(): bool
     {
         return ($this instanceof Exception);
+    }
+
+    /**
+     * Gets last internal error if exists.
+     *
+     * @return array<string, string|int>
+     */
+    public static final function getLastError(): array
+    {
+        // Better calling when sure there is an error happened.
+        $error = error_get_last();
+
+        return [
+            'code'    => $error['type'] ?? null,
+            'message' => strtolower($error['message'] ?? 'unknown')
+        ];
     }
 }
