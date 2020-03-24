@@ -65,6 +65,16 @@ class Enum
     }
 
     /**
+     * Get value as string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return ''. $this->value;
+    }
+
+    /**
      * Provides call routines such as "$foo->isBar()", that prefixed with `is`.
      *
      * @param  string $name
