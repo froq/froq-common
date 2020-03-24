@@ -85,6 +85,18 @@ trait ThrowableTrait
     }
 
     /**
+     * String magic.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        // Eg: Exception: ... => Exception(404): ...
+        return preg_replace('~^(.+?): *(.+)~', '\1('. $this->code .'): \2',
+            parent::__toString());
+    }
+
+    /**
      * Gets the class of.
      *
      * @return string
