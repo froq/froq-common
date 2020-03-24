@@ -143,73 +143,73 @@ declare(strict_types=1);
 {
     /**
      * Int.
-     * @param  numeric $input
+     * @param  numeric $in
      * @return int
      * @since  3.0
      */
-    function int($input): int
+    function int($in): int
     {
-        return (int) $input;
+        return (int) $in;
     }
 
     /**
      * Float.
-     * @param  numeric  $input
+     * @param  numeric  $in
      * @param  int|null $precision
      * @return float
      * @since  3.0
      */
-    function float($input, int $precision = null): float
+    function float($in, int $precision = null): float
     {
-        return !$precision ? (float) $input : round((float) $input, $precision);
+        return !$precision ? (float) $in : round((float) $in, $precision);
     }
 
     /**
      * String.
-     * @param  scalar $input
+     * @param  scalar $in
      * @param  bool   $trim
      * @return string
      * @since  3.0
      */
-    function string($input, bool $trim = false): string
+    function string($in, bool $trim = false): string
     {
-        return !$trim ? (string) $input : trim((string) $input);
+        return !$trim ? (string) $in : trim((string) $in);
     }
 
     /**
      * Bool.
-     * @param  scalar $input
+     * @param  scalar $in
      * @return bool
      * @since  3.0
      */
-    function bool($input): bool
+    function bool($in): bool
     {
-        return (bool) $input;
+        return (bool) $in;
     }
 
     // function array(): array {} // :(
 
     /**
      * Object.
-     * @param  object|array|null $input
+     * @param  object|array|null $in
      * @return object
      * @since  3.0
      */
-    function object($input = null): object
+    function object($in = null): object
     {
-        return (object) $input;
+        return (object) $in;
     }
 
     /**
      * Void.
-     * @param  any &...$inputs
+     * @param  any &...$ins
      * @return void
      * @since  3.0
      */
-    function void(&...$inputs): void
+    function void(&...$ins): void
     {
-        foreach ($inputs as &$input) {
-            $input = null;
+        foreach ($ins as &$in) {
+            $in = null;
         }
     }
 }
@@ -218,103 +218,107 @@ declare(strict_types=1);
 {
     /**
      * Map.
-     * @param  array|object $input
+     * @param  array|object $in
      * @param  callable     $func
      * @param  array|string $keys
      * @return array|object
      * @since  3.0
      */
-    function map($input, callable $func, $keys = null)
+    function map($in, callable $func, $keys = null)
     {
         // Prevent null errors.
-        $input = $input ?? [];
+        $in = $in ?? [];
 
         // Object check.
-        if ($check = ($input instanceof stdClass)) {
-            $input = (array) $input;
+        if ($check = ($in instanceof stdClass)) {
+            $in = (array) $in;
         }
 
-        if ($keys === null) {
-            $input = array_map($func, $input);
+        if (is_null($keys)) {
+            $out = array_map($func, $in);
         } else {
-            // Use key,value notation.
-            $keys = ($keys == '*') ? array_keys($input) : $keys;
-            foreach ($input as $key => $value) {
+            $out = [];
+            // Use key,value notation ('*' or true).
+            $keys = ($keys == '*') ? array_keys($in) : $keys;
+            foreach ($in as $key => $value) {
                 in_array($key, $keys, true)
-                    && $input[$key] = $func($key, $value);
+                    && $out[$key] = $func($key, $value);
             }
         }
 
-        return $check ? (object) $input : $input;
+        return $check ? (object) $out : $out;
     }
 
     /**
      * Filter.
-     * @param  array|object $input
+     * @param  array|object $in
      * @param  callable     $func
      * @param  array|string $keys
      * @return array|object
      * @since  3.0
      */
-    function filter($input, callable $func = null, $keys = null)
+    function filter($in, callable $func = null, $keys = null)
     {
         // Prevent null errors.
-        $input = $input ?? [];
+        $in = $in ?? [];
 
         // Default function.
         $func = $func ?? fn($v) => ($v !== '' && $v !== null && $v !== []);
 
         // Object check.
-        if ($check = ($input instanceof stdClass)) {
-            $input = (array) $input;
+        if ($check = ($in instanceof stdClass)) {
+            $in = (array) $in;
         }
 
-        if ($keys === null) {
-            $input = array_filter($input, $func);
+        if (is_null($keys)) {
+            $out = array_filter($in, $func);
         } else {
-            // Use key,value notation.
-            $keys = ($keys == '*') ? array_keys($input) : $keys;
-            foreach ($input as $key => $value) {
+            $out = [];
+            // Use key,value notation ('*' or true).
+            $keys = ($keys == '*') ? array_keys($in) : $keys;
+            foreach ($in as $key => $value) {
                 in_array($key, $keys, true)
                     && $func($key, $value)
-                        && $input[$key] = $value;
+                        && $out[$key] = $value;
             }
         }
 
-        return $check ? (object) $input : $input;
+        return $check ? (object) $out : $out;
     }
 
     /**
      * Reduce.
-     * @param  array|object  $input
+     * @param  array|object  $in
      * @param  any           $ret
      * @param  callable|null $func
      * @return any
      * @since  4.0
      */
-    function reduce($input, $ret = null, callable $func = null)
+    function reduce($in, $ret = null, callable $func = null)
     {
         // Prevent null errors.
-        $input = $input ?? [];
+        $in = $in ?? [];
 
         if (is_callable($ret)) {
             // Using an array accumulator? Then swap arguments.
             [$func, $ret] = [$ret, []];
-            foreach ($input as $key => $value) {
+
+            foreach ($in as $key => $value) {
                 // Argument $ret must be passed with ref (eg: (&$ret, ...) => ...).
                 $func($ret, $value, $key);
             }
+
             return $ret;
         }
 
-        return array_reduce((array) $input, $func, $ret);
+        return array_reduce((array) $in, $func, $ret);
     }
 }
 
-// Append/prepend.
+// Append/prepend/merge.
 {
     /**
-     * Array append.
+     * Append.
      * @param  array &$array
      * @param  ...    $values
      * @return array
@@ -326,7 +330,7 @@ declare(strict_types=1);
     }
 
     /**
-     * Array prepend.
+     * Prepend.
      * @param  array &$array
      * @param  ...    $values
      * @return array
