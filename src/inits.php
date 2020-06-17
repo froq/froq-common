@@ -242,7 +242,7 @@ declare(strict_types=1);
             $keys = ($keys == '*') ? array_keys($in) : $keys;
             foreach ($in as $key => $value) {
                 in_array($key, $keys, true)
-                    && $out[$key] = $func($key, $value);
+                    && $out[$key] = $func($value, $key);
             }
         }
 
@@ -278,7 +278,7 @@ declare(strict_types=1);
             $keys = ($keys == '*') ? array_keys($in) : $keys;
             foreach ($in as $key => $value) {
                 in_array($key, $keys, true)
-                    && $func($key, $value)
+                    && $func($value, $key)
                         && $out[$key] = $value;
             }
         }
