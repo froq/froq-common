@@ -107,7 +107,7 @@ trait ThrowableTrait
     }
 
     /**
-     * Gets the trace string of (alias for getTraceAsString()).
+     * Gets the trace string of (alias of getTraceAsString()).
      *
      * @return string
      */
@@ -119,15 +119,33 @@ trait ThrowableTrait
     /**
      * Gets a string representation of.
      *
+     * @param  bool $pretty
      * @return string
      */
-    public function toString(): string
+    public function toString(bool $pretty = false): string
     {
+        [$class, $code, $line, $file, $message, $messageTrace] = [
+            $this->getClass(), $this->code, $this->line, $this->file,
+            $this->getMessage(), $this->getTraceString()
+        ];
+
+        if ($pretty) {
+            $file = str_replace('.php', '', $file);
+            $class = str_replace('\\', '.', $class);
+
+            // Change dotable stuffs and remove php extensions.
+            $message = preg_replace('~(\w)(?:\\\|::|->)(\w)~',
+                '\1.\2', $message);
+            $messageTrace = preg_replace_callback('~(?:\.php[(]|(?:\\\|::|->))~',
+                fn($m) => ($m[0] == '.php(') ? '(' : '.', $messageTrace);
+        }
+
         return sprintf(
-            "%s(%d): %s at %s:%s\n%s", $this->getClass(),
-            $this->code, $this->message,
-            $this->file, $this->line,
-            $this->getTraceAsString()
+            "%s\n%s\n\n%s(%d): %s at %s:%d\n-\n%s",
+            sprintf("%s.", trim($message, '.')),
+            sprintf("Code: %d | Line: %d | File: %s", $code, $line, $file),
+            $class, $code, $message,
+            $file, $line, $messageTrace
         );
     }
 
