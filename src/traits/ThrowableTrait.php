@@ -40,12 +40,12 @@ trait ThrowableTrait
     /**
      * Constructor.
      *
-     * @param string|Throwable $message
-     * @param array|null       $messageParams
-     * @param int|null         $code
-     * @param Throwable|null   $previous
+     * @param string|Throwable  $message
+     * @param string|array|null $messageParams
+     * @param int|null          $code
+     * @param Throwable|null    $previous
      */
-    public function __construct($message = null, array $messageParams = null, int $code = null,
+    public function __construct($message = null, $messageParams = null, int $code = null,
         Throwable $previous = null)
     {
         if ($message) {
@@ -59,6 +59,7 @@ trait ThrowableTrait
                 }
                 // Eg: throw new Exception('Error: %s', ['@error']).
                 elseif ($message && $messageParams) {
+                    $messageParams = (array) $messageParams;
                     foreach ($messageParams as $i => $messageParam) {
                         if ($messageParam === '@error') {
                             $error             = self::getLastError();

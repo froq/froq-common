@@ -48,9 +48,7 @@ trait SingletonTrait
      */
     public static final function init(...$arguments): self
     {
-        return self::$instance ?? (
-               self::$instance = new self(...$arguments)
-        );
+        return self::$instance ?? (self::$instance = new self(...$arguments));
     }
 
     /**
