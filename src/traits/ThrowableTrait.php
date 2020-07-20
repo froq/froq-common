@@ -135,8 +135,8 @@ trait ThrowableTrait
             $class = str_replace('\\', '.', $class);
 
             // Change dotable stuffs and remove php extensions.
-            $message = preg_replace('~(\w)(?:\\\|::|->)(\w)~',
-                '\1.\2', $message);
+            $message = preg_replace(['~(\w)(?:\\\|::|->)(\w)~', '~\.php~'],
+                ['\1.\2', ''], $message);
             $messageTrace = preg_replace_callback('~(?:\.php[(]|(?:\\\|::|->))~',
                 fn($m) => ($m[0] == '.php(') ? '(' : '.', $messageTrace);
         }
