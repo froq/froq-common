@@ -182,11 +182,11 @@ class Enum
     /**
      * Checks whether a value is valid or not.
      *
-     * @param  string $value
-     * @param  bool   $strict
+     * @param  any  $value
+     * @param  bool $strict
      * @return bool
      */
-    public static final function isValidValue(string $value, bool $strict = true): bool
+    public static final function isValidValue($value, bool $strict = true): bool
     {
         return in_array($value, self::getValues(), $strict);
     }
