@@ -114,6 +114,24 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
     }
 
     /**
+     * Set data default.
+     * @param array $default
+     * @param bool  $nullCheck
+     * @since 4.1
+     */
+    public function setDataDefault(array $default, bool $nullCheck = true): self
+    {
+        foreach ($default as $key => $value) {
+            $ok = $nullCheck ? isset($this->data[$key])
+                             : array_key_exists($key, $this->data);
+            // Set default if not ok.
+            $ok || $this->data[$key] = $value;
+        }
+
+        return $this;
+    }
+
+    /**
      * Copy.
      * @return self (static)
      */
