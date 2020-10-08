@@ -115,8 +115,9 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
 
     /**
      * Set data default.
-     * @param array $default
-     * @param bool  $nullCheck
+     * @param  array $default
+     * @param  bool  $nullCheck
+     * @return self (static)
      * @since 4.1
      */
     public function setDataDefault(array $default, bool $nullCheck = true): self
@@ -182,7 +183,7 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
     /**
      * Each.
      * @param  callable $func
-     * @return self
+     * @return self (static)
      */
     public function each(callable $func): self
     {
@@ -225,7 +226,7 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
     /**
      * Reduce.
      * @param  callable $func
-     * @return self
+     * @return self (static)
      */
     public function reduce(callable $func): self
     {
