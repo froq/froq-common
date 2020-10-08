@@ -95,11 +95,18 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
     /**
      * Set data.
      * @param  array $data
+     * @param  bool  $override
      * @return self (static)
      */
-    public function setData(array $data): self
+    public function setData(array $data, bool $override = true): self
     {
-        $this->data = $data;
+        if ($override) {
+            $this->data = $data;
+        } else {
+            foreach ($data as $key => $value) {
+                $this->data[$key] = $value;
+            }
+        }
 
         return $this;
     }
