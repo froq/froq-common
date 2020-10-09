@@ -261,7 +261,6 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
         return array_reduce($this->data, $func, $value);
     }
 
-
     /**
      * @inheritDoc froq\common\interfaces\Arrayable
      */
