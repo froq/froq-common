@@ -252,11 +252,11 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
 
     /**
      * Reduce value.
-     * @param  any|null $value
+     * @param  any      $value
      * @param  callable $func
      * @return any
      */
-    public function reduceValue($value = null, callable $func)
+    public function reduceValue($value, callable $func)
     {
         return array_reduce($this->data, $func, $value);
     }
