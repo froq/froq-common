@@ -214,7 +214,10 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
         return !$useKeys
             ? new static(array_map($func, $this->data))
             // Preserving keys (assoc keys will be corrupted with array_map()).
-            : new static(array_combine($keys = array_keys($this->data), array_map($func, $this->data, $keys)));
+            : new static(array_combine(
+                $keys = array_keys($this->data),
+                array_map($func, $this->data, $keys)
+            ));
     }
 
     /**
