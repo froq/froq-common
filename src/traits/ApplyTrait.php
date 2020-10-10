@@ -51,6 +51,7 @@ trait ApplyTrait
         if (!$func instanceof Closure) {
             $func = Closure::fromCallable($func);
         }
+
         $func->bindTo($this)->call($this);
 
         return $this;

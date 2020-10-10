@@ -194,8 +194,6 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
      */
     public function each(callable $func): self
     {
-        $func = $func->bindTo($this, $this);
-
         foreach ($this->data as $key => $value) {
             $func($value, $key);
         }
@@ -204,61 +202,74 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
     }
 
     /**
+     * Apply.
+     * @param  callable $func
+     * @return self (static)
+     * @since  4.2
+     */
+    public function apply(callable $func): self
+    {
+        $data = [];
+
+        foreach ($this->data as $key => $value) {
+            // Argument $value must be passed with ref (eg: (&$value, ...) ...),
+            // so "return ..." not used, but just modifing value.
+            $func($value, $key, $this->data);
+
+            $data[$key] = $value;
+        }
+
+        return $this->setData($data);
+    }
+
+    /**
      * Map.
      * @param  callable $func
-     * @param  bool     $useKeys
      * @return self (static)
      */
-    public function map(callable $func, bool $useKeys = false): self
+    public function map(callable $func): self
     {
-        return !$useKeys
-            ? new static(array_map($func, $this->data))
-            // Preserving keys (assoc keys will be corrupted with array_map()).
-            : new static(array_combine(
-                $keys = array_keys($this->data),
-                array_map($func, $this->data, $keys)
-            ));
+        $data = [];
+
+        foreach ($this->data as $key => $value) {
+            $data[$key] = $func($value, $key, $this->data);
+        }
+
+        return $this->setData($data);
     }
 
     /**
      * Filter.
      * @param  callable $func
-     * @param  bool     $useKeys
+     * @param  bool     $keepKeys
      * @return self (static)
      */
-    public function filter(callable $func, bool $useKeys = false): self
+    public function filter(callable $func, bool $keepKeys = true): self
     {
-        return !$useKeys
-            ? new static(array_filter($this->data, $func))
-            : new static(array_filter($this->data, $func, 1));
+        $data = [];
+
+        foreach ($this->data as $key => $value) {
+            $func($value, $key, $this->data) && (
+                $keepKeys ? $data[$key] = $value : $data[] = $value
+            );
+        }
+
+        return $this->setData($data);
     }
 
     /**
      * Reduce.
-     * @param  callable $func
-     * @return self (static)
-     */
-    public function reduce(callable $func): self
-    {
-        $data = []; // Actually an accumulator.
-
-        foreach ($this->data as $key => $value) {
-            // Argument $data must be passed with ref (eg: (&$data, ...) => ...).
-            $func($data, $value, $key);
-        }
-
-        return new static($data);
-    }
-
-    /**
-     * Reduce value.
-     * @param  any      $value
+     * @param  any      $accumulator
      * @param  callable $func
      * @return any
      */
-    public function reduceValue($value, callable $func)
+    public function reduce($accumulator, callable $func)
     {
-        return array_reduce($this->data, $func, $value);
+        foreach ($this->data as $key => $value) {
+            $accumulator = $func($accumulator, $value, $key, $this->data);
+        }
+
+        return $accumulator;
     }
 
     /**
