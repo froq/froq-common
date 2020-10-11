@@ -52,8 +52,10 @@ final class Factory
      */
     public static function init(string $class, ...$classArgs): object
     {
-        if ($class == '') {
+        if (!$class) {
             throw new Exception('Empty class name given');
+        } elseif (!class_exists($class)) {
+            throw new Exception('Non-existent class name given');
         }
 
         return new $class(...$classArgs);
@@ -68,8 +70,10 @@ final class Factory
      */
     public static function initSingle(string $class, ...$classArgs): object
     {
-        if ($class == '') {
+        if (!$class) {
             throw new Exception('Empty class name given');
+        } elseif (!class_exists($class)) {
+            throw new Exception('Non-existent class name given');
         }
 
         return self::$instances[$class] ??= new $class(...$classArgs);
