@@ -72,8 +72,6 @@ final class Factory
             throw new Exception('Empty class name given');
         }
 
-        return self::$instances[$class] ?? (
-               self::$instances[$class] = new $class(...$classArgs)
-        );
+        return self::$instances[$class] ??= new $class(...$classArgs);
     }
 }
