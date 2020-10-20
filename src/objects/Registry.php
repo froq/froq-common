@@ -84,17 +84,12 @@ final class Registry
     /**
      * Get.
      * @param  string $id
-     * @return object
+     * @return ?object
      * @throws froq\common\Exception
      */
-    public static function get(string $id): object
+    public static function get(string $id): ?object
     {
-        if (isset(self::$stack[$id])) {
-            return self::$stack[$id]['object'];
-        }
-
-        throw new Exception('No object exists with "%s" id in registry, call has() if you want '.
-            'to prevent this exception', [$id]);
+        return self::$stack[$id]['object'] ?? null;
     }
 
     /**
