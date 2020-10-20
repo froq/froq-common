@@ -24,27 +24,25 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\objects;
+namespace froq\common\traits;
 
-use froq\common\traits\StaticClassTrait;
+use froq\common\Exception;
 
 /**
- * Static Class.
- *
- * Represents an uninitializable static class that forbid initializations of the extender classes.
- * We all wish it was a part of PHP but not (RFC: http://wiki.php.net/rfc/static-classes).
- *
- * @package froq\common\objects
- * @object  froq\common\objects\StaticClass
+ * Static Class Trait.
+ * @package froq\common\traits
+ * @object  froq\common\traits\StaticClassTrait
  * @author  Kerem Güneş <k-gun@mail.com>
- * @since   4.0
- * @static  Not abstract'ed, letting the exception in constructor.
+ * @since   4.3
  */
-class StaticClass
+trait StaticClassTrait
 {
     /**
-     * Static class trait.
-     * @see froq\common\traits\StaticClassTrait
+     * Constructor.
+     * @throws froq\common\Exception
      */
-    use StaticClassTrait;
+    public final function __construct()
+    {
+        throw new Exception('Cannot initialize static class "%s"', [static::class]);
+    }
 }
