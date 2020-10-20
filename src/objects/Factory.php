@@ -55,7 +55,7 @@ final class Factory
         if (!$class) {
             throw new Exception('Empty class name given');
         } elseif (!class_exists($class)) {
-            throw new Exception('Non-existent class name given');
+            throw new Exception('Non-existent class name "%s" given', [$class]);
         }
 
         return new $class(...$classArgs);
@@ -73,7 +73,7 @@ final class Factory
         if (!$class) {
             throw new Exception('Empty class name given');
         } elseif (!class_exists($class)) {
-            throw new Exception('Non-existent class name given');
+            throw new Exception('Non-existent class name "%s" given', [$class]);
         }
 
         return self::$instances[$class] ??= new $class(...$classArgs);
