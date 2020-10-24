@@ -27,6 +27,7 @@ declare(strict_types=1);
 namespace froq\common\objects;
 
 use froq\common\interfaces\{Arrayable, Objectable, Jsonable, Yieldable};
+use froq\util\Arrays;
 use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
 
 /**
@@ -224,19 +225,13 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
 
     /**
      * Filter.
-     * @param  callable $func
-     * @param  bool     $keepKeys
+     * @param  callable|null $func
+     * @param  bool          $keepKeys
      * @return self (static)
      */
-    public function filter(callable $func, bool $keepKeys = true): self
+    public function filter(callable $func = null, bool $keepKeys = true): self
     {
-        $data = [];
-
-        foreach ($this->data as $key => $value) {
-            $func($value, $key, $this->data) && (
-                $keepKeys ? $data[$key] = $value : $data[] = $value
-            );
-        }
+        $data = Arrays::filter($this->data, $func, $keepKeys);
 
         return $this->setData($data);
     }
@@ -248,28 +243,32 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
      */
     public function map(callable $func): self
     {
-        $data = [];
-
-        foreach ($this->data as $key => $value) {
-            $data[$key] = $func($value, $key, $this->data);
-        }
+        $data = Arrays::map($this->data, $func);
 
         return $this->setData($data);
     }
 
     /**
      * Reduce.
-     * @param  any      $accumulator
+     * @param  any      $carry
      * @param  callable $func
      * @return any
      */
-    public function reduce($accumulator, callable $func)
+    public function reduce($carry, callable $func)
     {
-        foreach ($this->data as $key => $value) {
-            $accumulator = $func($accumulator, $value, $key, $this->data);
-        }
+        return Arrays::reduce($this->data, $carry, $func);
+    }
 
-        return $accumulator;
+    /**
+     * Aggregate.
+     * @param  callable   $func
+     * @param  array|null $carry
+     * @return array
+     * @since  4.5
+     */
+    public function aggregate(callable $func, array $carry = null): array
+    {
+        return Arrays::aggregate($this->data, $func, $carry);
     }
 
     /**
