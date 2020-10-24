@@ -223,22 +223,6 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
     }
 
     /**
-     * Map.
-     * @param  callable $func
-     * @return self (static)
-     */
-    public function map(callable $func): self
-    {
-        $data = [];
-
-        foreach ($this->data as $key => $value) {
-            $data[$key] = $func($value, $key, $this->data);
-        }
-
-        return $this->setData($data);
-    }
-
-    /**
      * Filter.
      * @param  callable $func
      * @param  bool     $keepKeys
@@ -252,6 +236,22 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
             $func($value, $key, $this->data) && (
                 $keepKeys ? $data[$key] = $value : $data[] = $value
             );
+        }
+
+        return $this->setData($data);
+    }
+
+    /**
+     * Map.
+     * @param  callable $func
+     * @return self (static)
+     */
+    public function map(callable $func): self
+    {
+        $data = [];
+
+        foreach ($this->data as $key => $value) {
+            $data[$key] = $func($value, $key, $this->data);
         }
 
         return $this->setData($data);
