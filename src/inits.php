@@ -47,10 +47,10 @@ declare(strict_types=1);
     /**
      * Get global.
      * @param  string   $key
-     * @param  any|null $value_default
+     * @param  any|null $default
      * @return any|null
      */
-    function get_global(string $key, $value_default = null)
+    function get_global(string $key, $default = null)
     {
         if ($key === '*') { // All.
             $value = $GLOBALS['@froq'];
@@ -64,7 +64,7 @@ declare(strict_types=1);
             }
             $value = $values;
         } else { // Sub only (eg: "foo" or "foo.bar").
-            $value = $GLOBALS['@froq'][$key] ?? $value_default;
+            $value = $GLOBALS['@froq'][$key] ?? $default;
         }
         return $value;
     }
@@ -86,16 +86,16 @@ declare(strict_types=1);
     /**
      * Ini.
      * @param  string   $name
-     * @param  any|null $value_default
+     * @param  any|null $default
      * @param  bool     $bool
      * @return string|bool|null
      * @since  4.0
      */
-    function ini(string $name, $value_default = null, bool $bool = false)
+    function ini(string $name, $default = null, bool $bool = false)
     {
         $value = (string) ini_get($name);
         if ($value === '') {
-            $value = $value_default;
+            $value = $default;
         }
 
         static $bools = ['on', 'yes', 'true', '1'];
@@ -110,12 +110,12 @@ declare(strict_types=1);
     /**
      * Env.
      * @param  string   $name
-     * @param  any|null $value_default
+     * @param  any|null $default
      * @param  bool     $server_lookup
      * @return any|null
      * @since  4.0
      */
-    function env(string $name, $value_default = null, bool $server_lookup = true)
+    function env(string $name, $default = null, bool $server_lookup = true)
     {
         $value = $_ENV[$name] ?? $_ENV[strtoupper($name)] ?? null;
 
@@ -135,7 +135,7 @@ declare(strict_types=1);
             }
         }
 
-        return $value ?? $value_default;
+        return $value ?? $default;
     }
 }
 
