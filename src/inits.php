@@ -298,7 +298,7 @@ declare(strict_types=1);
     {
         return !is_array($out)
              ? array_reduce((array) $in, $func, $out)
-             : array_aggregate((array) $in, $func, $out)
+             : array_aggregate((array) $in, $func, $out);
     }
 }
 
