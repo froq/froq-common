@@ -296,9 +296,9 @@ declare(strict_types=1);
      */
     function reduce($in, $out = null, callable $func = null)
     {
-        return is_array($out)
-             ? array_agg((array) $in, $func, $out)
-             : array_reduce((array) $in, $func, $out);
+        return !is_array($out)
+             ? array_reduce((array) $in, $func, $out)
+             : array_aggregate((array) $in, $func, $out)
     }
 }
 
@@ -350,7 +350,7 @@ declare(strict_types=1);
      */
     function aggregate(array $array, callable $func, array $carry = null): array
     {
-        return array_agg($array, $func, $carry);
+        return array_aggregate($array, $func, $carry);
     }
 }
 
