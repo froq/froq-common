@@ -339,6 +339,19 @@ declare(strict_types=1);
     {
         return array_merge($array, ...array_map(fn($v) => (array) $v, $values));
     }
+
+    /**
+     * Aggregate.
+     * @param  array      $array
+     * @param  callable   $func
+     * @param  array|null $carry
+     * @return array
+     * @since  4.4
+     */
+    function aggregate(array $array, callable $func, array $carry = null): array
+    {
+        return array_agg($array, $func, $carry);
+    }
 }
 
 // Dirty debug (dump) tools.. :(
