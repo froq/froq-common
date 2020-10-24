@@ -230,7 +230,7 @@ declare(strict_types=1);
         $in = $in ?? [];
 
         // Default function.
-        $func = $func ?? fn($v) => ($v !== '' && $v !== null && $v !== []);
+        $func = $func ?? fn($v) => $v !== null && $v !== '' && $v !== [];
 
         // Object check.
         if ($check = ($in instanceof stdClass)) {
@@ -289,29 +289,16 @@ declare(strict_types=1);
     /**
      * Reduce.
      * @param  array|object  $in
-     * @param  any           $ret
+     * @param  any           $out
      * @param  callable|null $func
      * @return any
      * @since  4.0
      */
-    function reduce($in, $ret = null, callable $func = null)
+    function reduce($in, $out = null, callable $func = null)
     {
-        // Prevent null errors.
-        $in = $in ?? [];
-
-        if (is_callable($ret)) {
-            // Using an array accumulator? Then swap arguments.
-            [$func, $ret] = [$ret, []];
-
-            foreach ($in as $key => $value) {
-                // Argument $ret must be passed with ref (eg: (&$ret, ...) => ...).
-                $func($ret, $value, $key);
-            }
-
-            return $ret;
-        }
-
-        return array_reduce((array) $in, $func, $ret);
+        return is_array($out)
+             ? array_agg((array) $in, $func, $out)
+             : array_reduce((array) $in, $func, $out);
     }
 }
 
