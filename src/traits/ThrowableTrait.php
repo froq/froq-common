@@ -48,7 +48,7 @@ trait ThrowableTrait
     public function __construct($message = null, $messageParams = null, int $code = null,
         Throwable $previous = null)
     {
-        if ($message) {
+        if ($message != null) {
             if (is_string($message)) {
                 // Eg: throw new Exception('@error').
                 if ($message === '@error') {
@@ -57,9 +57,12 @@ trait ThrowableTrait
                     $messageParams = [$error['message']];
                     $message = vsprintf('Error: %s', $messageParams);
                 }
-                // Eg: throw new Exception('Error: %s', ['@error']).
-                elseif ($message && $messageParams) {
+                // Eg: throw new Exception('Error: %s', ['The error!'] or ['@error']).
+                elseif ($messageParams) {
+                    $message = preg_replace_callback('~["\']?%s["\']?~',
+                        fn($s) => "'". trim($s[0], '"\'') ."'", $message);
                     $messageParams = (array) $messageParams;
+
                     foreach ($messageParams as $i => $messageParam) {
                         if ($messageParam === '@error') {
                             $error             = self::getLastError();
@@ -68,6 +71,7 @@ trait ThrowableTrait
                             break;
                         }
                     }
+
                     $message = vsprintf($message, $messageParams);
                 }
             } elseif (is_object($message) && $message instanceof Throwable) {
