@@ -227,10 +227,10 @@ declare(strict_types=1);
     function filter($in, callable $func = null, $keys = null)
     {
         // Prevent null errors.
-        $in = $in ?? [];
+        $in ??= [];
 
         // Default function.
-        $func = $func ?? fn($v) => $v !== null && $v !== '' && $v !== [];
+        $func ??= fn($v) => $v !== null && $v !== '' && $v !== [];
 
         // Object check.
         if ($check = ($in instanceof stdClass)) {
@@ -264,7 +264,7 @@ declare(strict_types=1);
     function map($in, callable $func, $keys = null)
     {
         // Prevent null errors.
-        $in = $in ?? [];
+        $in ??= [];
 
         // Object check.
         if ($check = ($in instanceof stdClass)) {
