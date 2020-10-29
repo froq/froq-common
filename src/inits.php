@@ -218,91 +218,75 @@ declare(strict_types=1);
 {
     /**
      * Filter.
-     * @param  array|object $in
+     * @param  array        $array
      * @param  callable     $func
      * @param  array|string $keys
-     * @return array|object
+     * @return array
      * @since  3.0
      */
-    function filter($in, callable $func = null, $keys = null)
+    function filter(array $array, callable $func = null, $keys = null)
     {
-        // Prevent null errors.
-        $in ??= [];
-
         // Default function.
         $func ??= fn($v) => $v !== null && $v !== '' && $v !== [];
 
-        // Object check.
-        if ($check = ($in instanceof stdClass)) {
-            $in = (array) $in;
-        }
-
         if (is_null($keys)) {
-            $out = array_filter($in, $func);
+            $ret = array_filter($array, $func);
         } else {
-            $out = [];
+            $ret = []; $i = 0;
             // Use key,value notation ('*' or true).
-            $keys = ($keys == '*') ? array_keys($in) : $keys;
-            foreach ($in as $key => $value) {
+            $keys = ($keys == '*') ? array_keys($array) : $keys;
+            foreach ($array as $key => $value) {
                 in_array($key, $keys, true)
-                    && $func($value, $key)
-                        && $out[$key] = $value;
+                    && $func($value, $key, $i++)
+                        && $ret[$key] = $value;
             }
         }
 
-        return $check ? (object) $out : $out;
+        return $ret;
     }
 
     /**
      * Map.
-     * @param  array|object $in
+     * @param  array        $array
      * @param  callable     $func
      * @param  array|string $keys
-     * @return array|object
+     * @return array
      * @since  3.0
      */
-    function map($in, callable $func, $keys = null)
+    function map(array $array, callable $func, $keys = null)
     {
-        // Prevent null errors.
-        $in ??= [];
-
-        // Object check.
-        if ($check = ($in instanceof stdClass)) {
-            $in = (array) $in;
-        }
-
         if (is_null($keys)) {
-            $out = array_map($func, $in);
+            $ret = array_map($func, $array);
         } else {
-            $out = [];
+            $ret = []; $i = 0;
             // Use key,value notation ('*' or true).
-            $keys = ($keys == '*') ? array_keys($in) : $keys;
-            foreach ($in as $key => $value) {
+            $keys = ($keys == '*') ? array_keys($array) : $keys;
+            foreach ($array as $key => $value) {
                 in_array($key, $keys, true)
-                    && $out[$key] = $func($value, $key);
+                    && $array[$key] = $func($value, $key, $i++);
             }
         }
 
-        return $check ? (object) $out : $out;
+        return $ret;
     }
 
     /**
      * Reduce.
-     * @param  array|object  $in
+     * @param  array         $array
      * @param  any           $out
      * @param  callable|null $func
      * @return any
      * @since  4.0
      */
-    function reduce($in, $out = null, callable $func = null)
+    function reduce(array $array, $out = null, callable $func = null)
     {
         return !is_array($out)
-             ? array_reduce((array) $in, $func, $out)
-             : array_aggregate((array) $in, $func, $out);
+             ? array_reduce($array, $func, $out)
+             : array_aggregate($array, $func, $out);
     }
 }
 
-// Append/prepend/merge.
+// Append/prepend/merge/aggregate.
 {
     /**
      * Append.
