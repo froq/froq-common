@@ -59,7 +59,8 @@ trait ThrowableTrait
                 }
                 // Eg: throw new Exception('Error: %s', ['The error!'] or ['@error']).
                 elseif ($messageParams) {
-                    $message = preg_replace_callback('~["\']%s["\']~',
+                    // @todo: Remove at version 5.0 (change "%s" => '%s').
+                    $message = preg_replace_callback('~["\'](%s|%s::%s)["\']~',
                         fn($s) => "'". trim($s[0], '"\'') ."'", $message);
                     $messageParams = (array) $messageParams;
 
