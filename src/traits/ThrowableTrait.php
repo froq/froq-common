@@ -113,6 +113,23 @@ trait ThrowableTrait
     }
 
     /**
+     * Gets the type of.
+     *
+     * @param  bool $short
+     * @return string
+     */
+    public function getType(bool $short = false): string
+    {
+        $type = $this->getClass();
+
+        if ($short && ($pos = strrpos($type, '\\'))) {
+            $type = substr($type, $pos + 1);
+        }
+
+        return $type;
+    }
+
+    /**
      * Gets the trace string of (alias of getTraceAsString()).
      *
      * @return string
