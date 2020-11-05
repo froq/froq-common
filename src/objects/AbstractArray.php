@@ -239,11 +239,12 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
     /**
      * Map.
      * @param  callable $func
+     * @param  bool     $keepKeys
      * @return self (static)
      */
-    public function map(callable $func): self
+    public function map(callable $func, bool $keepKeys = true): self
     {
-        $data = Arrays::map($this->data, $func);
+        $data = Arrays::map($this->data, $func, $keepKeys);
 
         return $this->setData($data);
     }
