@@ -220,54 +220,41 @@ declare(strict_types=1);
      * Filter.
      * @param  array           $array
      * @param  callable        $func
-     * @param  array|bool|null $keys
+     * @param  bool            $keep_keys
      * @return array
      * @since  3.0
      */
-    function filter(array $array, callable $func = null, $keys = null)
+    function filter(array $array, callable $func = null, $keep_keys = null)
     {
         // Default function.
         $func ??= fn($v) => $v !== null && $v !== '' && $v !== [];
 
-        if (is_null($keys)) {
-            $ret = array_filter($array, $func, ARRAY_FILTER_USE_BOTH);
-        } else {
-            $ret = []; $i = 0;
-            // Use key,value notation (['foo', ..] or true).
-            $keys = ($keys === true) ? array_keys($array) : $keys;
-            foreach ($array as $key => $value) {
-                in_array($key, $keys, true)
-                    && $func($value, $key, $i++)
-                        && $ret[$key] = $value;
-            }
+        $ret = []; $i = 0;
+
+        foreach ($array as $key => $value) {
+            $func($value, $key, $i++) && $ret[$key] = $value;
         }
 
-        return $ret;
+        return $keep_keys ? $ret : array_values($ret);
     }
 
     /**
      * Map.
      * @param  array           $array
      * @param  callable        $func
-     * @param  array|bool|null $keys
+     * @param  bool            $keep_keys
      * @return array
      * @since  3.0
      */
-    function map(array $array, callable $func, $keys = null)
+    function map(array $array, callable $func, bool $keep_keys = true)
     {
-        if (is_null($keys)) {
-            $ret = array_map($func, $array, array_keys($array));
-        } else {
-            $ret = []; $i = 0;
-            // Use key,value notation (['foo', ..] or true).
-            $keys = ($keys === true) ? array_keys($array) : $keys;
-            foreach ($array as $key => $value) {
-                in_array($key, $keys, true)
-                    && $ret[$key] = $func($value, $key, $i++);
-            }
+        $ret = []; $i = 0;
+
+        foreach ($array as $key => $value) {
+            $ret[$key] = $func($value, $key, $i++);
         }
 
-        return $ret;
+        return $keep_keys ? $ret : array_values($ret);
     }
 
     /**
