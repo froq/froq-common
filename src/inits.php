@@ -218,9 +218,9 @@ declare(strict_types=1);
 {
     /**
      * Filter.
-     * @param  array        $array
-     * @param  callable     $func
-     * @param  array|string $keys
+     * @param  array           $array
+     * @param  callable        $func
+     * @param  array|bool|null $keys
      * @return array
      * @since  3.0
      */
@@ -233,8 +233,8 @@ declare(strict_types=1);
             $ret = array_filter($array, $func);
         } else {
             $ret = []; $i = 0;
-            // Use key,value notation ('*' or true).
-            $keys = ($keys == '*') ? array_keys($array) : $keys;
+            // Use key,value notation (['foo', ..] or true).
+            $keys = ($keys === true) ? array_keys($array) : $keys;
             foreach ($array as $key => $value) {
                 in_array($key, $keys, true)
                     && $func($value, $key, $i++)
@@ -247,9 +247,9 @@ declare(strict_types=1);
 
     /**
      * Map.
-     * @param  array        $array
-     * @param  callable     $func
-     * @param  array|string $keys
+     * @param  array           $array
+     * @param  callable        $func
+     * @param  array|bool|null $keys
      * @return array
      * @since  3.0
      */
@@ -259,11 +259,11 @@ declare(strict_types=1);
             $ret = array_map($func, $array);
         } else {
             $ret = []; $i = 0;
-            // Use key,value notation ('*' or true).
-            $keys = ($keys == '*') ? array_keys($array) : $keys;
+            // Use key,value notation (['foo', ..] or true).
+            $keys = ($keys === true) ? array_keys($array) : $keys;
             foreach ($array as $key => $value) {
                 in_array($key, $keys, true)
-                    && $array[$key] = $func($value, $key, $i++);
+                    && $ret[$key] = $func($value, $key, $i++);
             }
         }
 
