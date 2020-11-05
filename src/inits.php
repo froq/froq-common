@@ -230,7 +230,7 @@ declare(strict_types=1);
         $func ??= fn($v) => $v !== null && $v !== '' && $v !== [];
 
         if (is_null($keys)) {
-            $ret = array_filter($array, $func);
+            $ret = array_filter($array, $func, ARRAY_FILTER_USE_BOTH);
         } else {
             $ret = []; $i = 0;
             // Use key,value notation (['foo', ..] or true).
@@ -256,7 +256,7 @@ declare(strict_types=1);
     function map(array $array, callable $func, $keys = null)
     {
         if (is_null($keys)) {
-            $ret = array_map($func, $array);
+            $ret = array_map($func, $array, array_keys($array));
         } else {
             $ret = []; $i = 0;
             // Use key,value notation (['foo', ..] or true).
