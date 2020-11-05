@@ -224,7 +224,7 @@ declare(strict_types=1);
      * @return array
      * @since  3.0
      */
-    function filter(array $array, callable $func = null, $keep_keys = null)
+    function filter(array $array, callable $func = null, bool $keep_keys = true)
     {
         // Default function.
         $func ??= fn($v) => $v !== null && $v !== '' && $v !== [];
