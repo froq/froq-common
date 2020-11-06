@@ -66,19 +66,21 @@ final class Registry
      * Set.
      * @param  string $id
      * @param  object $object
-     * @param  bool   $replaceable
+     * @param  bool   $locked
      * @return void
      * @throws froq\common\Exception
      */
-    public static function set(string $id, object $object, bool $replaceable = false): void
+    public static function set(string $id, object $object, bool $locked = true): void
     {
         $current = self::$stack[$id] ?? null;
-        if ($current && !$current['replaceable']) {
-            throw new Exception('Object "%s" is already registered and not replaceable, call '.
-                'replace() instead to force it to change with set().', [$id]);
+
+        if ($current && $current['locked']) {
+            throw new Exception('Object "%s" is already registered and locked with id "%s", '.
+                'call replace() instead to force it to change with set().',
+                [get_class($current['object']), $id]);
         }
 
-        self::register($id, $object, $replaceable);
+        self::register($id, $object, $locked);
     }
 
     /**
@@ -106,24 +108,23 @@ final class Registry
      * Replace.
      * @param  string $id
      * @param  object $object
-     * @param  bool   $replaceable
+     * @param  bool   $locked
      * @return void
      */
-    public static function replace(string $id, object $object, bool $replaceable = false): void
+    public static function replace(string $id, object $object, bool $locked = true): void
     {
-        self::register($id, $object, $replaceable);
+        self::register($id, $object, $locked);
     }
 
     /**
      * Register.
      * @param  string $id
      * @param  object $object
-     * @param  bool   $replaceable
+     * @param  bool   $locked
      * @return void
-     * @internal
      */
-    private static function register(string $id, object $object, bool $replaceable): void
+    private static function register(string $id, object $object, bool $locked): void
     {
-        self::$stack[$id] = ['object' => $object, 'replaceable' => $replaceable];
+        self::$stack[$id] = ['object' => $object, 'locked' => $locked];
     }
 }
