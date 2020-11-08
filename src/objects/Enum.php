@@ -192,17 +192,40 @@ class Enum
     }
 
     /**
+     * Gets a name of value, or returns null when no value exists.
+     *
+     * @param  any $value
+     * @return string|null
+     * @since  4.7
+     */
+    public static final function getNameOf($value)
+    {
+        $name = array_search($value, self::toArray(), true);
+
+        return ($name !== false) ? $name : null;
+    }
+
+    /**
+     * Gets value of a name, or returns null when no name exists.
+     *
+     * @param  string $name
+     * @return any|null
+     * @since  4.7
+     */
+    public static final function getValueOf(string $name)
+    {
+        return self::toArray()[$name] ?? null;
+    }
+
+    /**
      * Generates a array copy of defined constants with key/value pairs.
      *
      * @return array<string, any>
      */
     public static final function toArray(): array
     {
-        $class = static::class;
-
-        return self::$cache[$class] ?? self::$cache[$class] = (
-            (new ReflectionClass($class))->getConstants()
-        );
+        return self::$cache[static::class]
+            ??= (new ReflectionClass(static::class))->getConstants();
     }
 
     /**
