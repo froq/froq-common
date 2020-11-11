@@ -224,7 +224,7 @@ declare(strict_types=1);
      * @return array
      * @since  3.0
      */
-    function filter(array $array, callable $func = null, bool $keep_keys = true)
+    function filter(array $array, callable $func = null, bool $keep_keys = true): array
     {
         // Default function.
         $func ??= fn($v) => $v !== null && $v !== '' && $v !== [];
@@ -232,7 +232,11 @@ declare(strict_types=1);
         $ret = []; $i = 0;
 
         foreach ($array as $key => $value) {
-            $func($value, $key, $i++) && $ret[$key] = $value;
+            try {
+                $func($value, $key, $i++) && $ret[$key] = $value;
+            } catch (ArgumentCountError $e) {
+                $func($value) && $ret[$key] = $value;
+            }
         }
 
         return $keep_keys ? $ret : array_values($ret);
@@ -246,12 +250,16 @@ declare(strict_types=1);
      * @return array
      * @since  3.0
      */
-    function map(array $array, callable $func, bool $keep_keys = true)
+    function map(array $array, callable $func, bool $keep_keys = true): array
     {
         $ret = []; $i = 0;
 
         foreach ($array as $key => $value) {
-            $ret[$key] = $func($value, $key, $i++);
+            try {
+                $ret[$key] = $func($value, $key, $i++);
+            } catch (ArgumentCountError $e) {
+                $ret[$key] = $func($value);
+            }
         }
 
         return $keep_keys ? $ret : array_values($ret);
