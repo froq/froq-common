@@ -281,8 +281,21 @@ declare(strict_types=1);
     }
 }
 
-// Append/prepend/merge/aggregate.
+// Merge/append/prepend/aggregate.
 {
+    /**
+     * Merge.
+     * @param  array $array
+     * @param  ...   $arrays
+     * @return array
+     * @since  4.0
+     */
+    function merge(array &$array, ...$arrays): array
+    {
+        return ($array = array_merge($array,
+            ...array_map(fn($v) => (array) $v, $arrays)));
+    }
+
     /**
      * Append.
      * @param  array &$array
@@ -305,18 +318,6 @@ declare(strict_types=1);
     function prepend(array &$array, ...$values): array
     {
         return array_prepend($array, ...$values);
-    }
-
-    /**
-     * Merge.
-     * @param  array $array
-     * @param  ...   $values
-     * @return array
-     * @since  4.0
-     */
-    function merge(array $array, ...$values): array
-    {
-        return array_merge($array, ...array_map(fn($v) => (array) $v, $values));
     }
 
     /**
