@@ -27,8 +27,7 @@ trait ThrowableTrait
      * @param int|null          $code
      * @param Throwable|null    $previous
      */
-    public function __construct($message = null, $messageParams = null, int $code = null,
-        Throwable $previous = null)
+    public function __construct($message = null, $messageParams = null, int $code = null, Throwable $previous = null)
     {
         if ($message != null) {
             if (is_string($message)) {
@@ -41,9 +40,6 @@ trait ThrowableTrait
                 }
                 // Eg: throw new Exception('Error: %s', ['The error!'] or ['@error']).
                 elseif ($messageParams) {
-                    // @todo: Remove at version 5.0 (change "%s" => '%s').
-                    $message = preg_replace_callback('~["\'](%s|%s::%s)["\']~',
-                        fn($s) => "'". trim($s[0], '"\'') ."'", $message);
                     $messageParams = (array) $messageParams;
 
                     foreach ($messageParams as $i => $messageParam) {
