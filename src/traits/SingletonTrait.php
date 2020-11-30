@@ -25,12 +25,12 @@ trait SingletonTrait
 
     /**
      * Init.
-     * @param  ... $arguments
+     * @param  ... $args
      * @return self
      */
-    public static final function init(...$arguments): self
+    public static final function init(...$args): self
     {
-        return self::$instance ??= new self(...$arguments);
+        return self::$instance ??= new self(...$args);
     }
 
     /**
@@ -38,8 +38,8 @@ trait SingletonTrait
      * @alias of init()
      * @since 4.0
      */
-    public static final function getInstance(...$arguments)
+    public static final function getInstance(...$args)
     {
-        return self::init(...$arguments);
+        return self::init(...$args);
     }
 }

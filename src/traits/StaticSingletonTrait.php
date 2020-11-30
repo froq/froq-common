@@ -25,20 +25,20 @@ trait StaticSingletonTrait
 
     /**
      * Init.
-     * @param  ... $arguments
+     * @param  ... $args
      * @return self (static)
      */
-    public static final function init(...$arguments): self
+    public static final function init(...$args): self
     {
-        return self::$instance ??= new static(...$arguments);
+        return self::$instance ??= new static(...$args);
     }
 
     /**
      * Get instance.
      * @alias of init()
      */
-    public static final function getInstance(...$arguments)
+    public static final function getInstance(...$args)
     {
-        return self::init(...$arguments);
+        return self::init(...$args);
     }
 }
