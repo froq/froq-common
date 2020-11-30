@@ -71,12 +71,12 @@ trait OptionTrait
     /**
      * Get option.
      * @param  string   $key
-     * @param  any|null $valueDefault
+     * @param  any|null $default
      * @return any|null
      */
-    public final function getOption(string $key, $valueDefault = null)
+    public final function getOption(string $key, $default = null)
     {
-        return $this->options[$key] ?? $valueDefault;
+        return $this->options[$key] ?? $default;
     }
 
     /**

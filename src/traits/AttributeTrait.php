@@ -71,12 +71,12 @@ trait AttributeTrait
     /**
      * Get attribute.
      * @param  string   $name
-     * @param  any|null $valueDefault
+     * @param  any|null $default
      * @return any|null
      */
-    public final function getAttribute(string $name, $valueDefault = null)
+    public final function getAttribute(string $name, $default = null)
     {
-        return $this->attributes[$name] ?? $valueDefault;
+        return $this->attributes[$name] ?? $default;
     }
 
     /**
