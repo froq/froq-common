@@ -138,7 +138,7 @@ trait ThrowableTrait
             $message = preg_replace(['~(\w)(?:\\\|::|->)(\w)~', '~\.php~'],
                 ['\1.\2', ''], $message);
             $messageTrace = preg_replace_callback('~(?:\.php[(]|(?:\\\|::|->))~',
-                fn($m) => ($m[0] == '.php(') ? '(' : '.', $messageTrace);
+                fn($m) => $m[0] == '.php(' ? '(' : '.', $messageTrace);
         }
 
         return sprintf(
