@@ -8,14 +8,14 @@ declare(strict_types=1);
 namespace froq\common\interfaces;
 
 /**
- * Sizeable.
+ * Sizable.
  *
  * @package froq\common\interfaces
- * @object  froq\common\interfaces\Sizeable
+ * @object  froq\common\interfaces\Sizable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   1.0
  */
-interface Sizeable
+interface Sizable
 {
     /**
      * Size.
