@@ -93,29 +93,23 @@ trait OptionTrait
 
     /**
      * Set options.
-     * @param  array<string, any> $options
-     * @return self
-     */
-    public final function setOptions(array $options): self
-    {
-        foreach ($options as $key => $value) {
-            $this->setOption($key, $value);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set options default.
      * @param  array<string, any>|null $options
-     * @param  array<string, any>      $optionsDefault
+     * @param  array<string, any>|null $defaults
      * @param  bool                    $recursive
      * @return self
      */
-    public final function setOptionsDefault(?array $options, array $optionsDefault, bool $recursive = false): self
+    public final function setOptions(?array $options, ?array $defaults = null, bool $recursive = true): self
     {
-        $this->options = !$recursive ? array_replace($optionsDefault, $options ?? [])
-            ? array_replace_recursive($optionsDefault, $options ?? []);
+        $options ??= [];
+
+        if ($defaults != null) {
+            $options = $recursive ? array_replace_recursive($defaults, $options)
+                : array_replace($defaults, $options);
+        }
+
+        foreach ($options as $key => $value) {
+            $this->setOption($key, $value);
+        }
 
         return $this;
     }

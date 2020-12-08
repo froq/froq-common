@@ -93,29 +93,23 @@ trait AttributeTrait
 
     /**
      * Set attributes.
-     * @param  array<string, any> $attributes
-     * @return self
-     */
-    public final function setAttributes(array $attributes): self
-    {
-        foreach ($attributes as $name => $value) {
-            $this->setAttribute($name, $value);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set attributes default.
      * @param  array<string, any>|null $attributes
-     * @param  array<string, any>      $attributesDefault
+     * @param  array<string, any>|null $defaults
      * @param  bool                    $recursive
      * @return self
      */
-    public final function setAttributesDefault(?array $attributes, array $attributesDefault, bool $recursive = false): self
+    public final function setAttributes(?array $attributes, ?array $defaults = null, bool $recursive = true): self
     {
-        $this->attributes = !$recursive ? array_replace($attributesDefault, $attributes ?? [])
-            : array_replace_recursive($attributesDefault, $attributes ?? []);
+        $attributes ??= [];
+
+        if ($defaults != null) {
+            $attributes = $recursive ? array_replace_recursive($defaults, $attributes)
+                : array_replace($defaults, $attributes);
+        }
+
+        foreach ($attributes as $name => $value) {
+            $this->setAttribute($name, $value);
+        }
 
         return $this;
     }
