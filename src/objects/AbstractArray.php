@@ -185,6 +185,21 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
     }
 
     /**
+     * Empty.
+     * @return self
+     * @since  5.0
+     */
+    public function empty(): self
+    {
+        // Not exists for all children.
+        method_exists($this, 'readOnlyCheck') && $this->readOnlyCheck();
+
+        $this->data = [];
+
+        return $this;
+    }
+
+    /**
      * Is empty.
      * @return bool
      */
@@ -200,21 +215,6 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
     public function keys(): array
     {
         return array_keys($this->data);
-    }
-
-    /**
-     * Empty.
-     * @return self
-     * @since  5.0
-     */
-    public function empty(): self
-    {
-        // Not exists for all children.
-        method_exists($this, 'readOnlyCheck') && $this->readOnlyCheck();
-
-        $this->data = [];
-
-        return $this;
     }
 
     /**
