@@ -82,6 +82,9 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
      */
     public function setData(array $data, bool $override = true): self
     {
+        // Not exists for all children.
+        method_exists($this, 'readOnlyCheck') && $this->readOnlyCheck();
+
         if ($override) {
             $this->data = $data;
         } else {
@@ -167,9 +170,8 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
      */
     public function empty(): self
     {
-        if (method_exists($this, 'readOnlyCheck')) {
-            $this->readOnlyCheck();
-        }
+        // Not exists for all children.
+        method_exists($this, 'readOnlyCheck') && $this->readOnlyCheck();
 
         $this->data = [];
 
