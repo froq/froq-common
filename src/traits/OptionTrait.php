@@ -107,12 +107,15 @@ trait OptionTrait
 
     /**
      * Set options default.
-     * @param array<string, any>|null $options
-     * @param array<string, any>      $optionsDefault
+     * @param  array<string, any>|null $options
+     * @param  array<string, any>      $optionsDefault
+     * @param  bool                    $recursive
+     * @return self
      */
-    public final function setOptionsDefault(array $options = null, array $optionsDefault): self
+    public final function setOptionsDefault(?array $options, array $optionsDefault, bool $recursive = false): self
     {
-        $this->options = array_replace($optionsDefault, $options ?? []);
+        $this->options = !$recursive ? array_replace($optionsDefault, $options ?? [])
+            ? array_replace_recursive($optionsDefault, $options ?? []);
 
         return $this;
     }

@@ -107,12 +107,15 @@ trait AttributeTrait
 
     /**
      * Set attributes default.
-     * @param array<string, any>|null $attributes
-     * @param array<string, any>      $attributesDefault
+     * @param  array<string, any>|null $attributes
+     * @param  array<string, any>      $attributesDefault
+     * @param  bool                    $recursive
+     * @return self
      */
-    public final function setAttributesDefault(array $attributes = null, array $attributesDefault): self
+    public final function setAttributesDefault(?array $attributes, array $attributesDefault, bool $recursive = false): self
     {
-        $this->attributes = array_replace($attributesDefault, $attributes ?? []);
+        $this->attributes = !$recursive ? array_replace($attributesDefault, $attributes ?? [])
+            : array_replace_recursive($attributesDefault, $attributes ?? []);
 
         return $this;
     }

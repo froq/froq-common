@@ -9,6 +9,7 @@ namespace froq\common\interfaces;
 
 /**
  * Yieldable.
+ *
  * @package froq\common\interfaces
  * @object  froq\common\interfaces\Yieldable
  * @author  Kerem Güneş <k-gun@mail.com>
