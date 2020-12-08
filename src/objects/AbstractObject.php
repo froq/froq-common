@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace froq\common\objects;
 
-use froq\common\interfaces\{Cloneable, Stringable};
+use froq\common\interfaces\{Cloneable, Arrayable, Stringable};
 use froq\util\Objects;
 use ReflectionObject;
 
@@ -22,7 +22,7 @@ use ReflectionObject;
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-abstract class AbstractObject implements Cloneable, Stringable
+abstract class AbstractObject implements Cloneable, Arrayable, Stringable
 {
     /**
      * Get name.
@@ -85,7 +85,7 @@ abstract class AbstractObject implements Cloneable, Stringable
      * @param  string|object $class
      * @return bool
      */
-    public final function isInstanceOf($class): bool
+    public final function isInstanceOf(string|object $class): bool
     {
         return ($this instanceof $class);
     }
@@ -110,11 +110,19 @@ abstract class AbstractObject implements Cloneable, Stringable
     }
 
     /**
+     * @inheritDoc froq\common\interfaces\Arrayable
+     */
+    public function toArray(bool $all = false): array
+    {
+        return get_class_properties($this, true, !$all);
+    }
+
+    /**
      * @inheritDoc froq\common\interfaces\Stringable
      */
     public function toString(): string
     {
-        $vars = get_object_vars($this);
+        $vars = $this->toArray(true);
 
         return sprintf('object(%s)#%s (%s) { %s }', $this->getName(), spl_object_id($this),
             count($vars), join(', ', array_keys($vars)));
