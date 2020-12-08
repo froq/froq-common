@@ -161,6 +161,22 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
     }
 
     /**
+     * Empty.
+     * @return self
+     * @since  5.0
+     */
+    public function empty(): self
+    {
+        if (method_exists($this, 'readOnlyCheck')) {
+            $this->readOnlyCheck();
+        }
+
+        $this->data = [];
+
+        return $this;
+    }
+
+    /**
      * Values.
      * @return array<any>
      */
