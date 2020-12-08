@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace froq\common\objects;
 
 use froq\common\interfaces\{Arrayable, Objectable, Jsonable, Yieldable};
+use froq\common\exceptions\InvalidKeyException;
 use froq\util\Arrays;
 use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
 
@@ -76,16 +77,54 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
 
     /**
      * Set data.
-     * @param  array $data
-     * @param  bool  $override
+     * @param  array<int|string, any> $data
+     * @param  bool                   $reset
      * @return self (static)
      */
-    public function setData(array $data, bool $override = true): self
+    public function setData(array $data, bool $reset = true): self
     {
         // Not exists for all children.
         method_exists($this, 'readOnlyCheck') && $this->readOnlyCheck();
 
-        if ($override) {
+        // Get key type(s) from child, or self for this method.
+        static $getTypes; $getTypes ??= fn() =>
+            grep((new \ReflectionMethod(static::class, 'setData'))->getDocComment(),
+                '~@param +array<([^,]+).*> +\$data~') ??
+            grep((new \ReflectionMethod(self::class, 'setData'))->getDocComment(),
+                '~@param +array<([^,]+).*> +\$data~')
+        ;
+
+        $types = $getTypes();
+
+        // Validate keys.
+        foreach (array_keys($data) as $key) {
+            if ($key === '') throw new InvalidKeyException(
+                "Empty keys not allowed for '%s' object", static::class
+            );
+
+            switch ($types) {
+                case 'int|string':
+                    is_int($key) || is_string($key) || throw new InvalidKeyException(
+                        "Only int|string keys allowed for '%s' object, %s given",
+                        [static::class, get_type($key)]
+                    );
+                    break;
+                case 'int':
+                    is_int($key) || throw new InvalidKeyException(
+                        "Only int keys allowed for '%s' object, %s given",
+                        [static::class, get_type($key)]
+                    );
+                    break;
+                case 'string':
+                    is_string($key) || throw new InvalidKeyException(
+                        "Only string keys allowed for '%s' object, %s given",
+                        [static::class, get_type($key)]
+                    );
+                    break;
+            }
+        }
+
+        if ($reset) {
             $this->data = $data;
         } else {
             foreach ($data as $key => $value) {
