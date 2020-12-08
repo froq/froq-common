@@ -184,27 +184,6 @@ abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldab
     }
 
     /**
-     * Apply.
-     * @param  callable $func
-     * @return self (static)
-     * @since  4.2
-     */
-    public function apply(callable $func): self
-    {
-        $data = [];
-
-        foreach ($this->data as $key => $value) {
-            // Argument $value must be passed with ref (eg: (&$value, ...) ...),
-            // so "return ..." not used, but just modifing value.
-            $func($value, $key, $this->data);
-
-            $data[$key] = $value;
-        }
-
-        return $this->setData($data);
-    }
-
-    /**
      * Filter.
      * @param  callable|null $func
      * @param  bool          $keepKeys
