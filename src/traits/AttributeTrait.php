@@ -52,7 +52,7 @@ trait AttributeTrait
      */
     public final function hasAttributeValue(string $name): bool
     {
-        return array_key_exists($name, $this->attributes) && $this->attributes[$name] !== null;
+        return isset($this->attributes[$name]);
     }
 
     /**
@@ -127,9 +127,11 @@ trait AttributeTrait
         }
 
         $values = [];
+
         foreach ($names as $name) {
             $values[] = $this->getAttribute($name);
         }
+
         return $values;
     }
 

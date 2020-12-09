@@ -52,7 +52,7 @@ trait OptionTrait
      */
     public final function hasOptionValue(string $key): bool
     {
-        return array_key_exists($key, $this->options) && $this->options[$key] !== null;
+        return isset($this->options[$key]);
     }
 
     /**
@@ -127,9 +127,11 @@ trait OptionTrait
         }
 
         $values = [];
+
         foreach ($keys as $key) {
             $values[] = $this->getOption($key);
         }
+
         return $values;
     }
 
