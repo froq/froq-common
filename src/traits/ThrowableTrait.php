@@ -60,7 +60,7 @@ trait ThrowableTrait
             } else {
                 throw new Exception(sprintf(
                     "Invalid message type '%s' given to '%s', valids are: string, Throwable",
-                    is_object($message) ? get_class($message) : gettype($message), static::class
+                    get_type($message), static::class
                 ));
             }
         }
