@@ -104,7 +104,7 @@ abstract class AbstractObject implements Cloneable, Arrayable, Stringable
     /**
      * @inheritDoc froq\common\interfaces\Cloneable
      */
-    public function toClone(): object
+    public function toClone(): static
     {
         return clone $this;
     }

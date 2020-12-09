@@ -19,7 +19,7 @@ interface Cloneable
 {
     /**
      * To clone.
-     * @return object
+     * @return static
      */
-    public function toClone(): object;
+    public function toClone(): static;
 }
