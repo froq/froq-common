@@ -182,7 +182,7 @@ trait ThrowableTrait
 
         return [
             'code'    => $error['type'] ?? null,
-            'message' => strtolower($error['message'] ?? 'unknown')
+            'message' => $error['message'] ?? 'unknown'
         ];
     }
 }
