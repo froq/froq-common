@@ -10,7 +10,7 @@ namespace froq\common\traits;
 /**
  * Data Trait.
  *
- * Represents a trait which carries `$data` property and is able to set/get actions.
+ * Represents a trait entity which carries `$data` property and is able to set/get/empty/count actions.
  *
  * @package froq\common\traits
  * @object  froq\common\traits\DataTrait
@@ -23,7 +23,7 @@ trait DataTrait
     protected array $data;
 
     /**
-     * Set data property.
+     * Set data stack.
      *
      * @param  array $data
      * @return self
@@ -36,12 +36,64 @@ trait DataTrait
     }
 
     /**
-     * Get data property.
+     * Get data stack.
      *
      * @return array|null
      */
     public function getData(): array|null
     {
         return $this->data ?? null;
+    }
+
+    /**
+     * Check data empty state.
+     *
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return empty($this->data);
+    }
+
+    /**
+     * Empty data stack.
+     *
+     * @return self
+     */
+    public function empty(): self
+    {
+        $this->data = [];
+
+        return $this;
+    }
+
+    /**
+     * Get count/size of data stack.
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        return count($this->toArray());
+    }
+
+    /**
+     * Alias of count().
+     *
+     * @return int
+     */
+    public function size(): int
+    {
+        return $this->count();
+    }
+
+    /**
+     * Get data stack.
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return $this->data ?? [];
     }
 }
