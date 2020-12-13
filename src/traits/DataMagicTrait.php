@@ -10,7 +10,7 @@ namespace froq\common\traits;
 /**
  * Data Magic Trait.
  *
- * Represents a trait which carries `$data` property and is able to set/get/isset/unset actions.
+ * Represents a trait entity which carries `$data` property and is able to set/get/isset/unset actions.
  *
  * @package froq\common\traits
  * @object  froq\common\traits\DataMagicTrait
