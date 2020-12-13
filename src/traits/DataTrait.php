@@ -20,7 +20,7 @@ namespace froq\common\traits;
 trait DataTrait
 {
     /** @var array $data */
-    protected array $data;
+    protected array $data = [];
 
     /**
      * Set data property.
@@ -38,10 +38,10 @@ trait DataTrait
     /**
      * Get data property.
      *
-     * @return array|null
+     * @return array
      */
-    public function getData(): array|null
+    public function getData(): array
     {
-        return $this->data ?? null;
+        return $this->data;
     }
 }
