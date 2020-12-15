@@ -23,6 +23,20 @@ trait DataTrait
     protected array $data;
 
     /**
+     * Set/get data stack.
+     *
+     * @param  array|null $data
+     * @return array|self|null
+     */
+    public function data(array $data = null): array|self|null
+    {
+        if (func_num_args()) {
+            return $this->setData($data);
+        }
+        return $this->getData();
+    }
+
+    /**
      * Set data stack.
      *
      * @param  array $data
