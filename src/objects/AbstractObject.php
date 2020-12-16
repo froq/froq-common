@@ -62,6 +62,39 @@ abstract class AbstractObject implements Stringable
     }
 
     /**
+     * Get constants.
+     * @param  bool $all
+     * @return array<string, array>|null
+     * @since  5.0
+     */
+    public final function getConstants(bool $all = true): array|null
+    {
+        return Objects::getConstants($this, $all);
+    }
+
+    /**
+     * Get properties.
+     * @param  bool $all
+     * @return array<string, array>|null
+     * @since  5.0
+     */
+    public final function getProperties(bool $all = true): array|null
+    {
+        return Objects::getProperties($this, $all);
+    }
+
+    /**
+     * Get methods.
+     * @param  bool $all
+     * @return array<string, array>|null
+     * @since  5.0
+     */
+    public final function getMethods(bool $all = true): array|null
+    {
+        return Objects::getMethods($this, $all);
+    }
+
+    /**
      * Is type of.
      * @param  string $class
      * @return bool
