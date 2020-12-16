@@ -13,7 +13,7 @@ use ReflectionObject;
 /**
  * Object Trait.
  *
- * Represents an trait entity for objects which may be used with ConstantTrait, PropertyTrait and MethodTrait.
+ * Represents a trait entity for objects which may be used with ConstantTrait, PropertyTrait and MethodTrait.
  *
  * @package froq\common\traits
  * @object  froq\common\traits\ObjectTrait
