@@ -81,30 +81,30 @@ trait ThrowableTrait
     }
 
     /**
-     * Gets the class of.
-     *
-     * @return string
-     */
-    public function getClass(): string
-    {
-        return $this::class;
-    }
-
-    /**
-     * Gets the type of.
+     * Get class of.
      *
      * @param  bool $short
      * @return string
      */
-    public function getType(bool $short = false): string
+    public function getClass(bool $short = false): string
     {
-        $type = $this->getClass();
+        $class = $this::class;
 
-        if ($short && ($pos = strrpos($type, '\\'))) {
-            $type = substr($type, $pos + 1);
+        if ($short && ($pos = strrpos($class, '\\'))) {
+            $class = substr($class, $pos + 1);
         }
 
-        return $type;
+        return $class;
+    }
+
+    /**
+     * Get type of.
+     *
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->isError() ? 'error' : 'exception';
     }
 
     /**
