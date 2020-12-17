@@ -57,8 +57,8 @@ final class Registry
         $current = self::$stack[$id] ?? null;
 
         if ($current && $current['locked']) {
-            throw new Exception("Object '%s' is already registered and locked with id '%s', call replace() "
-                . "instead to force it to change with set().", [get_class($current['object']), $id]);
+            throw new Exception('Object `%s` is already registered and locked with id `%s`, call replace()'
+                . ' instead to force it to change with set().', [$current['object']::class, $id]);
         }
 
         self::register($id, $object, $locked);
