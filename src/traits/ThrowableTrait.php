@@ -87,7 +87,7 @@ trait ThrowableTrait
      */
     public function getClass(): string
     {
-        return get_class($this);
+        return $this::class;
     }
 
     /**
