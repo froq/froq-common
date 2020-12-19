@@ -23,16 +23,10 @@ use ReflectionClass;
  */
 class Enum
 {
-    /**
-     * Cache.
-     * @var array
-     */
+    /** @var array */
     private static array $cache;
 
-    /**
-     * Value.
-     * @var any|null
-     */
+    /** @var any|null */
     protected $value;
 
     /**
@@ -52,11 +46,11 @@ class Enum
      */
     public function __toString()
     {
-        return ''. $this->value;
+        return (string) $this->value;
     }
 
     /**
-     * Provides call routines such as "$foo->isBar()", that prefixed with `is`.
+     * Magic - call: provide call routines such as "$foo->isBar()", that prefixed with "is".
      *
      * @param  string $name
      * @param  array  $arguments
@@ -65,23 +59,23 @@ class Enum
      */
     public function __call($name, $arguments)
     {
-        if (strpos($name, 'is') !== 0) {
-            throw new Exception('No valid call as "%s::%s()", call must be prefixed with "is" '.
-                'and followed by an existing constant name', [static::class, $name, __function__]);
+        if (!str_starts_with($name, 'is')) {
+            throw new Exception('No valid call as %s::%s(), call must be prefixed with `is` and'
+                . ' followed by an existing constant name', [static::class, $name, __function__]);
         }
 
         $constants = self::toArray();
 
         $name = strtoupper(substr($name, 2));
         if (!array_key_exists($name, $constants)) {
-            throw new Exception('No constant exists such "%s::%s"', [static::class, $name]);
+            throw new Exception('No constant exists such %s::%s', [static::class, $name]);
         }
 
         return ($this->value === $constants[$name]);
     }
 
     /**
-     * Provides static call routines such as "Foo::isBar()", that prefixed with `is`.
+     * Magic - call static: provide static call routines such as "Foo::isBar()", that prefixed with "is".
      *
      * @param  string $name
      * @param  array  $arguments
@@ -90,16 +84,16 @@ class Enum
      */
     public static function __callStatic($name, $arguments)
     {
-        if (strpos($name, 'is') !== 0) {
-            throw new Exception('No valid call as "%s::%s()", call must be prefixed with "is" '.
-                'and followed by an existing constant name', [static::class, $name]);
+        if (!str_starts_with($name, 'is')) {
+            throw new Exception('No valid call as %s::%s(), call must be prefixed with `is` and'
+                . ' followed by an existing constant name', [static::class, $name]);
         }
 
         $constants = self::toArray();
 
         $name = strtoupper(substr($name, 2));
         if (!array_key_exists($name, $constants)) {
-            throw new Exception('No constant exists such "%s::%s"', [static::class, $name]);
+            throw new Exception('No constant exists such %s::%s', [static::class, $name]);
         }
         if (!array_key_exists(0, $arguments)) {
             throw new Exception('No value given in arguments');
@@ -130,7 +124,7 @@ class Enum
     }
 
     /**
-     * Gets all constant names.
+     * Get all constant names.
      *
      * @return array<string>
      */
@@ -140,7 +134,7 @@ class Enum
     }
 
     /**
-     * Gets all constant values.
+     * Get all constant values.
      *
      * @return array<any>
      */
@@ -150,7 +144,7 @@ class Enum
     }
 
     /**
-     * Checks whether a name is valid or not.
+     * Check whether a name is valid or not.
      *
      * @param  string $name
      * @return bool
@@ -161,7 +155,7 @@ class Enum
     }
 
     /**
-     * Checks whether a value is valid or not.
+     * Check whether a value is valid or not.
      *
      * @param  any  $value
      * @param  bool $strict
@@ -173,7 +167,7 @@ class Enum
     }
 
     /**
-     * Gets a name of value, or returns null when no value exists.
+     * Get a name of value, or returns null when no value exists.
      *
      * @param  any $value
      * @return string|null
@@ -187,7 +181,7 @@ class Enum
     }
 
     /**
-     * Gets value of a name, or returns null when no name exists.
+     * Get value of a name, or returns null when no name exists.
      *
      * @param  string $name
      * @return any|null
@@ -199,18 +193,17 @@ class Enum
     }
 
     /**
-     * Generates a array copy of defined constants with key/value pairs.
+     * Generate an array copy of defined constants with key/value pairs.
      *
      * @return array<string, any>
      */
     public static final function toArray(): array
     {
-        return self::$cache[static::class]
-            ??= (new ReflectionClass(static::class))->getConstants();
+        return self::$cache[static::class] ??= (new ReflectionClass(static::class))->getConstants();
     }
 
     /**
-     * Generates a string copy of definer class with its constants.
+     * Generate a string copy of definer class with its constants.
      *
      * @return string
      */

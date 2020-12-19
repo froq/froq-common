@@ -20,22 +20,23 @@ use froq\common\Exception;
 final class Registry
 {
     /**
-     * Stack.
-     * @var array<string, array>
+     * @var array<string, object>
      */
     private static array $stack = [];
 
     /**
-     * Get stack.
-     * @return array<string, array>
+     * Get stack property.
+     *
+     * @return array<string, object>
      */
-    public static function getStack(): array
+    public static function stack(): array
     {
         return self::$stack;
     }
 
     /**
-     * Has.
+     * Check whether an object is in registery stack.
+     *
      * @param  string $id
      * @return bool
      */
@@ -45,7 +46,8 @@ final class Registry
     }
 
     /**
-     * Set.
+     * Put an object into registery stack.
+     *
      * @param  string $id
      * @param  object $object
      * @param  bool   $locked
@@ -65,18 +67,20 @@ final class Registry
     }
 
     /**
-     * Get.
+     * Get an object from register stack if exists.
+     *
      * @param  string $id
-     * @return ?object
+     * @return object|null
      * @throws froq\common\Exception
      */
-    public static function get(string $id): ?object
+    public static function get(string $id): object|null
     {
         return self::$stack[$id]['object'] ?? null;
     }
 
     /**
-     * Remove.
+     * Remove a registered object from registery stack.
+     *
      * @param  string $id
      * @return void
      */
@@ -86,7 +90,8 @@ final class Registry
     }
 
     /**
-     * Replace.
+     * Replace an object with new one.
+     *
      * @param  string $id
      * @param  object $object
      * @param  bool   $locked
@@ -98,7 +103,8 @@ final class Registry
     }
 
     /**
-     * Register.
+     * Register an object.
+     *
      * @param  string $id
      * @param  object $object
      * @param  bool   $locked
