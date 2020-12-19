@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\traits;
+namespace froq\common\trait;
 
 /**
  * Attribute Trait.
  *
- * @package froq\common\traits
- * @object  froq\common\traits\AttributeTrait
+ * @package froq\common\trait
+ * @object  froq\common\trait\AttributeTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

@@ -5,15 +5,15 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\traits;
+namespace froq\common\trait;
 
 use Throwable, Error, Exception;
 
 /**
  * Throwable Trait.
  *
- * @package froq\common\traits
- * @object  froq\common\traits\AttributeTrait
+ * @package froq\common\trait
+ * @object  froq\common\trait\AttributeTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
@@ -23,11 +23,12 @@ trait ThrowableTrait
      * Constructor.
      *
      * @param string|Throwable  $message
-     * @param string|array|null $messageParams
+     * @param any|null          $messageParams
      * @param int|null          $code
      * @param Throwable|null    $previous
      */
-    public function __construct($message = null, $messageParams = null, int $code = null, Throwable $previous = null)
+    public function __construct(string|Throwable $message = null, $messageParams = null, int $code = null,
+        Throwable $previous = null)
     {
         if ($message != null) {
             if (is_string($message)) {

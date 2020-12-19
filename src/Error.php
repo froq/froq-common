@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace froq\common;
 
-use froq\common\traits\ThrowableTrait;
+use froq\common\trait\ThrowableTrait;
 use Error as _Error;
 
 /**

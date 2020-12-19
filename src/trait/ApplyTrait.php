@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\traits;
+namespace froq\common\trait;
 
 use Closure;
 
@@ -15,8 +15,8 @@ use Closure;
  * Represents a trait which is able to access the hidden properties/methods for modify/call
  * purposes in owner class.
  *
- * @package froq\common\traits
- * @object  froq\common\traits\ApplyTrait
+ * @package froq\common\trait
+ * @object  froq\common\trait\ApplyTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

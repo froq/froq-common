@@ -5,15 +5,15 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\traits;
+namespace froq\common\trait;
 
 /**
  * Data Load Trait.
  *
  * Represents a trait which carries `$data` property and is able to load/unload actions.
  *
- * @package froq\common\traits
- * @object  froq\common\traits\DataLoadTrait
+ * @package froq\common\trait
+ * @object  froq\common\trait\DataLoadTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   5.0
  */

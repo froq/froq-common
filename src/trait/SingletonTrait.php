@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\traits;
+namespace froq\common\trait;
 
 /**
  * Singleton Trait.
  *
- * @package froq\common\traits
- * @object  froq\common\traits\SingletonTrait
+ * @package froq\common\trait
+ * @object  froq\common\trait\SingletonTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   1.0
  */

@@ -5,15 +5,15 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\traits;
+namespace froq\common\trait;
 
 /**
  * Data Magic Trait.
  *
  * Represents a trait entity which carries `$data` property and is able to set/get/isset/unset actions.
  *
- * @package froq\common\traits
- * @object  froq\common\traits\DataMagicTrait
+ * @package froq\common\trait
+ * @object  froq\common\trait\DataMagicTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   5.0
  */

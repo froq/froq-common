@@ -5,15 +5,15 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\traits;
+namespace froq\common\trait;
 
 /**
  * Data Trait.
  *
  * Represents a trait entity which carries `$data` property and is able to set/get/empty/count actions.
  *
- * @package froq\common\traits
- * @object  froq\common\traits\DataTrait
+ * @package froq\common\trait
+ * @object  froq\common\trait\DataTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   5.0
  */

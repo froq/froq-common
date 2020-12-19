@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\traits;
+namespace froq\common\trait;
 
 use froq\util\Objects;
 use ReflectionObject;
@@ -15,8 +15,8 @@ use ReflectionObject;
  *
  * Represents a trait entity for objects which may be used with ConstantTrait, PropertyTrait and MethodTrait.
  *
- * @package froq\common\traits
- * @object  froq\common\traits\ObjectTrait
+ * @package froq\common\trait
+ * @object  froq\common\trait\ObjectTrait
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   5.0
  */

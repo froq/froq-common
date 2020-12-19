@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace froq\common\objects;
 
-use froq\common\traits\StaticClassTrait;
+use froq\common\trait\StaticClassTrait;
 
 /**
  * Static Class.
@@ -25,7 +25,7 @@ class StaticClass
 {
     /**
      * Static class trait.
-     * @see froq\common\traits\StaticClassTrait
+     * @see froq\common\trait\StaticClassTrait
      */
     use StaticClassTrait;
 }
