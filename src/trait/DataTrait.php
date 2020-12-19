@@ -102,7 +102,7 @@ trait DataTrait
     }
 
     /**
-     * Get data stack.
+     * Get data stack or an empty array.
      *
      * @return array
      */
