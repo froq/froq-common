@@ -54,15 +54,10 @@ trait ThrowableTrait
 
                     $message = vsprintf($message, $messageParams);
                 }
-            } elseif (is_object($message) && $message instanceof Throwable) {
+            } else {
                 $code     = $code ?? $message->getCode();
                 $previous = $previous ?? $message->getPrevious();
                 $message  = $message->getMessage();
-            } else {
-                throw new Exception(sprintf(
-                    "Invalid message type '%s' given to '%s', valids are: string, Throwable",
-                    get_type($message), static::class
-                ));
             }
         }
 

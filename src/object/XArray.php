@@ -97,25 +97,25 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
         // Validate keys.
         foreach (array_keys($data) as $key) {
             if ($key === '') throw new InvalidKeyException(
-                "Empty keys not allowed for '%s' object", static::class
+                'Empty keys not allowed for %s object', static::class
             );
 
             switch ($types) {
                 case 'int|string':
                     is_int($key) || is_string($key) || throw new InvalidKeyException(
-                        "Only int|string keys allowed for '%s' object, %s given",
+                        'Only int|string keys allowed for object %s, %s given',
                         [static::class, get_type($key)]
                     );
                     break;
                 case 'int':
                     is_int($key) || throw new InvalidKeyException(
-                        "Only int keys allowed for '%s' object, %s given",
+                        'Only int keys allowed for object %s, %s given',
                         [static::class, get_type($key)]
                     );
                     break;
                 case 'string':
                     is_string($key) || throw new InvalidKeyException(
-                        "Only string keys allowed for '%s' object, %s given",
+                        'Only string keys allowed for object %s, %s given',
                         [static::class, get_type($key)]
                     );
                     break;
