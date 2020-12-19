@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\interfaces;
+namespace froq\common\interface;
 
 /**
  * Jsonable.
  *
- * @package froq\common\interfaces
- * @object  froq\common\interfaces\Jsonable
+ * @package froq\common\interface
+ * @object  froq\common\interface\Jsonable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   1.0
  */
@@ -19,6 +19,7 @@ interface Jsonable
 {
     /**
      * To json.
+     *
      * @param  int $flags
      * @return string
      */

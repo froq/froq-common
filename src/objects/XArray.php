@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace froq\common\objects;
 
-use froq\common\interfaces\{Arrayable, Objectable, Jsonable, Yieldable};
+use froq\common\interface\{Arrayable, Objectable, Jsonable, Yieldable};
 use froq\common\exception\InvalidKeyException;
 use froq\util\Arrays;
 use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
@@ -288,7 +288,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
-     * @inheritDoc froq\common\interfaces\Arrayable
+     * @inheritDoc froq\common\interface\Arrayable
      */
     public function toArray(): array
     {
@@ -296,7 +296,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
-     * @inheritDoc froq\common\interfaces\Objectable
+     * @inheritDoc froq\common\interface\Objectable
      */
     public function toObject(): object
     {
@@ -304,7 +304,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
-     * @inheritDoc froq\common\interfaces\Jsonable
+     * @inheritDoc froq\common\interface\Jsonable
      */
     public function toJson(int $flags = 0): string
     {
@@ -312,7 +312,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
-     * @inheritDoc froq\common\interfaces\Yieldable
+     * @inheritDoc froq\common\interface\Yieldable
      */
     public function yield(): iterable
     {

@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\interfaces;
+namespace froq\common\interface;
 
 /**
  * Sizable.
  *
- * @package froq\common\interfaces
- * @object  froq\common\interfaces\Sizable
+ * @package froq\common\interface
+ * @object  froq\common\interface\Sizable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   1.0
  */
@@ -19,6 +19,7 @@ interface Sizable
 {
     /**
      * Size.
+     *
      * @return int
      */
     public function size(): int;

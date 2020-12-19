@@ -5,21 +5,22 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\interfaces;
+namespace froq\common\interface;
 
 /**
- * Floatable.
+ * Boolable.
  *
- * @package froq\common\interfaces
- * @object  froq\common\interfaces\Floatable
+ * @package froq\common\interface
+ * @object  froq\common\interface\Boolable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   5.0
  */
-interface Floatable
+interface Boolable
 {
     /**
-     * To float.
-     * @return float
+     * To bool.
+     *
+     * @return bool
      */
-    public function toFloat(): float;
+    public function toBool(): bool;
 }

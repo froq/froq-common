@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace froq\common\objects;
 
-use froq\common\interfaces\Stringable;
+use froq\common\interface\Stringable;
 use froq\util\Objects;
 use ReflectionObject;
 
@@ -135,7 +135,7 @@ abstract class XObject implements Stringable
     }
 
     /**
-     * @inheritDoc froq\common\interfaces\Stringable
+     * @inheritDoc froq\common\interface\Stringable
      */
     public function toString(): string
     {

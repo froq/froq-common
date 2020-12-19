@@ -5,21 +5,22 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\interfaces;
+namespace froq\common\interface;
 
 /**
- * Boolable.
+ * Intable.
  *
- * @package froq\common\interfaces
- * @object  froq\common\interfaces\Boolable
+ * @package froq\common\interface
+ * @object  froq\common\interface\Intable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   5.0
  */
-interface Boolable
+interface Intable
 {
     /**
-     * To bool.
-     * @return bool
+     * To int.
+     *
+     * @return int
      */
-    public function toBool(): bool;
+    public function toInt(): int;
 }

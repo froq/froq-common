@@ -5,21 +5,22 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\interfaces;
+namespace froq\common\interface;
 
 /**
  * Cloneable.
  *
- * @package froq\common\interfaces
- * @object  froq\common\interfaces\Cloneable
+ * @package froq\common\interface
+ * @object  froq\common\interface\Cloneable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
 interface Cloneable
 {
     /**
-     * To clone.
+     * Clone.
+     *
      * @return static
      */
-    public function toClone(): static;
+    public function clone(): static;
 }

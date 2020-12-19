@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\interfaces;
+namespace froq\common\interface;
 
 /**
  * Yieldable.
  *
- * @package froq\common\interfaces
- * @object  froq\common\interfaces\Yieldable
+ * @package froq\common\interface
+ * @object  froq\common\interface\Yieldable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
@@ -19,6 +19,7 @@ interface Yieldable
 {
     /**
      * Yield.
+     *
      * @return iterable
      */
     public function yield(): iterable;

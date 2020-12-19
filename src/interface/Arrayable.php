@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\interfaces;
+namespace froq\common\interface;
 
 /**
  * Arrayable.
  *
- * @package froq\common\interfaces
- * @object  froq\common\interfaces\Arrayable
+ * @package froq\common\interface
+ * @object  froq\common\interface\Arrayable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   1.0
  */
@@ -19,6 +19,7 @@ interface Arrayable
 {
     /**
      * To array.
+     *
      * @return array
      */
     public function toArray(): array;

@@ -5,21 +5,22 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\interfaces;
+namespace froq\common\interface;
 
 /**
- * Intable.
+ * Floatable.
  *
- * @package froq\common\interfaces
- * @object  froq\common\interfaces\Intable
+ * @package froq\common\interface
+ * @object  froq\common\interface\Floatable
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   5.0
  */
-interface Intable
+interface Floatable
 {
     /**
-     * To int.
-     * @return int
+     * To float.
+     *
+     * @return float
      */
-    public function toInt(): int;
+    public function toFloat(): float;
 }
