@@ -5,15 +5,15 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\exceptions;
+namespace froq\common\exception;
 
 use froq\common\Exception;
 
 /**
  * Logic Exception.
  *
- * @package froq\common\exceptions
- * @object  froq\common\exceptions\LogicException
+ * @package froq\common\exception
+ * @object  froq\common\exception\LogicException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

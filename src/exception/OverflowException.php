@@ -5,15 +5,15 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\exceptions;
+namespace froq\common\exception;
 
-use froq\common\exceptions\RuntimeException;
+use froq\common\exception\RuntimeException;
 
 /**
  * Overflow Exception.
  *
- * @package froq\common\exceptions
- * @object  froq\common\exceptions\OverflowException
+ * @package froq\common\exception
+ * @object  froq\common\exception\OverflowException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

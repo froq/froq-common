@@ -5,15 +5,15 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\exceptions;
+namespace froq\common\exception;
 
-use froq\common\exceptions\RuntimeException;
+use froq\common\exception\RuntimeException;
 
 /**
- * Out Of Bounds Exception.
+ * Out-Of-Bounds Exception.
  *
- * @package froq\common\exceptions
- * @object  froq\common\exceptions\OutOfBoundsException
+ * @package froq\common\exception
+ * @object  froq\common\exception\OutOfBoundsException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

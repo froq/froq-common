@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace froq\common\objects;
 
 use froq\common\interfaces\{Arrayable, Objectable, Jsonable, Yieldable};
-use froq\common\exceptions\InvalidKeyException;
+use froq\common\exception\InvalidKeyException;
 use froq\util\Arrays;
 use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
 
@@ -77,6 +77,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
      * @param  array<int|string, any> $data
      * @param  bool                   $reset
      * @return self (static)
+     * @throws froq\common\exception\InvalidKeyException
      */
     public function setData(array $data, bool $reset = true): self
     {

@@ -5,15 +5,15 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\exceptions;
+namespace froq\common\exception;
 
-use froq\common\exceptions\LogicException;
+use froq\common\exception\LogicException;
 
 /**
  * Invalid Value Exception.
  *
- * @package froq\common\exceptions
- * @object  froq\common\exceptions\InvalidValueException
+ * @package froq\common\exception
+ * @object  froq\common\exception\InvalidValueException
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
