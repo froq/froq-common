@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\objects;
+namespace froq\common\object;
 
 use froq\common\Exception;
 use ReflectionClass;
@@ -13,11 +13,11 @@ use ReflectionClass;
 /**
  * Enum.
  *
- * Represents an enumerable set of named values. We all wish it was a part of PHP but not chance
- * (RFC: http://wiki.php.net/rfc/enum).
+ * Represents an enumerable set of named values.
+ * We wish it was a part of PHP but not (RFC: http://wiki.php.net/rfc/enum).
  *
- * @package froq\common\objects
- * @object  froq\common\objects\Enum
+ * @package froq\common\object
+ * @object  froq\common\object\Enum
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\objects;
+namespace froq\common\object;
 
 use froq\common\interface\Stringable;
 use froq\util\Objects;
@@ -17,8 +17,8 @@ use ReflectionObject;
  * Represents an abstract but extended object that provides couple of utility methods which access
  * and check object's attributes.
  *
- * @package froq\common\objects
- * @object  froq\common\objects\XObject
+ * @package froq\common\object
+ * @object  froq\common\object\XObject
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

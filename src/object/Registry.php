@@ -5,15 +5,15 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\objects;
+namespace froq\common\object;
 
 use froq\common\Exception;
 
 /**
  * Registry.
  *
- * @package froq\common\objects
- * @object  froq\common\objects\Registry
+ * @package froq\common\object
+ * @object  froq\common\object\Registry
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */

@@ -5,28 +5,32 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\objects;
+namespace froq\common\object;
 
 use froq\common\Exception;
 
 /**
  * Factory.
  *
- * @package froq\common\objects
- * @object  froq\common\objects\Factory
+ * Represents a factory entity that creates instances from given class names (with arguments), and caches
+ * using singleton way when requested.
+ *
+ * @package froq\common\object
+ * @object  froq\common\object\Factory
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
 final class Factory
 {
     /**
-     * Instances, singleton stack.
+     * Singleton stack.
      * @var array<string, object>
      */
     private static array $instances = [];
 
     /**
-     * Init.
+     * Create an instance from given class with its arguments.
+     *
      * @param  string $class
      * @param  ...    $classArgs
      * @return object
@@ -34,15 +38,16 @@ final class Factory
      */
     public static function init(string $class, ...$classArgs): object
     {
-        if (!class_exists($class)) {
-            throw new Exception("No class exists such '%s'", $class);
+        if (class_exists($class)) {
+            return new $class(...$classArgs);
         }
 
-        return new $class(...$classArgs);
+        throw new Exception('No class exists such ' . $class);
     }
 
     /**
-     * Init single.
+     * Create a single instance from given class with its arguments if it was not created previously.
+     *
      * @param  string $class
      * @param  ...    $classArgs
      * @return object
@@ -50,10 +55,10 @@ final class Factory
      */
     public static function initSingle(string $class, ...$classArgs): object
     {
-        if (!class_exists($class)) {
-            throw new Exception("No class exists such '%s'", $class);
+        if (class_exists($class)) {
+            return self::$instances[$class] ??= new $class(...$classArgs);
         }
 
-        return self::$instances[$class] ??= new $class(...$classArgs);
+        throw new Exception('No class exists such ' . $class);
     }
 }

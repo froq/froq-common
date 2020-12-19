@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\objects;
+namespace froq\common\object;
 
 use froq\common\interface\{Arrayable, Objectable, Jsonable, Yieldable};
 use froq\common\exception\InvalidKeyException;
@@ -18,8 +18,8 @@ use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
  * Represents an abstract but extended array object that provides couple of utility methods which
  * access, modify or iterate `$data` items.
  *
- * @package froq\common\objects
- * @object  froq\common\objects\XArray
+ * @package froq\common\object
+ * @object  froq\common\object\XArray
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
