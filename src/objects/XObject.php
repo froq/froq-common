@@ -12,17 +12,17 @@ use froq\util\Objects;
 use ReflectionObject;
 
 /**
- * Abstract Object.
+ * X-Object.
  *
  * Represents an abstract but extended object that provides couple of utility methods which access
  * and check object's attributes.
  *
  * @package froq\common\objects
- * @object  froq\common\objects\AbstractObject
+ * @object  froq\common\objects\XObject
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-abstract class AbstractObject implements Stringable
+abstract class XObject implements Stringable
 {
     /**
      * Get name.

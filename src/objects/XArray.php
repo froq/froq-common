@@ -13,17 +13,17 @@ use froq\util\Arrays;
 use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
 
 /**
- * Abstract Array.
+ * X-Array.
  *
  * Represents an abstract but extended array object that provides couple of utility methods which
  * access, modify or iterate `$data` items.
  *
  * @package froq\common\objects
- * @object  froq\common\objects\AbstractArray
+ * @object  froq\common\objects\XArray
  * @author  Kerem Güneş <k-gun@mail.com>
  * @since   4.0
  */
-abstract class AbstractArray implements Arrayable, Objectable, Jsonable, Yieldable,
+abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     Countable, JsonSerializable, IteratorAggregate
 {
     /**
