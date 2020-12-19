@@ -26,16 +26,13 @@ use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
 abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     Countable, JsonSerializable, IteratorAggregate
 {
-    /**
-     * Data.
-     * @var array<int|string, any>
-     */
+    /** @var array<int|string, any> */
     protected array $data = [];
 
     /**
      * Constructor.
-     * @param  iterable|null $data
-     * @throws froq\common\exceptions\InvalidArgumentException
+     *
+     * @param iterable|null $data
      */
     public function __construct(iterable $data = null)
     {
