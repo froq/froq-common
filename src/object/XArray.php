@@ -172,7 +172,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Copy to.
-     * @param  self (static) $array
+     * @param  static (self) $array
      * @return static
      */
     public function copyTo(self $array): static

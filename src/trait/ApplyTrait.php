@@ -25,7 +25,7 @@ trait ApplyTrait
     /**
      * Apply.
      * @param  callable $func
-     * @return self (static)
+     * @return self
      */
     public final function apply(callable $func): self
     {
