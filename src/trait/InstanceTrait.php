@@ -17,7 +17,7 @@ namespace froq\common\trait;
  */
 trait InstanceTrait
 {
-    /** @var self */
+    /** @var self (static) */
     private static self $instance;
 
     /**

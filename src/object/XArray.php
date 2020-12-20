@@ -46,7 +46,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Clone.
-     * @return self (static)
+     * @return static
      */
     public function __clone()
     {
@@ -76,7 +76,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
      * Set data.
      * @param  array<int|string, any> $data
      * @param  bool                   $reset
-     * @return self (static)
+     * @return self
      * @throws froq\common\exception\InvalidKeyException
      */
     public function setData(array $data, bool $reset = true): self
@@ -146,8 +146,8 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
      * Set data default.
      * @param  array $default
      * @param  bool  $nullCheck
-     * @return self (static)
-     * @since 4.1
+     * @return self
+     * @since  4.1
      */
     public function setDataDefault(array $default, bool $nullCheck = true): self
     {
@@ -163,9 +163,9 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Copy.
-     * @return self (static)
+     * @return static
      */
-    public function copy(): self
+    public function copy(): static
     {
         return new static($this->data);
     }
@@ -173,9 +173,9 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     /**
      * Copy to.
      * @param  self (static) $array
-     * @return self (static)
+     * @return static
      */
-    public function copyTo(self $array): self
+    public function copyTo(self $array): static
     {
         $array->setData($this->data);
 
@@ -227,7 +227,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     /**
      * Each.
      * @param  callable $func
-     * @return self (static)
+     * @return self
      */
     public function each(callable $func): self
     {
@@ -242,7 +242,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
      * Filter.
      * @param  callable|null $func
      * @param  bool          $keepKeys
-     * @return self (static)
+     * @return self
      */
     public function filter(callable $func = null, bool $keepKeys = true): self
     {
@@ -255,7 +255,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
      * Map.
      * @param  callable $func
      * @param  bool     $keepKeys
-     * @return self (static)
+     * @return self
      */
     public function map(callable $func, bool $keepKeys = true): self
     {
@@ -348,9 +348,9 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     /**
      * From.
      * @param  iterable $data
-     * @return self (static)
+     * @return static
      */
-    public static function from(iterable $data): self
+    public static function from(iterable $data): static
     {
         return new static($data);
     }
