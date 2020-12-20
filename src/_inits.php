@@ -39,7 +39,7 @@ declare(strict_types=1);
             $values = [];
             $search = substr($key, 0, -1);
             foreach ($GLOBALS['@froq'] as $key => $value) {
-                if ($search && strpos($key, $search) === 0) {
+                if ($search && str_starts_with($key, $search)) {
                     $values[$key] = $value;
                 }
             }
