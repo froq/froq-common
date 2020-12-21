@@ -12,6 +12,8 @@ use froq\common\Exception;
 /**
  * Registry.
  *
+ * Represents an registry entity which is able to store/unstore objects only.
+ *
  * @package froq\common\object
  * @object  froq\common\object\Registry
  * @author  Kerem Güneş <k-gun@mail.com>
@@ -35,7 +37,7 @@ final class Registry
     }
 
     /**
-     * Check whether an object is in registery stack.
+     * Check whether an object is in registry stack.
      *
      * @param  string $id
      * @return bool
@@ -46,7 +48,7 @@ final class Registry
     }
 
     /**
-     * Put an object into registery stack.
+     * Put an object into registry stack.
      *
      * @param  string $id
      * @param  object $object
@@ -79,7 +81,7 @@ final class Registry
     }
 
     /**
-     * Remove a registered object from registery stack.
+     * Remove a registered object from registry stack.
      *
      * @param  string $id
      * @return void

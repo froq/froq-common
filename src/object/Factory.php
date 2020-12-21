@@ -12,7 +12,7 @@ use froq\common\Exception;
 /**
  * Factory.
  *
- * Represents a factory entity that creates instances from given class names (with arguments), and caches
+ * Represents a factory entity that creates instances from given class names with/without arguments, and caches
  * using singleton way when requested.
  *
  * @package froq\common\object
@@ -22,14 +22,11 @@ use froq\common\Exception;
  */
 final class Factory
 {
-    /**
-     * Singleton stack.
-     * @var array<string, object>
-     */
+    /** @var array<string, object> */
     private static array $instances = [];
 
     /**
-     * Create an instance from given class with its arguments.
+     * Create an instance from given class with/without its arguments.
      *
      * @param  string $class
      * @param  ...    $classArgs
@@ -46,7 +43,8 @@ final class Factory
     }
 
     /**
-     * Create a single instance from given class with its arguments if it was not created previously.
+     * Create a single instance from given class with/without its arguments and cache it or return cached one
+     * that was previously created.
      *
      * @param  string $class
      * @param  ...    $classArgs

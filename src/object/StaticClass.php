@@ -12,8 +12,8 @@ use froq\common\trait\StaticClassTrait;
 /**
  * Static Class.
  *
- * Represents an uninitializable static class that forbid initializations of the extender classes.
- * We wish it was a part of PHP but not (RFC: http://wiki.php.net/rfc/static-classes).
+ * Represents an uninitializable static class that forbid initializations of the extender classes. We wish it was
+ * part of PHP but not (http://wiki.php.net/rfc/static-classes).
  *
  * @package froq\common\object
  * @object  froq\common\object\StaticClass
@@ -23,8 +23,6 @@ use froq\common\trait\StaticClassTrait;
  */
 class StaticClass
 {
-    /**
-     * @see froq\common\trait\StaticClassTrait
-     */
+    /** @see froq\common\trait\StaticClassTrait */
     use StaticClassTrait;
 }

@@ -14,8 +14,8 @@ use ReflectionObject;
 /**
  * X-Object.
  *
- * Represents an abstract but extended object that provides couple of utility methods which access
- * and check object's attributes.
+ * Represents an abstract but extended object that provides couple of utility methods which access and
+ * check object's attributes.
  *
  * @package froq\common\object
  * @object  froq\common\object\XObject
@@ -26,6 +26,7 @@ abstract class XObject implements Stringable
 {
     /**
      * Get name.
+     *
      * @return string
      */
     public final function getName(): string
@@ -35,6 +36,7 @@ abstract class XObject implements Stringable
 
     /**
      * Get short name.
+     *
      * @return string
      */
     public final function getShortName(): string
@@ -44,6 +46,7 @@ abstract class XObject implements Stringable
 
     /**
      * Get namespace.
+     *
      * @param  bool $baseOnly
      * @return string
      */
@@ -54,6 +57,7 @@ abstract class XObject implements Stringable
 
     /**
      * Get reflection.
+     *
      * @return ReflectionObject
      */
     public final function getReflection(): ReflectionObject
@@ -63,6 +67,7 @@ abstract class XObject implements Stringable
 
     /**
      * Get constants.
+     *
      * @param  bool $all
      * @return array<string, array>|null
      * @since  5.0
@@ -74,6 +79,7 @@ abstract class XObject implements Stringable
 
     /**
      * Get properties.
+     *
      * @param  bool $all
      * @return array<string, array>|null
      * @since  5.0
@@ -85,6 +91,7 @@ abstract class XObject implements Stringable
 
     /**
      * Get methods.
+     *
      * @param  bool $all
      * @return array<string, array>|null
      * @since  5.0
@@ -96,6 +103,7 @@ abstract class XObject implements Stringable
 
     /**
      * Is type of.
+     *
      * @param  string $class
      * @return bool
      */
@@ -106,6 +114,7 @@ abstract class XObject implements Stringable
 
     /**
      * Is type of self.
+     *
      * @return bool
      */
     public final function isTypeOfSelf(): bool
@@ -115,6 +124,7 @@ abstract class XObject implements Stringable
 
     /**
      * Is instance of.
+     *
      * @param  string|object $class
      * @return bool
      */
@@ -125,6 +135,7 @@ abstract class XObject implements Stringable
 
     /**
      * Is equal to.
+     *
      * @param  object $object
      * @param  bool   $strict
      * @return bool

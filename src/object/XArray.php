@@ -46,6 +46,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Clone.
+     *
      * @return static
      */
     public function __clone()
@@ -55,6 +56,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Serialize.
+     *
      * @return array
      */
     public function __serialize()
@@ -64,6 +66,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Unserialize.
+     *
      * @param  array $data
      * @return void
      */
@@ -74,6 +77,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Set data.
+     *
      * @param  array<int|string, any> $data
      * @param  bool                   $reset
      * @return self
@@ -135,6 +139,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Get data.
+     *
      * @return array
      */
     public function getData(): array
@@ -144,6 +149,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Set data default.
+     *
      * @param  array $default
      * @param  bool  $nullCheck
      * @return self
@@ -163,6 +169,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Copy.
+     *
      * @return static
      */
     public function copy(): static
@@ -172,6 +179,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Copy to.
+     *
      * @param  static (self) $array
      * @return static
      */
@@ -183,7 +191,8 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
-     * Empty.
+     * Empty data stack.
+     *
      * @return self
      * @since  5.0
      */
@@ -198,7 +207,8 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
-     * Is empty.
+     * Check whether data stack is empty.
+     *
      * @return bool
      */
     public function isEmpty(): bool
@@ -207,7 +217,8 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
-     * Keys.
+     * Get keys of data stack.
+     *
      * @return array<int|string>
      */
     public function keys(): array
@@ -216,7 +227,8 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
-     * Values.
+     * Get values of data stack.
+     *
      * @return array<any>
      */
     public function values(): array
@@ -225,7 +237,8 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
-     * Each.
+     * Run given function on each item of data stack.
+     *
      * @param  callable $func
      * @return self
      */
@@ -240,6 +253,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Filter.
+     *
      * @param  callable|null $func
      * @param  bool          $keepKeys
      * @return self
@@ -253,6 +267,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Map.
+     *
      * @param  callable $func
      * @param  bool     $keepKeys
      * @return self
@@ -266,6 +281,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Reduce.
+     *
      * @param  any      $carry
      * @param  callable $func
      * @return any
@@ -277,6 +293,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
 
     /**
      * Aggregate.
+     *
      * @param  callable   $func
      * @param  array|null $carry
      * @return array
@@ -346,7 +363,8 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
-     * From.
+     * Create an instance with given data.
+     *
      * @param  iterable $data
      * @return static
      */

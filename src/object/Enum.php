@@ -13,8 +13,7 @@ use ReflectionClass;
 /**
  * Enum.
  *
- * Represents an enumerable set of named values.
- * We wish it was a part of PHP but not (RFC: http://wiki.php.net/rfc/enum).
+ * Represents an enumerable set of named values. We wish it was part of PHP but not (http://wiki.php.net/rfc/enum).
  *
  * @package froq\common\object
  * @object  froq\common\object\Enum
@@ -40,7 +39,7 @@ class Enum
     }
 
     /**
-     * Get value as string.
+     * Magic - string: get value as string.
      *
      * @return string
      */
@@ -144,7 +143,7 @@ class Enum
     }
 
     /**
-     * Check whether a name is valid or not.
+     * Check whether a name is valid.
      *
      * @param  string $name
      * @return bool
@@ -155,7 +154,7 @@ class Enum
     }
 
     /**
-     * Check whether a value is valid or not.
+     * Check whether a value is valid.
      *
      * @param  any  $value
      * @param  bool $strict
@@ -167,7 +166,7 @@ class Enum
     }
 
     /**
-     * Get a name of value, or returns null when no value exists.
+     * Get a name of value or return null when no value exists.
      *
      * @param  any $value
      * @return string|null
@@ -181,7 +180,7 @@ class Enum
     }
 
     /**
-     * Get value of a name, or returns null when no name exists.
+     * Get value of a name or return null when no name exists.
      *
      * @param  string $name
      * @return any|null
@@ -193,7 +192,7 @@ class Enum
     }
 
     /**
-     * Generate an array copy of defined constants with key/value pairs.
+     * Generate an array copy of defined constants with key/value pairs or return cacheed one.
      *
      * @return array<string, any>
      */
