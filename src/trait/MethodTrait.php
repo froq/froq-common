@@ -22,7 +22,8 @@ use froq\util\Objects;
 trait MethodTrait
 {
     /**
-     * Has method.
+     * Check whether a method exists on user object.
+     *
      * @param  string $name
      * @return bool
      */
@@ -32,31 +33,34 @@ trait MethodTrait
     }
 
     /**
-     * Get method.
+     * Get a detailed method info.
+     *
      * @param  string $name
-     * @return ?array<string, any>
+     * @return array<string, any>|null
      */
-    public final function getMethod(string $name): ?array
+    public final function getMethod(string $name): array|null
     {
         return Objects::getMethod($this, $name);
     }
 
     /**
      * Get methods.
+     *
      * @param  bool $all
-     * @return ?array<string, array>
+     * @return array<string, array>|null
      */
-    public final function getMethods(bool $all = true): ?array
+    public final function getMethods(bool $all = true): array|null
     {
         return Objects::getMethods($this, $all);
     }
 
     /**
      * Get method names.
+     *
      * @param  bool $all
-     * @return ?array<string>
+     * @return array<string>|null
      */
-    public final function getMethodNames(bool $all = true): ?array
+    public final function getMethodNames(bool $all = true): array|null
     {
         return Objects::getMethodNames($this, $all);
     }

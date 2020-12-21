@@ -10,6 +10,9 @@ namespace froq\common\trait;
 /**
  * Mutation Magic Trait.
  *
+ * Represents a trait entity which provides access method via magic methods for encapsulated properties
+ * with/without strict option on user object.
+ *
  * @package froq\common\trait
  * @object  froq\common\trait\MutationMagicTrait
  * @author  Kerem Güneş <k-gun@mail.com>
@@ -17,14 +20,12 @@ namespace froq\common\trait;
  */
 trait MutationMagicTrait
 {
-    /**
-     * Strict.
-     * @var bool
-     */
+    /** @var bool */
     protected bool $__strict = false;
 
     /**
-     * Set.
+     * Magic - set.
+     *
      * @param  string $name
      * @param  any    $value
      * @return void
@@ -39,7 +40,8 @@ trait MutationMagicTrait
     }
 
     /**
-     * Get.
+     * Magic - set.
+     *
      * @param  string $name
      * @return any|void
      */
@@ -53,7 +55,8 @@ trait MutationMagicTrait
     }
 
     /**
-     * Isset.
+     * Magic - isset.
+     *
      * @param  string $name
      * @return bool|void
      */
@@ -67,7 +70,8 @@ trait MutationMagicTrait
     }
 
     /**
-     * Unset.
+     * Magic - unset.
+     *
      * @param  string $name
      * @return void
      */

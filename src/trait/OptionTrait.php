@@ -17,17 +17,15 @@ namespace froq\common\trait;
  */
 trait OptionTrait
 {
-    /**
-     * Options.
-     * @var array<string, any>
-     */
+    /** @var array<string, any> */
     protected array $options = [];
 
     /**
-     * Option (set/get).
+     * Set/get an option.
+     *
      * @param  string   $key
      * @param  any|null $value
-     * @return any
+     * @return any|null|self
      */
     public final function option(string $key, $value = null)
     {
@@ -36,7 +34,8 @@ trait OptionTrait
     }
 
     /**
-     * Has option.
+     * Check whether an option exists with given key.
+     *
      * @param  string $key
      * @return bool
      */
@@ -46,7 +45,8 @@ trait OptionTrait
     }
 
     /**
-     * Has option value.
+     * Check whether an option was set with given key.
+     *
      * @param  string $key
      * @return bool
      */
@@ -56,7 +56,8 @@ trait OptionTrait
     }
 
     /**
-     * Set option.
+     * Set an option by given key and value.
+     *
      * @param  string $key
      * @param  any    $value
      * @return self
@@ -69,7 +70,8 @@ trait OptionTrait
     }
 
     /**
-     * Get option.
+     * Get an option by given key.
+     *
      * @param  string   $key
      * @param  any|null $default
      * @return any|null
@@ -80,7 +82,8 @@ trait OptionTrait
     }
 
     /**
-     * Remove option.
+     * Remove an option by given key.
+     *
      * @param  string $key
      * @return self
      */
@@ -92,7 +95,8 @@ trait OptionTrait
     }
 
     /**
-     * Set options.
+     * Set options with optional defaults.
+     *
      * @param  array<string, any>|null $options
      * @param  array<string, any>|null $defaults
      * @param  bool                    $recursive
@@ -115,7 +119,8 @@ trait OptionTrait
     }
 
     /**
-     * Get options.
+     * Get options by given keys.
+     *
      * @return array<string>|null $keys
      * @return array<any>
      */
@@ -136,7 +141,8 @@ trait OptionTrait
     }
 
     /**
-     * Remove options.
+     * Remove options by given keys.
+     *
      * @param  array<string> $keys
      * @return self
      */

@@ -22,7 +22,8 @@ use froq\util\Objects;
 trait PropertyTrait
 {
     /**
-     * Has property.
+     * Check whether a property exists on user object.
+     *
      * @param  string $name
      * @return bool
      */
@@ -32,17 +33,19 @@ trait PropertyTrait
     }
 
     /**
-     * Get property.
+     * Get a detailed property info.
+     *
      * @param  string $name
-     * @return ?array<string, any>
+     * @return array<string, any>
      */
-    public final function getProperty(string $name): ?array
+    public final function getProperty(string $name): array
     {
         return Objects::getProperty($this, $name);
     }
 
     /**
-     * Get property value.
+     * Get a property value.
+     *
      * @param  string $name
      * @return any
      */
@@ -53,30 +56,33 @@ trait PropertyTrait
 
     /**
      * Get properties.
+     *
      * @param  bool $all
-     * @return ?array<string, array>
+     * @return array<string, array>
      */
-    public final function getProperties(bool $all = true): ?array
+    public final function getProperties(bool $all = true): array
     {
         return Objects::getProperties($this, $all);
     }
 
     /**
      * Get property names.
+     *
      * @param  bool $all
-     * @return ?array<string>
+     * @return array<string>
      */
-    public final function getPropertyNames(bool $all = true): ?array
+    public final function getPropertyNames(bool $all = true): array
     {
         return Objects::getPropertyNames($this, $all);
     }
 
     /**
      * Get property values.
+     *
      * @param  bool $all
-     * @return ?array<string>
+     * @return array<string>
      */
-    public final function getPropertyValues(bool $all = true, bool $associative = false): ?array
+    public final function getPropertyValues(bool $all = true, bool $associative = false): array
     {
         return Objects::getPropertyValues($this, $all, $associative);
     }

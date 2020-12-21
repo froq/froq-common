@@ -12,6 +12,8 @@ use froq\common\Exception;
 /**
  * Static Class Trait.
  *
+ * Represents a trait entity which is able to forbid initialions on user object.
+ *
  * @package froq\common\trait
  * @object  froq\common\trait\StaticClassTrait
  * @author  Kerem Güneş <k-gun@mail.com>

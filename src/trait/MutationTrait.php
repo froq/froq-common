@@ -10,6 +10,9 @@ namespace froq\common\trait;
 /**
  * Mutation Trait.
  *
+ * Represents a trait entity which provides access method for encapsulated properties with/without strict option
+ * on user object.
+ *
  * @package froq\common\trait
  * @object  froq\common\trait\MutationTrait
  * @author  Kerem Güneş <k-gun@mail.com>
@@ -17,14 +20,12 @@ namespace froq\common\trait;
  */
 trait MutationTrait
 {
-    /**
-     * Strict.
-     * @var bool
-     */
+    /** @var bool */
     protected bool $__strict = false;
 
     /**
-     * Set.
+     * Magic - set.
+     *
      * @param  string $name
      * @param  any    $value
      * @return void
@@ -39,7 +40,8 @@ trait MutationTrait
     }
 
     /**
-     * Get.
+     * Magic - get.
+     *
      * @param  string $name
      * @return any|void
      */
@@ -53,7 +55,8 @@ trait MutationTrait
     }
 
     /**
-     * Isset.
+     * Magic - isset.
+     *
      * @param  string $name
      * @return bool|void
      */
@@ -67,7 +70,8 @@ trait MutationTrait
     }
 
     /**
-     * Unset.
+     * Magic - unset.
+     *
      * @param  string $name
      * @return void
      */

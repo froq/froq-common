@@ -10,6 +10,8 @@ namespace froq\common\trait;
 /**
  * Instance Trait.
  *
+ * Represents a trait entity that used for implementing Singleton pattern.
+ *
  * @package froq\common\trait
  * @object  froq\common\trait\InstanceTrait
  * @author  Kerem Güneş <k-gun@mail.com>

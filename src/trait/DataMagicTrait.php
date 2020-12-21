@@ -29,7 +29,7 @@ trait DataMagicTrait
      * @param  any    $value
      * @return void
      */
-    public function __set(string $key, $value): void
+    public function __set(string $key, $value)
     {
         $this->data[$key] = $value;
     }
@@ -51,7 +51,7 @@ trait DataMagicTrait
      * @param  string $key
      * @return bool
      */
-    public function __isset(string $key): bool
+    public function __isset(string $key)
     {
         return isset($this->data[$key]);
     }
@@ -62,7 +62,7 @@ trait DataMagicTrait
      * @param  string $key
      * @return void
      */
-    public function __unset(string $key): void
+    public function __unset(string $key)
     {
         unset($this->data[$key]);
     }

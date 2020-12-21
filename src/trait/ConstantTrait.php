@@ -22,7 +22,8 @@ use froq\util\Objects;
 trait ConstantTrait
 {
     /**
-     * Has constant.
+     * Check whether a constant exists on user object.
+     *
      * @param  string $name
      * @return bool
      */
@@ -33,17 +34,19 @@ trait ConstantTrait
     }
 
     /**
-     * Get constant.
+     * Get a detailed constant info.
+     *
      * @param  string $name
-     * @return ?array<string, any>
+     * @return array<string, any>|null
      */
-    public final function getConstant(string $name): ?array
+    public final function getConstant(string $name): array|null
     {
         return Objects::getConstant($this, $name);
     }
 
     /**
-     * Get constant value.
+     * Get a constant value.
+     *
      * @param  string $name
      * @return any
      */
@@ -54,30 +57,33 @@ trait ConstantTrait
 
     /**
      * Get constants.
+     *
      * @param  bool $all
-     * @return ?array<string, array>
+     * @return array<string, array>|null
      */
-    public final function getConstants(bool $all = true): ?array
+    public final function getConstants(bool $all = true): array|null
     {
         return Objects::getConstants($this, $all);
     }
 
     /**
      * Get constant names.
+     *
      * @param  bool $all
-     * @return ?array<string>
+     * @return array<string>|null
      */
-    public final function getConstantNames(bool $all = true): ?array
+    public final function getConstantNames(bool $all = true): array|null
     {
         return Objects::getConstantNames($this, $all);
     }
 
     /**
-     * Get constant value.
+     * Get constant values.
+     *
      * @param  bool $all
-     * @return ?array<int|string, any>
+     * @return array<int|string, any>|null
      */
-    public final function getConstantValues(bool $all = true, bool $associative = false): ?array
+    public final function getConstantValues(bool $all = true, bool $associative = false): array|null
     {
         return Objects::getConstantValues($this, $all, $associative);
     }

@@ -12,6 +12,9 @@ use Throwable, Error, Exception;
 /**
  * Throwable Trait.
  *
+ * Represents a trait entity which is used by Error and Exception classes, provides a relaxation getting
+ * rid of `sprintf()` calls for each throw also having some utility methods.
+ *
  * @package froq\common\trait
  * @object  froq\common\trait\AttributeTrait
  * @author  Kerem Güneş <k-gun@mail.com>
@@ -65,7 +68,7 @@ trait ThrowableTrait
     }
 
     /**
-     * String magic.
+     * Magic - string.
      *
      * @return string
      */
@@ -77,7 +80,7 @@ trait ThrowableTrait
     }
 
     /**
-     * Get class of.
+     * Get class of user object.
      *
      * @param  bool $short
      * @return string
@@ -94,7 +97,7 @@ trait ThrowableTrait
     }
 
     /**
-     * Get type of.
+     * Get type of user object.
      *
      * @return string
      */
@@ -104,7 +107,7 @@ trait ThrowableTrait
     }
 
     /**
-     * Gets the trace string of (alias of getTraceAsString()).
+     * Get the trace string of user object (alias of getTraceAsString()).
      *
      * @return string
      */
@@ -114,7 +117,7 @@ trait ThrowableTrait
     }
 
     /**
-     * Gets a string representation of.
+     * Get a string representation of user object.
      *
      * @param  bool $pretty
      * @return string
@@ -146,7 +149,7 @@ trait ThrowableTrait
     }
 
     /**
-     * Checks the self object whether instance of Error or not.
+     * Check user object whether instance of Error.
      *
      * @return bool
      */
@@ -156,7 +159,7 @@ trait ThrowableTrait
     }
 
     /**
-     * Checks the self object whether instance of Exception or not.
+     * Check user object whether instance of Exception.
      *
      * @return bool
      */
@@ -166,7 +169,7 @@ trait ThrowableTrait
     }
 
     /**
-     * Gets last internal error if exists.
+     * Get last internal error if exists.
      *
      * @return array<string, string|int>
      */

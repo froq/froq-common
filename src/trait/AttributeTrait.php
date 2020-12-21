@@ -10,6 +10,8 @@ namespace froq\common\trait;
 /**
  * Attribute Trait.
  *
+ * Represents a trait entity which is able to set, get or check attributes on user object.
+ *
  * @package froq\common\trait
  * @object  froq\common\trait\AttributeTrait
  * @author  Kerem Güneş <k-gun@mail.com>
@@ -17,17 +19,15 @@ namespace froq\common\trait;
  */
 trait AttributeTrait
 {
-    /**
-     * Attribute.
-     * @var array<string, any>
-     */
+    /** @var array<string, any> */
     protected array $attributes = [];
 
     /**
-     * Attribute (set/get).
+     * Get/get an attribute.
+     *
      * @param  string   $name
      * @param  any|null $value
-     * @return any
+     * @return any|null|self
      */
     public final function attribute(string $name, $value = null)
     {
@@ -36,7 +36,8 @@ trait AttributeTrait
     }
 
     /**
-     * Has attribute.
+     * Check whether an attribute exists with given name.
+     *
      * @param  string $name
      * @return bool
      */
@@ -46,7 +47,8 @@ trait AttributeTrait
     }
 
     /**
-     * Has attribute value.
+     * Check whether an attribute was set with given name.
+     *
      * @param  string $name
      * @return bool
      */
@@ -56,7 +58,8 @@ trait AttributeTrait
     }
 
     /**
-     * Set attribute.
+     * Set an attribute with given name and value.
+     *
      * @param  string $name
      * @param  any    $value
      * @return self
@@ -69,7 +72,8 @@ trait AttributeTrait
     }
 
     /**
-     * Get attribute.
+     * Get an attribute with given name.
+     *
      * @param  string   $name
      * @param  any|null $default
      * @return any|null
@@ -80,7 +84,8 @@ trait AttributeTrait
     }
 
     /**
-     * Remove attribute.
+     * Remove an attribute by given name.
+     *
      * @param  string $name
      * @return self
      */
@@ -92,7 +97,8 @@ trait AttributeTrait
     }
 
     /**
-     * Set attributes.
+     * Set attributes with optional defaults.
+     *
      * @param  array<string, any>|null $attributes
      * @param  array<string, any>|null $defaults
      * @param  bool                    $recursive
@@ -115,7 +121,8 @@ trait AttributeTrait
     }
 
     /**
-     * Get attributes.
+     * Get attributes by given names.
+     *
      * @return array<string>|null $names
      * @return array<any>
      */
@@ -136,7 +143,8 @@ trait AttributeTrait
     }
 
     /**
-     * Remove attributes.
+     * Remove attributes by given names.
+     *
      * @param  array<string> $names
      * @return self
      */
