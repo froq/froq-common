@@ -15,7 +15,8 @@ declare(strict_types=1);
     }
 
     /**
-     * Set global.
+     * Set a global variable.
+     *
      * @param  string $key
      * @param  any    $value
      * @return void
@@ -26,7 +27,8 @@ declare(strict_types=1);
     }
 
     /**
-     * Get global.
+     * Get a global variable/variables.
+     *
      * @param  string   $key
      * @param  any|null $default
      * @return any|null
@@ -51,7 +53,8 @@ declare(strict_types=1);
     }
 
     /**
-     * Delete global.
+     * Delete a global variable.
+     *
      * @param  string $key
      * @return void
      * @since  3.0
@@ -65,7 +68,8 @@ declare(strict_types=1);
 // System stuff.
 {
     /**
-     * Ini.
+     * Get an ini directive with bool option.
+     *
      * @param  string   $name
      * @param  any|null $default
      * @param  bool     $bool
@@ -79,17 +83,18 @@ declare(strict_types=1);
             $value = $default;
         }
 
-        static $bools = ['on', 'yes', 'true', '1'];
-
         if ($bool) {
-            $value = $value && in_array(strtolower($value), $bools);
+            $value = $value && in_array(
+                strtolower($value), ['on', 'yes', 'true', '1'], true
+            );
         }
 
         return $value;
     }
 
     /**
-     * Env.
+     * Get an environment variable.
+     *
      * @param  string   $name
      * @param  any|null $default
      * @param  bool     $server_lookup
@@ -123,7 +128,8 @@ declare(strict_types=1);
 // Casting utility stuff.
 {
     /**
-     * Int.
+     * Int caster.
+     *
      * @param  numeric $in
      * @return int
      * @since  3.0
@@ -134,7 +140,8 @@ declare(strict_types=1);
     }
 
     /**
-     * Float.
+     * Float caster.
+     *
      * @param  numeric  $in
      * @param  int|null $precision
      * @return float
@@ -146,7 +153,8 @@ declare(strict_types=1);
     }
 
     /**
-     * String.
+     * String caster.
+     *
      * @param  scalar $in
      * @param  bool   $trim
      * @return string
@@ -158,7 +166,8 @@ declare(strict_types=1);
     }
 
     /**
-     * Bool.
+     * Bool caster.
+     *
      * @param  scalar $in
      * @return bool
      * @since  3.0
@@ -168,10 +177,11 @@ declare(strict_types=1);
         return (bool) $in;
     }
 
-    // function array(): array {} // :(
+    /* function array(): array {} // :( */
 
     /**
-     * Object.
+     * Object caster.
+     *
      * @param  object|array|null $in
      * @return object
      * @since  3.0
@@ -182,7 +192,8 @@ declare(strict_types=1);
     }
 
     /**
-     * Void.
+     * Void caster.
+     *
      * @param  any &...$ins
      * @return void
      * @since  3.0
@@ -198,22 +209,23 @@ declare(strict_types=1);
 // Merge/append/prepend/aggregate.
 {
     /**
-     * Merge.
-     * @param  array $array
-     * @param  ...   $arrays
+     * Merge given values with given array.
+     *
+     * @param  array    $array
+     * @param  any   ...$values
      * @return array
      * @since  4.0
      */
-    function merge(array &$array, ...$arrays): array
+    function merge(array &$array, ...$values): array
     {
-        return ($array = array_merge($array,
-            ...array_map(fn($v) => (array) $v, $arrays)));
+        return ($array = array_merge($array, ...array_map(fn($v) => (array) $v, $values)));
     }
 
     /**
-     * Append.
-     * @param  array &$array
-     * @param  ...    $values
+     * Append given values to given array.
+     *
+     * @param  array   &$array
+     * @param  any   ...$values
      * @return array
      * @since  4.0
      */
@@ -223,9 +235,10 @@ declare(strict_types=1);
     }
 
     /**
-     * Prepend.
-     * @param  array &$array
-     * @param  ...    $values
+     * Prepend given values to given array.
+     *
+     * @param  array   &$array
+     * @param  any   ...$values
      * @return array
      * @since  4.0
      */
@@ -235,7 +248,8 @@ declare(strict_types=1);
     }
 
     /**
-     * Aggregate.
+     * Aggregate given array, optionally with a carry.
+     *
      * @param  array      $array
      * @param  callable   $func
      * @param  array|null $carry
