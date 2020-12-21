@@ -45,7 +45,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
-     * Clone.
+     * Magic - clone.
      *
      * @return static
      */
@@ -55,7 +55,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
-     * Serialize.
+     * Magic - serialize.
      *
      * @return array
      */
@@ -65,7 +65,7 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
-     * Unserialize.
+     * Magic - unserialize.
      *
      * @param  array $data
      * @return void
