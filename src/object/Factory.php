@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) 2015 · Kerem Güneş
- * Apache License 2.0 <https://opensource.org/licenses/apache-2.0>
+ * Apache License 2.0 · http://github.com/froq/froq-common
  */
 declare(strict_types=1);
 
@@ -17,7 +17,7 @@ use froq\common\Exception;
  *
  * @package froq\common\object
  * @object  froq\common\object\Factory
- * @author  Kerem Güneş <k-gun@mail.com>
+ * @author  Kerem Güneş
  * @since   4.0
  */
 final class Factory
