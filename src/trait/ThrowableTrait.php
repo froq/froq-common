@@ -58,9 +58,9 @@ trait ThrowableTrait
                     $message = vsprintf($message, $messageParams);
                 }
             } else {
-                $code     = $code ?? $message->getCode();
-                $previous = $previous ?? $message->getPrevious();
-                $message  = $message->getMessage();
+                $code     ??= $message->getCode();
+                $previous ??= $message->getPrevious() ?: $message; // Use message as previous.
+                $message    = $message->getMessage();
             }
         }
 
@@ -179,7 +179,7 @@ trait ThrowableTrait
         $error = error_get_last();
 
         return [
-            'code'    => $error['type'] ?? null,
+            'code'    => $error['type']    ?? null,
             'message' => $error['message'] ?? 'unknown'
         ];
     }
