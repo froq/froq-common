@@ -168,13 +168,14 @@ class Enum
     /**
      * Get a name of value or return null when no value exists.
      *
-     * @param  any $value
+     * @param  any  $value
+     * @param  bool $strict
      * @return string|null
      * @since  4.7
      */
-    public static final function getNameOf($value)
+    public static final function getNameOf($value, bool $strict = true)
     {
-        $name = array_search($value, self::toArray(), true);
+        $name = array_search($value, self::toArray(), $strict);
 
         return ($name !== false) ? $name : null;
     }
