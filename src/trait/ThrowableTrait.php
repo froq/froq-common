@@ -43,7 +43,7 @@ trait ThrowableTrait
                     $message = vsprintf('Error: %s', $messageParams);
                 }
                 // Eg: throw new Exception('Error: %s', ['The error!'] or ['@error']).
-                elseif ($messageParams) {
+                elseif ($messageParams !== null) {
                     $messageParams = (array) $messageParams;
 
                     foreach ($messageParams as $i => $messageParam) {
