@@ -31,11 +31,11 @@ trait ThrowableTrait
      * @param string|Throwable  $message
      * @param any|null          $messageParams
      * @param int|null          $code
-     * @param Throwable|null    $cause
      * @param Throwable|null    $previous
+     * @param Throwable|null    $cause
      */
     public function __construct(string|Throwable $message = null, $messageParams = null, int $code = null,
-        Throwable $cause = null, Throwable $previous = null)
+        Throwable $previous = null, Throwable $cause = null)
     {
         if ($message != null) {
             if (is_string($message)) {
