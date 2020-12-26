@@ -16,7 +16,7 @@ use Throwable, Error, Exception;
  * rid of `sprintf()` calls for each throw also having some utility methods and cause option.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\AttributeTrait
+ * @object  froq\common\trait\ThrowableTrait
  * @author  Kerem Güneş
  * @since   4.0
  */
