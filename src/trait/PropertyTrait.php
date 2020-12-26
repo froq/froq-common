@@ -36,9 +36,9 @@ trait PropertyTrait
      * Get a detailed property info.
      *
      * @param  string $name
-     * @return array<string, any>
+     * @return array<string, any>|null
      */
-    public final function getProperty(string $name): array
+    public final function getProperty(string $name): array|null
     {
         return Objects::getProperty($this, $name);
     }
@@ -58,9 +58,9 @@ trait PropertyTrait
      * Get properties.
      *
      * @param  bool $all
-     * @return array<string, array>
+     * @return array<string, array>|null
      */
-    public final function getProperties(bool $all = true): array
+    public final function getProperties(bool $all = true): array|null
     {
         return Objects::getProperties($this, $all);
     }
@@ -69,9 +69,9 @@ trait PropertyTrait
      * Get property names.
      *
      * @param  bool $all
-     * @return array<string>
+     * @return array<string>|null
      */
-    public final function getPropertyNames(bool $all = true): array
+    public final function getPropertyNames(bool $all = true): array|null
     {
         return Objects::getPropertyNames($this, $all);
     }
@@ -80,9 +80,9 @@ trait PropertyTrait
      * Get property values.
      *
      * @param  bool $all
-     * @return array<string>
+     * @return array<string>|null
      */
-    public final function getPropertyValues(bool $all = true, bool $associative = false): array
+    public final function getPropertyValues(bool $all = true, bool $associative = false): array|null
     {
         return Objects::getPropertyValues($this, $all, $associative);
     }
