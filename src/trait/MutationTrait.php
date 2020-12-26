@@ -24,7 +24,7 @@ trait MutationTrait
     protected bool $__strict = false;
 
     /**
-     * Magic - set.
+     * Set.
      *
      * @param  string $name
      * @param  any    $value
@@ -40,7 +40,7 @@ trait MutationTrait
     }
 
     /**
-     * Magic - get.
+     * Get.
      *
      * @param  string $name
      * @return any|void
@@ -55,7 +55,7 @@ trait MutationTrait
     }
 
     /**
-     * Magic - isset.
+     * Isset.
      *
      * @param  string $name
      * @return bool|void
@@ -70,7 +70,7 @@ trait MutationTrait
     }
 
     /**
-     * Magic - unset.
+     * Unset.
      *
      * @param  string $name
      * @return void
