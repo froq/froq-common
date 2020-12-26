@@ -63,7 +63,7 @@ trait ThrowableTrait
                 }
             } else {
                 $code     ??= $message->getCode();
-                $previous ??= $message->getPrevious() ?: $message; // Use message as previous.
+                $previous ??= $message; // Use message as previous.
                 $message    = $message->getMessage();
             }
         }
