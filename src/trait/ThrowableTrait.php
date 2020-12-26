@@ -13,7 +13,7 @@ use Throwable, Error, Exception;
  * Throwable Trait.
  *
  * Represents a trait entity which is used by Error and Exception classes, provides a relaxation getting
- * rid of `sprintf()` calls for each throw also having some utility methods.
+ * rid of `sprintf()` calls for each throw also having some utility methods and cause option.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\AttributeTrait
@@ -22,16 +22,20 @@ use Throwable, Error, Exception;
  */
 trait ThrowableTrait
 {
+    /** @var Throwable|null */
+    private Throwable|null $cause;
+
     /**
      * Constructor.
      *
      * @param string|Throwable  $message
      * @param any|null          $messageParams
      * @param int|null          $code
+     * @param Throwable|null    $cause
      * @param Throwable|null    $previous
      */
     public function __construct(string|Throwable $message = null, $messageParams = null, int $code = null,
-        Throwable $previous = null)
+        Throwable $cause = null, Throwable $previous = null)
     {
         if ($message != null) {
             if (is_string($message)) {
@@ -64,6 +68,8 @@ trait ThrowableTrait
             }
         }
 
+        $this->cause = $cause;
+
         parent::__construct((string) $message, (int) $code, $previous);
     }
 
@@ -80,12 +86,61 @@ trait ThrowableTrait
     }
 
     /**
+     * Get cause.
+     *
+     * @return Throwable|null
+     * @since  5.0
+     */
+    public final function getCause(): Throwable|null
+    {
+        return $this->cause;
+    }
+
+    /**
+     * Get causes.
+     *
+     * @return array<Throwable>|null
+     * @since  5.0
+     */
+    public final function getCauses(): array|null
+    {
+        $causes = null;
+
+        if ($cause = $this->getCause()) {
+            $causes[] = $cause;
+
+            while ($root = $cause?->getCause()) {
+                $causes[] = $cause = $root;
+            }
+        }
+
+        return $causes;
+    }
+
+    /**
+     * Get root cause.
+     *
+     * @return Throwable|null
+     * @since  5.0
+     */
+    public final function getRootCause(): Throwable|null
+    {
+        $cause = $this->getCause();
+
+        while ($root = $cause?->getCause()) {
+            $cause = $root;
+        }
+
+        return $cause;
+    }
+
+    /**
      * Get class of user object.
      *
      * @param  bool $short
      * @return string
      */
-    public function getClass(bool $short = false): string
+    public final function getClass(bool $short = false): string
     {
         $class = $this::class;
 
@@ -101,7 +156,7 @@ trait ThrowableTrait
      *
      * @return string
      */
-    public function getType(): string
+    public final function getType(): string
     {
         return $this->isError() ? 'error' : 'exception';
     }
@@ -111,7 +166,7 @@ trait ThrowableTrait
      *
      * @return string
      */
-    public function getTraceString(): string
+    public final function getTraceString(): string
     {
         return $this->getTraceAsString();
     }
@@ -122,7 +177,7 @@ trait ThrowableTrait
      * @param  bool $pretty
      * @return string
      */
-    public function toString(bool $pretty = false): string
+    public final function toString(bool $pretty = false): string
     {
         [$class, $code, $line, $file, $message, $messageTrace] = [
             $this->getClass(), $this->code, $this->line, $this->file,
@@ -153,7 +208,7 @@ trait ThrowableTrait
      *
      * @return bool
      */
-    public function isError(): bool
+    public final function isError(): bool
     {
         return ($this instanceof Error);
     }
@@ -163,7 +218,7 @@ trait ThrowableTrait
      *
      * @return bool
      */
-    public function isException(): bool
+    public final function isException(): bool
     {
         return ($this instanceof Exception);
     }
