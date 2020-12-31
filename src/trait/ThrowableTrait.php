@@ -48,6 +48,8 @@ trait ThrowableTrait
                 }
                 // Eg: throw new Exception('Error: %s', ['The error!'] or ['@error']).
                 elseif ($messageParams !== null) {
+                    // Special formats (quoted string & error).
+                    $message       = str_replace(['%q', '%e'], ["'%s'", '@error'], $message);
                     $messageParams = (array) $messageParams;
 
                     foreach ($messageParams as $i => $messageParam) {
