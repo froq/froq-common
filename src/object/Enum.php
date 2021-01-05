@@ -184,11 +184,14 @@ class Enum
      * Get value of a name or return null when no name exists.
      *
      * @param  string $name
+     * @param  bool   $upper
      * @return any|null
      * @since  4.7
      */
-    public static final function getValueOf(string $name)
+    public static final function getValueOf(string $name, bool $upper = true)
     {
+        $upper && $name = strtoupper($name);
+
         return self::toArray()[$name] ?? null;
     }
 
