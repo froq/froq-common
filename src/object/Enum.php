@@ -170,12 +170,14 @@ class Enum
      *
      * @param  any  $value
      * @param  bool $strict
+     * @param  bool $lower
      * @return string|null
      * @since  4.7
      */
-    public static final function getNameOf($value, bool $strict = true)
+    public static final function getNameOf($value, bool $strict = true, bool $lower = false)
     {
         $name = array_search($value, self::toArray(), $strict);
+        $lower && $name && $name = strtolower($name);
 
         return ($name !== false) ? $name : null;
     }
