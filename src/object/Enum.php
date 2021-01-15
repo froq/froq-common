@@ -180,6 +180,7 @@ class Enum
     public static final function getNameOf($value, bool $strict = true, bool $lower = false)
     {
         $name = array_search($value, self::toArray(), $strict);
+
         $lower && $name && $name = strtolower($name);
 
         return ($name !== false) ? $name : null;
