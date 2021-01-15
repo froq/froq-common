@@ -146,10 +146,13 @@ class Enum
      * Check whether a name is valid.
      *
      * @param  string $name
+     * @param  bool   $upper
      * @return bool
      */
-    public static final function isValidName(string $name): bool
+    public static final function isValidName(string $name, bool $upper = true): bool
     {
+        $upper && $name = strtoupper($name);
+
         return in_array($name, self::getNames(), true);
     }
 
