@@ -149,7 +149,7 @@ class Enum
      * @param  bool   $upper
      * @return bool
      */
-    public static final function isValidName(string $name, bool $upper = true): bool
+    public static final function isValidName(string $name, bool $upper = false): bool
     {
         $upper && $name = strtoupper($name);
 
