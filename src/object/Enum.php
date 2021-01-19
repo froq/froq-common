@@ -194,7 +194,7 @@ class Enum
      * @return any|null
      * @since  4.7
      */
-    public static final function getValueOf(string $name, bool $upper = true)
+    public static final function getValueOf(string $name, bool $upper = false)
     {
         $upper && $name = strtoupper($name);
 
