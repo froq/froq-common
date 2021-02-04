@@ -92,16 +92,6 @@ trait DataTrait
     }
 
     /**
-     * Alias of count().
-     *
-     * @return int
-     */
-    public function size(): int
-    {
-        return $this->count();
-    }
-
-    /**
      * Get data stack or an empty array.
      *
      * @return array
