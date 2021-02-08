@@ -237,6 +237,23 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
+     * Get entries of data stack.
+     *
+     * @return array<array>
+     * @since  5.0
+     */
+    public function entries(): array
+    {
+        $ret = [];
+
+        foreach ($this->data as $key => $value) {
+            $ret[] = [$key, $value];
+        }
+
+        return $ret;
+    }
+
+    /**
      * Run given function on each item of data stack.
      *
      * @param  callable $func
