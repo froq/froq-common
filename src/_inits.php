@@ -216,7 +216,7 @@ declare(strict_types=1);
      * @return array
      * @since  4.0
      */
-    function merge(array &$array, ...$values): array
+    function merge(array $array, ...$values): array
     {
         return ($array = array_merge($array, ...array_map(fn($v) => (array) $v, $values)));
     }
@@ -224,12 +224,12 @@ declare(strict_types=1);
     /**
      * Append given values to given array.
      *
-     * @param  array   &$array
+     * @param  array    $array
      * @param  any   ...$values
      * @return array
      * @since  4.0
      */
-    function append(array &$array, ...$values): array
+    function append(array $array, ...$values): array
     {
         return array_append($array, ...$values);
     }
@@ -237,12 +237,12 @@ declare(strict_types=1);
     /**
      * Prepend given values to given array.
      *
-     * @param  array   &$array
+     * @param  array    $array
      * @param  any   ...$values
      * @return array
      * @since  4.0
      */
-    function prepend(array &$array, ...$values): array
+    function prepend(array $array, ...$values): array
     {
         return array_prepend($array, ...$values);
     }
