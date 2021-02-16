@@ -25,7 +25,7 @@ trait DataTrait
     /**
      * Set/get data stack.
      *
-     * @param  array|null $data
+     * @param  array $data
      * @return array|self|null
      */
     public function data(array $data = []): array|self|null
