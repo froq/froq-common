@@ -28,7 +28,7 @@ trait DataTrait
      * @param  array|null $data
      * @return array|self|null
      */
-    public function data(array $data = null): array|self|null
+    public function data(array $data = []): array|self|null
     {
         if (func_num_args()) {
             return $this->setData($data);
