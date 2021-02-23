@@ -218,7 +218,7 @@ declare(strict_types=1);
      */
     function merge(array $array, ...$values): array
     {
-        return ($array = array_merge($array, ...array_map(fn($v) => (array) $v, $values)));
+        return array_merge($array, ...array_map(fn($value) => (array) $value, $values));
     }
 
     /**
