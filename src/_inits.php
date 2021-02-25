@@ -222,6 +222,20 @@ declare(strict_types=1);
     }
 
     /**
+     * Aggregate given array, optionally with a carry.
+     *
+     * @param  array      $array
+     * @param  callable   $func
+     * @param  array|null $carry
+     * @return array
+     * @since  4.4
+     */
+    function aggregate(array $array, callable $func, array $carry = null): array
+    {
+        return array_aggregate($array, $func, $carry);
+    }
+
+    /**
      * Append given values to given array.
      *
      * @param  array &$array
@@ -245,20 +259,6 @@ declare(strict_types=1);
     function prepend(array &$array, ...$values): array
     {
         return array_prepend($array, ...$values);
-    }
-
-    /**
-     * Aggregate given array, optionally with a carry.
-     *
-     * @param  array      $array
-     * @param  callable   $func
-     * @param  array|null $carry
-     * @return array
-     * @since  4.4
-     */
-    function aggregate(array $array, callable $func, array $carry = null): array
-    {
-        return array_aggregate($array, $func, $carry);
     }
 }
 
