@@ -224,12 +224,12 @@ declare(strict_types=1);
     /**
      * Append given values to given array.
      *
-     * @param  array    $array
-     * @param  any   ...$values
+     * @param  array &$array
+     * @param  ...    $values
      * @return array
      * @since  4.0
      */
-    function append(array $array, ...$values): array
+    function append(array &$array, ...$values): array
     {
         return array_append($array, ...$values);
     }
@@ -237,12 +237,12 @@ declare(strict_types=1);
     /**
      * Prepend given values to given array.
      *
-     * @param  array    $array
-     * @param  any   ...$values
+     * @param  array &$array
+     * @param  ...    $values
      * @return array
      * @since  4.0
      */
-    function prepend(array $array, ...$values): array
+    function prepend(array &$array, ...$values): array
     {
         return array_prepend($array, ...$values);
     }
