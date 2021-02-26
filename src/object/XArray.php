@@ -333,6 +333,10 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
         return Arrays::aggregate($this->data, $func, $carry);
     }
 
+    /** Aliases. */
+    public function array()  { return $this->toArray(); }
+    public function object() { return $this->toObject(); }
+
     /**
      * @inheritDoc froq\common\interface\Arrayable
      */
