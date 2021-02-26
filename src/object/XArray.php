@@ -297,6 +297,18 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     }
 
     /**
+     * Map all items as given given.
+     *
+     * @param  string $type
+     * @return self
+     * @since  5.0
+     */
+    public function mapAs(string $type): self
+    {
+        return $this->map(fn($v) => settype($v, $type) ? $v : $v);
+    }
+
+    /**
      * Reduce.
      *
      * @param  any      $carry
