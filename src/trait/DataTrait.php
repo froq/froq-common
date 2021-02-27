@@ -39,11 +39,15 @@ trait DataTrait
     /**
      * Get data only by given keys.
      *
-     * @param  array $keys
+     * @param  array|string $keys
      * @return array
      */
-    public function dataOnly(array $keys): array
+    public function dataOnly(array|string $keys): array
     {
+        if (is_string($keys)) {
+            $keys = explode(' ', $keys);
+        }
+
         return array_select($this->toArray(), $keys, combine: true);
     }
 
