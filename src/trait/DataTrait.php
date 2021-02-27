@@ -37,6 +37,17 @@ trait DataTrait
     }
 
     /**
+     * Get data only by given keys.
+     *
+     * @param  array $keys
+     * @return array
+     */
+    public function dataOnly(array $keys): array
+    {
+        return array_select($this->toArray(), $keys, combine: true);
+    }
+
+    /**
      * Set data stack.
      *
      * @param  array $data
