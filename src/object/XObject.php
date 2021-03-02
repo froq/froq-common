@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace froq\common\object;
 
-use froq\common\interface\Stringable;
+use froq\common\interface\{Arrayable, Stringable};
 use froq\util\Objects;
 use ReflectionObject;
 
@@ -143,6 +143,14 @@ abstract class XObject implements Stringable
     public final function isEqualTo(object $object, bool $strict = false): bool
     {
         return !$strict ? ($this == $object) : ($this === $object);
+    }
+
+    /**
+     * @inheritDoc froq\common\interface\Arrayable
+     */
+    public function toArray(): array
+    {
+        return get_class_properties($this, scope_check: true);
     }
 
     /**
