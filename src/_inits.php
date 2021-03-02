@@ -130,24 +130,25 @@ declare(strict_types=1);
     /**
      * Int caster.
      *
-     * @param  numeric $in
+     * @param  any  $in
+     * @param  bool $abs
      * @return int
      * @since  3.0
      */
-    function int($in): int
+    function int($in, bool $abs = false): int
     {
-        return (int) $in;
+        return !$abs ? (int) $in : abs((int) $in);
     }
 
     /**
      * Float caster.
      *
-     * @param  numeric  $in
-     * @param  int|null $precision
+     * @param  any $in
+     * @param  int $precision
      * @return float
      * @since  3.0
      */
-    function float($in, int $precision = null): float
+    function float($in, int $precision = 0): float
     {
         return !$precision ? (float) $in : round((float) $in, $precision);
     }
@@ -155,8 +156,8 @@ declare(strict_types=1);
     /**
      * String caster.
      *
-     * @param  scalar $in
-     * @param  bool   $trim
+     * @param  any  $in
+     * @param  bool $trim
      * @return string
      * @since  3.0
      */
@@ -168,7 +169,7 @@ declare(strict_types=1);
     /**
      * Bool caster.
      *
-     * @param  scalar $in
+     * @param  any $in
      * @return bool
      * @since  3.0
      */
