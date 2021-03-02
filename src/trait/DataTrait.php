@@ -115,4 +115,8 @@ trait DataTrait
     {
         return $this->data ?? [];
     }
+
+    /** Shorties. */
+    public function array()  { return $this->toArray(); }
+    public function object() { return (object) $this->toArray(); }
 }
