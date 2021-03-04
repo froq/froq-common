@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace froq\common\object;
 
-use froq\common\interface\{Arrayable, Objectable, Jsonable, Yieldable};
+use froq\common\interface\{Arrayable, Objectable, Listable, Jsonable, Yieldable};
 use froq\common\exception\InvalidKeyException;
 use froq\util\Arrays;
 use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
@@ -23,7 +23,7 @@ use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
  * @author  Kerem Güneş
  * @since   4.0
  */
-abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
+abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yieldable,
     Countable, JsonSerializable, IteratorAggregate
 {
     /** @var array<int|string, any> */
@@ -336,6 +336,14 @@ abstract class XArray implements Arrayable, Objectable, Jsonable, Yieldable,
     /** Aliases. */
     public function array()  { return $this->toArray(); }
     public function object() { return $this->toObject(); }
+
+    /**
+     * @inheritDoc froq\common\interface\Listable
+     */
+    public function toList(): array
+    {
+        return array_values($this->data);
+    }
 
     /**
      * @inheritDoc froq\common\interface\Arrayable
