@@ -25,7 +25,7 @@ trait DataAccessTrait
     /**
      * @inheritDoc ArrayAccess
      */
-    public final function offsetExists($key)
+    public function offsetExists($key)
     {
         return isset($this->data[$key]);
     }
@@ -33,7 +33,7 @@ trait DataAccessTrait
     /**
      * @inheritDoc ArrayAccess
      */
-    public final function offsetSet($key, $value)
+    public function offsetSet($key, $value)
     {
         $this->data[$key] = $value;
     }
@@ -41,7 +41,7 @@ trait DataAccessTrait
     /**
      * @inheritDoc ArrayAccess
      */
-    public final function offsetGet($key)
+    public function offsetGet($key)
     {
         return $this->data[$key] ?? null;
     }
@@ -49,7 +49,7 @@ trait DataAccessTrait
     /**
      * @inheritDoc ArrayAccess
      */
-    public final function offsetUnset($key)
+    public function offsetUnset($key)
     {
         unset($this->data[$key]);
     }

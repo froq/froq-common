@@ -28,7 +28,7 @@ trait DataLoadTrait
      * @param  array $data
      * @return self
      */
-    public final function load(array $data): self
+    public function load(array $data): self
     {
         foreach ($data as $key => $value) {
             $this->data[$key] = $value;
@@ -42,7 +42,7 @@ trait DataLoadTrait
      *
      * @return self
      */
-    public final function unload(): self
+    public function unload(): self
     {
         $this->data = [];
 
