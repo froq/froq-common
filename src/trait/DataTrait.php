@@ -75,6 +75,21 @@ trait DataTrait
     }
 
     /**
+     * Update data stack.
+     *
+     * @param  array $data
+     * @return self
+     */
+    public function updateData(array $data): self
+    {
+        foreach ($data as $key => $value) {
+            $this->data[$key] = $value;
+        }
+
+        return $this;
+    }
+
+    /**
      * Check data empty state.
      *
      * @return bool
