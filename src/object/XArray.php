@@ -168,6 +168,20 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     }
 
     /**
+     * Reset data, without type/read-only checks like in setData().
+     *
+     * @param  array $data
+     * @return self
+     * @since  5.0
+     */
+    public function resetData(array $data): self
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
      * Copy.
      *
      * @return static
