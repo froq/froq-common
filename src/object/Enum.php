@@ -102,6 +102,21 @@ class Enum
     }
 
     /**
+     * Set/get value.
+     *
+     * @param  any|null $value
+     * @return any|null
+     * @since  5.0
+     */
+    public function value($value = null)
+    {
+        if (func_num_args()) {
+            $this->setValue($value);
+        }
+        return $this->getValue();
+    }
+
+    /**
      * Set value.
      *
      * @param  any $value
@@ -127,7 +142,7 @@ class Enum
      *
      * @return array<string>
      */
-    public static final function getNames(): array
+    public static final function names(): array
     {
         return array_keys(self::toArray());
     }
@@ -137,7 +152,7 @@ class Enum
      *
      * @return array<any>
      */
-    public static final function getValues(): array
+    public static final function values(): array
     {
         return array_values(self::toArray());
     }
@@ -149,11 +164,11 @@ class Enum
      * @param  bool   $upper
      * @return bool
      */
-    public static final function isValidName(string $name, bool $upper = false): bool
+    public static final function validName(string $name, bool $upper = false): bool
     {
         $upper && $name = strtoupper($name);
 
-        return in_array($name, self::getNames(), true);
+        return in_array($name, self::names(), true);
     }
 
     /**
@@ -163,21 +178,21 @@ class Enum
      * @param  bool $strict
      * @return bool
      */
-    public static final function isValidValue($value, bool $strict = true): bool
+    public static final function validValue($value, bool $strict = true): bool
     {
-        return in_array($value, self::getValues(), $strict);
+        return in_array($value, self::values(), $strict);
     }
 
     /**
      * Get a name of value or return null when no value exists.
      *
      * @param  any  $value
-     * @param  bool $strict
      * @param  bool $lower
+     * @param  bool $strict
      * @return string|null
      * @since  4.7
      */
-    public static final function getNameOf($value, bool $strict = true, bool $lower = false)
+    public static final function nameOf($value, bool $lower = false, bool $strict = true)
     {
         $name = array_search($value, self::toArray(), $strict);
 
@@ -194,7 +209,7 @@ class Enum
      * @return any|null
      * @since  4.7
      */
-    public static final function getValueOf(string $name, bool $upper = false)
+    public static final function valueOf(string $name, bool $upper = false)
     {
         $upper && $name = strtoupper($name);
 
