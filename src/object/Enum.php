@@ -192,7 +192,7 @@ class Enum
      * @return string|null
      * @since  4.7
      */
-    public static final function nameOf($value, bool $lower = false, bool $strict = true)
+    public static final function nameOf($value, bool $lower = false, bool $strict = true): string|null
     {
         $name = array_search($value, self::toArray(), $strict);
 
