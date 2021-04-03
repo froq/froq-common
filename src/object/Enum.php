@@ -158,6 +158,23 @@ class Enum
     }
 
     /**
+     * Get all constant entries.
+     *
+     * @return array<array>
+     * @since  5.0
+     */
+    public static final function entries(): array
+    {
+        $ret = [];
+
+        foreach (self::toArray() as $name => $value) {
+            $ret[] = [$name, $value];
+        }
+
+        return $ret;
+    }
+
+    /**
      * Check whether a name is valid.
      *
      * @param  string $name
