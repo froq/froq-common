@@ -91,9 +91,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
         // Get key type(s) from child, or self for this method.
         static $getTypes; $getTypes ??= fn() =>
             grep((new \ReflectionMethod(static::class, 'setData'))->getDocComment(),
-                '~@param +array<([^,]+).*> +\$data~') ??
-            grep((new \ReflectionMethod(self::class, 'setData'))->getDocComment(),
-                '~@param +array<([^,]+).*> +\$data~')
+                '~@param +array<([^,]+).*> +\$data~') ?? 'int|string'
         ;
 
         $types = $getTypes();
