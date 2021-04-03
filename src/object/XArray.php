@@ -150,16 +150,33 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     /**
      * Set data default.
      *
-     * @param  array $default
+     * @param  int|string $key
+     * @param  any        $value
+     * @param  bool       $nullCheck
+     * @return self
+     * @since  5.0 Replaced with setDataDefaults().
+     */
+    public function setDataDefault(int|string $key, $value, bool $nullCheck = true): self
+    {
+        $defaults = [$key => $value];
+
+        return self::setDataDefaults($defaults, $nullCheck);
+    }
+
+    /**
+     * Set data defaults.
+     *
+     * @param  array $defaults
      * @param  bool  $nullCheck
      * @return self
-     * @since  4.1
+     * @since  4.1, 5.0
      */
-    public function setDataDefault(array $default, bool $nullCheck = true): self
+    public function setDataDefaults(array $defaults, bool $nullCheck = true): self
     {
-        foreach ($default as $key => $value) {
+        foreach ($defaults as $key => $value) {
             $ok = $nullCheck ? isset($this->data[$key])
                              : array_key_exists($key, $this->data);
+
             // Set default if not ok.
             $ok || $this->data[$key] = $value;
         }
