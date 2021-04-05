@@ -395,7 +395,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      */
     public function toJson(int $flags = 0): string
     {
-        return json_encode($this->data, $flags);
+        return (string) json_encode($this->data, $flags);
     }
 
     /**
