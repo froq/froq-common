@@ -290,7 +290,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      */
     public function each(callable $func): self
     {
-        foreach ($this->data as $key => $value) {
+        foreach ($this->data as $key => &$value) {
             $func($value, $key);
         }
 
