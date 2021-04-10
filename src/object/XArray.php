@@ -367,6 +367,31 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     public function object() { return $this->toObject(); }
 
     /**
+     * Check whether data stack contains given value.
+     *
+     * @param  any  $value
+     * @param  bool $strict
+     * @return bool
+     * @since  5.0
+     */
+    public function contains($value, bool $strict = false): bool
+    {
+        return array_value_exists($value, $this->data, $strict);
+    }
+
+    /**
+     * Check whether data stack contains given key.
+     *
+     * @param  int|string $key
+     * @return bool
+     * @since  5.0
+     */
+    public function containsKey(int|string $key): bool
+    {
+        return array_key_exists($key, $this->data);
+    }
+
+    /**
      * @inheritDoc froq\common\interface\Listable
      */
     public function toList(): array
