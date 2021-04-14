@@ -293,6 +293,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
         foreach ($this->data as $key => &$value) {
             $func($value, $key);
         }
+        unset($value);
 
         return $this;
     }
