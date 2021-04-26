@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace froq\common\object;
 
 use froq\common\interface\{Arrayable, Objectable, Listable, Jsonable, Yieldable};
-use froq\common\exception\InvalidKeyException;
+use froq\common\exception\{InvalidKeyException, InvalidArgumentException, RuntimeException};
 use froq\util\Arrays;
 use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
 
@@ -293,6 +293,8 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
         foreach ($this->data as $key => &$value) {
             $func($value, $key);
         }
+
+        // Drop ref.
         unset($value);
 
         return $this;
@@ -327,7 +329,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     }
 
     /**
-     * Map all items as given given.
+     * Map all data items as given type.
      *
      * @param  string $type
      * @return self
@@ -335,7 +337,40 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      */
     public function mapAs(string $type): self
     {
-        return $this->map(fn($v) => settype($v, $type) ? $v : $v);
+        // Check given type for proper error message, not like settype()'s like.
+        preg_match($pattern = '~^(int|float|string|bool|array|object|null)$~', $type)
+            || throw new InvalidArgumentException('Invalid type `%s`, valid type pattern: %s', [$type, $pattern]);
+
+        return $this->map(function ($item) use ($type) {
+            settype($item, $type);
+
+            return $item;
+        });
+    }
+
+    /**
+     * Map all data items to given class.
+     *
+     * @notice This method must be used on list-data containing objects, not single-dimensions.
+     * @param  string $class
+     * @return self
+     * @since  5.0
+     */
+    public function mapTo(string $class): self
+    {
+        class_exists($class) || throw new RuntimeException('Class `%s` not exists', [$class]);
+
+        $object = new $class();
+
+        return $this->map(function ($item) use ($object) {
+            $clone = clone $object;
+
+            foreach ($item as $key => $value) {
+                $clone->{$key} = $value;
+            }
+
+            return $clone;
+        });
     }
 
     /**
