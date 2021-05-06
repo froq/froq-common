@@ -22,7 +22,7 @@ use ReflectionObject;
  * @author  Kerem Güneş
  * @since   4.0
  */
-abstract class XObject implements Stringable
+abstract class XObject implements Arrayable, Stringable
 {
     /**
      * Get name.
