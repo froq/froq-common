@@ -1,18 +1,17 @@
 {
     "name": "froq/froq-common",
-    "homepage": "https://github.com/froq/froq-common",
+    "homepage": "http://github.com/froq/froq-common",
     "description": "Froq! Common.",
     "keywords": ["froq", "common"],
-    "license": "MIT",
-    "authors": [
-        {"name": "Kerem Güneş", "email": "k-gun@mail.com"}
-    ],
+    "license": "Apache-2.0",
+    "authors": [{"name": "Kerem Güneş"}],
     "require": {
-        "php": "^7.4",
-        "froq/froq-util": "^4.0"
+        "php": "^8.0",
+        "froq/froq-util": "^5.0",
+        "froq/froq-collection": "^5.0"
     },
     "autoload": {
         "classmap": ["src/"],
-           "files": ["src/inits.php"]
+           "files": ["src/_inits.php"]
     }
 }
