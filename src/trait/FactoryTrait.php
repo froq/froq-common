@@ -23,7 +23,7 @@ trait FactoryTrait
     private static self $instance;
 
     /**
-     * Create a static instance.
+     * Create a static (user class) instance.
      *
      * @param  ... $args
      * @return static
@@ -34,12 +34,12 @@ trait FactoryTrait
     }
 
     /**
-     * Create a single static instance.
+     * Create a static (user class) instance as singleton.
      *
      * @param  ... $args
      * @return static
      */
-    public static final function initSingle(...$args): static
+    public static final function initOnce(...$args): static
     {
         return self::$instance ??= new static(...$args);
     }

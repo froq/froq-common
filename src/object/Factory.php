@@ -43,15 +43,15 @@ final class Factory
     }
 
     /**
-     * Create a single instance from given class with/without its arguments and cache it or return cached one
-     * that was previously created.
+     * Create an instance from given class as singleton with/without its arguments and cache it or return
+     * cached one that was previously created.
      *
      * @param  string $class
      * @param  ...    $classArgs
      * @return object
      * @throws froq\common\Exception
      */
-    public static function initSingle(string $class, ...$classArgs): object
+    public static function initOnce(string $class, ...$classArgs): object
     {
         if (class_exists($class)) {
             return self::$instances[$class] ??= new $class(...$classArgs);
