@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace froq\common\object;
 
-use froq\common\interface\{Arrayable, Objectable, Listable, Jsonable, Yieldable};
+use froq\common\interface\{Arrayable, Objectable, Listable, Jsonable, Yieldable, Sortable};
 use froq\common\exception\{InvalidKeyException, InvalidArgumentException, RuntimeException};
 use froq\util\Arrays;
 use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
@@ -23,7 +23,7 @@ use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
  * @author  Kerem Güneş
  * @since   4.0
  */
-abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yieldable,
+abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yieldable, Sortable,
     Countable, JsonSerializable, IteratorAggregate
 {
     /** @var array<int|string, any> */
@@ -82,6 +82,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      * @param  bool                   $reset
      * @return self
      * @throws froq\common\exception\InvalidKeyException
+     * @causes froq\collection\AccessException
      */
     public function setData(array $data, bool $reset = true): self
     {
@@ -309,9 +310,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      */
     public function filter(callable $func = null, bool $keepKeys = true): self
     {
-        $data = Arrays::filter($this->data, $func, $keepKeys);
-
-        return $this->setData($data);
+        return $this->setData(Arrays::filter($this->data, $func, $keepKeys));
     }
 
     /**
@@ -323,9 +322,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      */
     public function map(callable $func, bool $keepKeys = true): self
     {
-        $data = Arrays::map($this->data, $func, $keepKeys);
-
-        return $this->setData($data);
+        return $this->setData(Arrays::map($this->data, $func, $keepKeys));
     }
 
     /**
@@ -467,6 +464,35 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
         foreach ($this->data as $key => $value) {
             yield $key => $value;
         }
+    }
+
+    /**
+     * Sort.
+     *
+     * @inheritDoc froq\common\interface\Sortable
+     *
+     * @param  callable|null $func
+     * @param  int           $flags
+     * @param  bool          $keepKeys
+     * @return self
+     * @since  5.3
+     */
+    public function sort(callable $func = null, int $flags = 0, bool $keepKeys = true): self
+    {
+        return $this->setData(Arrays::sort($this->data, $func, $flags, $keepKeys));
+    }
+
+    /**
+     * Sort key.
+     *
+     * @param  callable|null $func
+     * @param  int           $flags
+     * @return self
+     * @since  5.3
+     */
+    public function sortKey(callable $func = null, int $flags = 0): self
+    {
+        return $this->setData(Arrays::sortKey($this->data, $func, $flags));
     }
 
     /**

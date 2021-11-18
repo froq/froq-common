@@ -21,8 +21,7 @@ interface Sortable
      * Sort.
      *
      * @param  callable|null $func
-     * @param  int           $flags
      * @return any
      */
-    public function sort(callable $func = null, int $flags = 0);
+    public function sort(callable $func = null);
 }
