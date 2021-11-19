@@ -9,8 +9,9 @@ namespace froq\common\object;
 
 use froq\common\interface\{Arrayable, Objectable, Listable, Jsonable, Yieldable, Sortable};
 use froq\common\exception\{InvalidKeyException, InvalidArgumentException, RuntimeException};
+use froq\collection\iterator\{ArrayIterator, ReverseArrayIterator};
 use froq\util\Arrays;
-use Traversable, Countable, JsonSerializable, IteratorAggregate, ArrayIterator;
+use Traversable, Countable, JsonSerializable, IteratorAggregate;
 
 /**
  * X-Array.
@@ -425,6 +426,17 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     }
 
     /**
+     * Check whether data stack is a list.
+     *
+     * @return bool
+     * @since  5.4
+     */
+    public function isList(): bool
+    {
+        return is_list($this->data);
+    }
+
+    /**
      * @inheritDoc froq\common\interface\Listable
      */
     public function toList(): array
@@ -458,11 +470,20 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
 
     /**
      * @inheritDoc froq\common\interface\Yieldable
+     *
+     * @param bool $reverse @since 5.4
+     * @note Return is permissive.
      */
-    public function yield(): iterable
+    public function yield(bool $reverse = false): iterable
     {
-        foreach ($this->data as $key => $value) {
-            yield $key => $value;
+        if (!$reverse) {
+            foreach ($this->data as $key => $value) {
+                yield $key => $value;
+            }
+        } else {
+            for (end($this->data); ($key = key($this->data)) !== null; prev($this->data)) {
+                yield $key => current($this->data);
+            }
         }
     }
 
@@ -513,10 +534,20 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
 
     /**
      * @inheritDoc IteratorAggregate
+     * @note Return is permissive.
      */
     public function getIterator(): iterable
     {
         return new ArrayIterator($this->data);
+    }
+
+    /**
+     * @since 5.4
+     * @note Return is permissive.
+     */
+    public function getReverseIterator(): iterable
+    {
+        return new ReverseArrayIterator($this->data);
     }
 
     /**
