@@ -8,10 +8,11 @@ declare(strict_types=1);
 namespace froq\common\object;
 
 use froq\common\interface\{Arrayable, Objectable, Listable, Jsonable, Yieldable};
-use froq\common\exception\{InvalidKeyException, InvalidArgumentException, RuntimeException};
+use froq\common\exception\InvalidKeyException;
 use froq\collection\iterator\{ArrayIterator, ReverseArrayIterator};
+use froq\collection\trait\{SortTrait, EachTrait, FilterTrait, MapTrait, ReduceTrait, AggregateTrait, ReadOnlyTrait};
 use froq\util\Arrays;
-use Traversable, Countable, JsonSerializable, IteratorAggregate;
+use Traversable, Countable, JsonSerializable, IteratorAggregate, ReflectionMethod;
 
 /**
  * X-Array.
@@ -27,6 +28,17 @@ use Traversable, Countable, JsonSerializable, IteratorAggregate;
 abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yieldable,
     Countable, JsonSerializable, IteratorAggregate
 {
+    /** @see froq\collection\trait\SortTrait */
+    /** @see froq\collection\trait\EachTrait */
+    /** @see froq\collection\trait\FilterTrait */
+    /** @see froq\collection\trait\MapTrait */
+    /** @see froq\collection\trait\ReduceTrait */
+    /** @see froq\collection\trait\AggregateTrait */
+    use SortTrait, EachTrait, FilterTrait, MapTrait, ReduceTrait, AggregateTrait;
+
+    /** @see froq\collection\trait\ReadOnlyTrait */
+    use ReadOnlyTrait;
+
     /** @var array<int|string, any> */
     protected array $data = [];
 
@@ -87,12 +99,11 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      */
     public function setData(array $data, bool $reset = true): self
     {
-        // Not exists for all children.
-        method_exists($this, 'readOnlyCheck') && $this->readOnlyCheck();
+        $this->readOnlyCheck();
 
         // Get key type(s) from child, or self for this method.
         static $getTypes; $getTypes ??= fn() =>
-            grep((new \ReflectionMethod(static::class, 'setData'))->getDocComment(),
+            grep((new ReflectionMethod(static::class, 'setData'))->getDocComment() ?: '',
                 '~@param +array<([^,]+).*> +\$data~') ?? 'int|string'
         ;
 
@@ -185,7 +196,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     }
 
     /**
-     * Reset data, without type/read-only checks like in setData().
+     * Reset data, without type/read-only checks in setData().
      *
      * @param  array $data
      * @return self
@@ -229,8 +240,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      */
     public function empty(): self
     {
-        // Not exists for all children.
-        method_exists($this, 'readOnlyCheck') && $this->readOnlyCheck();
+        $this->readOnlyCheck();
 
         $this->data = [];
 
@@ -283,122 +293,6 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
 
         return $ret;
     }
-
-    /**
-     * Run given function on each item of data stack.
-     *
-     * @param  callable $func
-     * @return self
-     */
-    public function each(callable $func): self
-    {
-        foreach ($this->data as $key => &$value) {
-            $func($value, $key);
-        }
-
-        // Drop ref.
-        unset($value);
-
-        return $this;
-    }
-
-    /**
-     * Filter.
-     *
-     * @param  callable|null $func
-     * @param  bool          $keepKeys
-     * @return self
-     */
-    public function filter(callable $func = null, bool $keepKeys = true): self
-    {
-        return $this->setData(Arrays::filter($this->data, $func, $keepKeys));
-    }
-
-    /**
-     * Map.
-     *
-     * @param  callable $func
-     * @param  bool     $keepKeys
-     * @return self
-     */
-    public function map(callable $func, bool $keepKeys = true): self
-    {
-        return $this->setData(Arrays::map($this->data, $func, $keepKeys));
-    }
-
-    /**
-     * Map all data items as given type.
-     *
-     * @param  string $type
-     * @return self
-     * @since  5.0
-     */
-    public function mapAs(string $type): self
-    {
-        // Check given type for proper error message, not like settype()'s like.
-        preg_match($pattern = '~^(int|float|string|bool|array|object|null)$~', $type)
-            || throw new InvalidArgumentException('Invalid type `%s`, valid type pattern: %s', [$type, $pattern]);
-
-        return $this->map(function ($item) use ($type) {
-            settype($item, $type);
-
-            return $item;
-        });
-    }
-
-    /**
-     * Map all data items to given class.
-     *
-     * @notice This method must be used on list-data containing objects, not single-dimensions.
-     * @param  string $class
-     * @return self
-     * @since  5.0
-     */
-    public function mapTo(string $class): self
-    {
-        class_exists($class) || throw new RuntimeException('Class `%s` not exists', [$class]);
-
-        $object = new $class();
-
-        return $this->map(function ($item) use ($object) {
-            $clone = clone $object;
-
-            foreach ($item as $key => $value) {
-                $clone->{$key} = $value;
-            }
-
-            return $clone;
-        });
-    }
-
-    /**
-     * Reduce.
-     *
-     * @param  any      $carry
-     * @param  callable $func
-     * @return any
-     */
-    public function reduce($carry, callable $func)
-    {
-        return Arrays::reduce($this->data, $carry, $func);
-    }
-
-    /**
-     * Aggregate.
-     *
-     * @param  callable   $func
-     * @param  array|null $carry
-     * @return array
-     * @since  4.5
-     */
-    public function aggregate(callable $func, array $carry = null): array
-    {
-        return Arrays::aggregate($this->data, $func, $carry);
-    }
-
-    /** Aliases. */
-    public function array()  { return $this->toArray(); }
-    public function object() { return $this->toObject(); }
 
     /**
      * Check whether data stack contains given value.
@@ -488,33 +382,6 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     }
 
     /**
-     * Sort.
-     *
-     * @param  callable|null $func
-     * @param  int           $flags
-     * @param  bool          $keepKeys
-     * @return self
-     * @since  5.3
-     */
-    public function sort(callable $func = null, int $flags = 0, bool $keepKeys = true): self
-    {
-        return $this->setData(Arrays::sort($this->data, $func, $flags, $keepKeys));
-    }
-
-    /**
-     * Sort key.
-     *
-     * @param  callable|null $func
-     * @param  int           $flags
-     * @return self
-     * @since  5.3
-     */
-    public function sortKey(callable $func = null, int $flags = 0): self
-    {
-        return $this->setData(Arrays::sortKey($this->data, $func, $flags));
-    }
-
-    /**
      * @inheritDoc Countable
      */
     public function count(): int
@@ -558,4 +425,9 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     {
         return new static($data);
     }
+
+    /** Aliases. */
+    public function array() { return $this->toArray(); }
+    public function object() { return $this->toObject(); }
+    public function json(...$args) { return $this->toJson(...$args); }
 }
