@@ -83,7 +83,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      * @param  bool                   $reset
      * @return self
      * @throws froq\common\exception\InvalidKeyException
-     * @causes froq\collection\AccessException
+     * @causes froq\common\exception\ReadOnlyException
      */
     public function setData(array $data, bool $reset = true): self
     {
