@@ -10,7 +10,8 @@ namespace froq\common\trait;
 /**
  * Data Trait.
  *
- * Represents a trait entity which carries `$data` property and is able to set/get/empty/count actions.
+ * Represents a trait that provides some access & modify actions for those classes hold
+ * a `$data` property as array.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\DataTrait
@@ -19,40 +20,35 @@ namespace froq\common\trait;
  */
 trait DataTrait
 {
-    /** @var array $data */
-    protected array $data;
-
     /**
-     * Set/get data stack.
+     * Set/get data array.
      *
      * @param  array $data
-     * @return array|self|null
+     * @return array|self
      */
-    public function data(array $data = []): array|self|null
+    public function data(array $data = []): array|self
     {
-        if (func_num_args()) {
-            return $this->setData($data);
-        }
-        return $this->getData();
+        return func_num_args() ? $this->setData($data) : $this->getData();
     }
 
     /**
-     * Get data only by given keys.
+     * Get data fields by given keys.
      *
      * @param  array|string $keys
+     * @param  bool         $combine
      * @return array
      */
-    public function dataOnly(array|string $keys): array
+    public function dataOnly(array|string $keys, bool $combine = true): array
     {
         if (is_string($keys)) {
-            $keys = explode(' ', $keys);
+            $keys = mb_split(' +', $keys);
         }
 
-        return array_select($this->toArray(), $keys, combine: true);
+        return (array) array_select($this->data, $keys, combine: $combine);
     }
 
     /**
-     * Set data stack.
+     * Set data array.
      *
      * @param  array $data
      * @return self
@@ -65,17 +61,17 @@ trait DataTrait
     }
 
     /**
-     * Get data stack.
+     * Get data array.
      *
-     * @return array|null
+     * @return array
      */
-    public function getData(): array|null
+    public function getData(): array
     {
-        return $this->data ?? null;
+        return $this->data;
     }
 
     /**
-     * Update data stack.
+     * Update data array.
      *
      * @param  array $data
      * @return self
@@ -88,50 +84,4 @@ trait DataTrait
 
         return $this;
     }
-
-    /**
-     * Check data empty state.
-     *
-     * @return bool
-     */
-    public function isEmpty(): bool
-    {
-        return empty($this->data);
-    }
-
-    /**
-     * Empty data stack.
-     *
-     * @return self
-     */
-    public function empty(): self
-    {
-        $this->data = [];
-
-        return $this;
-    }
-
-    /**
-     * Get count/size of data stack.
-     *
-     * @return int
-     */
-    public function count(): int
-    {
-        return count($this->toArray());
-    }
-
-    /**
-     * Get data stack or an empty array.
-     *
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return $this->data ?? [];
-    }
-
-    /** Shorties. */
-    public function array()  { return $this->toArray(); }
-    public function object() { return (object) $this->toArray(); }
 }

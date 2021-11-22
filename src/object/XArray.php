@@ -7,10 +7,12 @@ declare(strict_types=1);
 
 namespace froq\common\object;
 
-use froq\common\interface\{Arrayable, Objectable, Listable, Jsonable, Yieldable};
 use froq\common\exception\InvalidKeyException;
+use froq\common\interface\{Arrayable, Objectable, Listable, Jsonable, Yieldable};
+use froq\common\trait\{DataCountTrait, DataEmptyTrait, DataListTrait, DataToArrayTrait, DataToObjectTrait,
+    DataToJsonTrait, ReadOnlyTrait};
 use froq\collection\iterator\{ArrayIterator, ReverseArrayIterator};
-use froq\collection\trait\{SortTrait, EachTrait, FilterTrait, MapTrait, ReduceTrait, AggregateTrait, ReadOnlyTrait};
+use froq\collection\trait\{SortTrait, EachTrait, FilterTrait, MapTrait, ReduceTrait, AggregateTrait};
 use froq\util\Arrays;
 use Traversable, Countable, JsonSerializable, IteratorAggregate, ReflectionMethod;
 
@@ -36,7 +38,17 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     /** @see froq\collection\trait\AggregateTrait */
     use SortTrait, EachTrait, FilterTrait, MapTrait, ReduceTrait, AggregateTrait;
 
-    /** @see froq\collection\trait\ReadOnlyTrait */
+    /**
+     * @see froq\common\trait\DataCountTrait
+     * @see froq\common\trait\DataEmptyTrait
+     * @see froq\common\trait\DataListTrait
+     * @see froq\common\trait\DataToArrayTrait
+     * @see froq\common\trait\DataToObjectTrait
+     * @see froq\common\trait\DataToJsonTrait
+     */
+    use DataCountTrait, DataEmptyTrait, DataListTrait, DataToArrayTrait, DataToObjectTrait, DataToJsonTrait;
+
+    /** @see froq\common\trait\ReadOnlyTrait */
     use ReadOnlyTrait;
 
     /** @var array<int|string, any> */
@@ -46,15 +58,19 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      * Constructor.
      *
      * @param iterable|null $data
+     * @param bool|null     $readOnly
      */
-    public function __construct(iterable $data = null)
+    public function __construct(iterable $data = null, bool $readOnly = null)
     {
         if ($data != null) {
             if ($data instanceof Traversable) {
                 $data = iterator_to_array($data);
             }
+
             $this->setData($data);
         }
+
+        $this->readOnly($readOnly);
     }
 
     /**
@@ -233,10 +249,11 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     }
 
     /**
-     * Empty data stack.
+     * Empty data array.
      *
      * @return self
      * @since  5.0
+     * @override to DataEmptyTrait.empty()
      */
     public function empty(): self
     {
@@ -248,17 +265,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     }
 
     /**
-     * Check whether data stack is empty.
-     *
-     * @return bool
-     */
-    public function isEmpty(): bool
-    {
-        return empty($this->data);
-    }
-
-    /**
-     * Get keys of data stack.
+     * Get keys of data array.
      *
      * @return array<int|string>
      */
@@ -268,7 +275,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     }
 
     /**
-     * Get values of data stack.
+     * Get values of data array.
      *
      * @return array<any>
      */
@@ -278,7 +285,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     }
 
     /**
-     * Get entries of data stack.
+     * Get entries of data array.
      *
      * @return array<array>
      * @since  5.0
@@ -295,7 +302,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     }
 
     /**
-     * Check whether data stack contains given value.
+     * Check whether data array contains given value.
      *
      * @param  any  $value
      * @param  bool $strict
@@ -308,7 +315,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     }
 
     /**
-     * Check whether data stack contains given key.
+     * Check whether data array contains given key.
      *
      * @param  int|string $key
      * @return bool
@@ -317,49 +324,6 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     public function containsKey(int|string $key): bool
     {
         return array_key_exists($key, $this->data);
-    }
-
-    /**
-     * Check whether data stack is a list.
-     *
-     * @return bool
-     * @since  5.4
-     */
-    public function isList(): bool
-    {
-        return is_list($this->data);
-    }
-
-    /**
-     * @inheritDoc froq\common\interface\Listable
-     */
-    public function toList(): array
-    {
-        return array_values($this->data);
-    }
-
-    /**
-     * @inheritDoc froq\common\interface\Arrayable
-     */
-    public function toArray(): array
-    {
-        return $this->data;
-    }
-
-    /**
-     * @inheritDoc froq\common\interface\Objectable
-     */
-    public function toObject(): object
-    {
-        return (object) $this->data;
-    }
-
-    /**
-     * @inheritDoc froq\common\interface\Jsonable
-     */
-    public function toJson(int $flags = 0): string
-    {
-        return (string) json_encode($this->data, $flags);
     }
 
     /**
@@ -379,14 +343,6 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
                 yield $key => current($this->data);
             }
         }
-    }
-
-    /**
-     * @inheritDoc Countable
-     */
-    public function count(): int
-    {
-        return count($this->data);
     }
 
     /**
@@ -425,9 +381,4 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     {
         return new static($data);
     }
-
-    /** Aliases. */
-    public function array() { return $this->toArray(); }
-    public function object() { return $this->toObject(); }
-    public function json(...$args) { return $this->toJson(...$args); }
 }
