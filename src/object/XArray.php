@@ -12,7 +12,7 @@ use froq\common\interface\{Arrayable, Objectable, Listable, Jsonable, Yieldable}
 use froq\common\trait\{DataCountTrait, DataEmptyTrait, DataListTrait, DataToArrayTrait, DataToObjectTrait,
     DataToJsonTrait, ReadOnlyTrait};
 use froq\collection\iterator\{ArrayIterator, ReverseArrayIterator};
-use froq\collection\trait\{SortTrait, EachTrait, FilterTrait, MapTrait, ReduceTrait, AggregateTrait};
+use froq\collection\trait\{SortTrait, EachTrait, FilterTrait, MapTrait, ReduceTrait, ApplyTrait, AggregateTrait};
 use froq\util\Arrays;
 use Traversable, Countable, JsonSerializable, IteratorAggregate, ReflectionMethod;
 
@@ -35,8 +35,9 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     /** @see froq\collection\trait\FilterTrait */
     /** @see froq\collection\trait\MapTrait */
     /** @see froq\collection\trait\ReduceTrait */
+    /** @see froq\collection\trait\ApplyTrait */
     /** @see froq\collection\trait\AggregateTrait */
-    use SortTrait, EachTrait, FilterTrait, MapTrait, ReduceTrait, AggregateTrait;
+    use SortTrait, EachTrait, FilterTrait, MapTrait, ReduceTrait, ApplyTrait, AggregateTrait;
 
     /**
      * @see froq\common\trait\DataCountTrait
