@@ -310,7 +310,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      * @return bool
      * @since  5.0
      */
-    public function contains($value, bool $strict = false): bool
+    public function contains($value, bool $strict = true): bool
     {
         return array_value_exists($value, $this->data, $strict);
     }
