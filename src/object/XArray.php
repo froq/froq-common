@@ -8,13 +8,13 @@ declare(strict_types=1);
 namespace froq\common\object;
 
 use froq\common\exception\InvalidKeyException;
-use froq\common\interface\{Arrayable, Objectable, Listable, Jsonable, Yieldable};
+use froq\common\interface\{Arrayable, Objectable, Listable, Jsonable, Yieldable, Iteratable, IteratableReverse};
 use froq\common\trait\{DataCountTrait, DataEmptyTrait, DataListTrait, DataToArrayTrait, DataToObjectTrait,
-    DataToJsonTrait, ReadOnlyTrait};
+    DataToJsonTrait, DataIteratorTrait, ReadOnlyTrait};
 use froq\collection\iterator\{ArrayIterator, ReverseArrayIterator};
 use froq\collection\trait\{SortTrait, EachTrait, FilterTrait, MapTrait, ReduceTrait, ApplyTrait, AggregateTrait};
 use froq\util\Arrays;
-use Traversable, Countable, JsonSerializable, IteratorAggregate, ReflectionMethod;
+use Iterator, Countable, JsonSerializable, Traversable, ReflectionMethod;
 
 /**
  * X-Array.
@@ -27,8 +27,8 @@ use Traversable, Countable, JsonSerializable, IteratorAggregate, ReflectionMetho
  * @author  Kerem Güneş
  * @since   4.0
  */
-abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yieldable,
-    Countable, JsonSerializable, IteratorAggregate
+abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yieldable, Iteratable, IteratableReverse,
+    Iterator, Countable, JsonSerializable
 {
     /** @see froq\collection\trait\SortTrait */
     /** @see froq\collection\trait\EachTrait */
@@ -46,8 +46,10 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      * @see froq\common\trait\DataToArrayTrait
      * @see froq\common\trait\DataToObjectTrait
      * @see froq\common\trait\DataToJsonTrait
+     * @see froq\common\trait\DataIteratorTrait
      */
-    use DataCountTrait, DataEmptyTrait, DataListTrait, DataToArrayTrait, DataToObjectTrait, DataToJsonTrait;
+    use DataCountTrait, DataEmptyTrait, DataListTrait, DataToArrayTrait, DataToObjectTrait, DataToJsonTrait,
+        DataIteratorTrait;
 
     /** @see froq\common\trait\ReadOnlyTrait */
     use ReadOnlyTrait;
@@ -355,8 +357,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     }
 
     /**
-     * @inheritDoc IteratorAggregate
-     * @note Return is permissive.
+     * @inheritDoc Iteratable
      */
     public function getIterator(): iterable
     {
@@ -364,8 +365,8 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     }
 
     /**
+     * @inheritDoc IteratableReverse
      * @since 5.4
-     * @note Return is permissive.
      */
     public function getReverseIterator(): iterable
     {
