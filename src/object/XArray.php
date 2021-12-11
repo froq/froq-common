@@ -30,13 +30,15 @@ use Iterator, Countable, JsonSerializable, Traversable, ReflectionMethod;
 abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yieldable, Iteratable, IteratableReverse,
     Iterator, Countable, JsonSerializable
 {
-    /** @see froq\collection\trait\SortTrait */
-    /** @see froq\collection\trait\EachTrait */
-    /** @see froq\collection\trait\FilterTrait */
-    /** @see froq\collection\trait\MapTrait */
-    /** @see froq\collection\trait\ReduceTrait */
-    /** @see froq\collection\trait\ApplyTrait */
-    /** @see froq\collection\trait\AggregateTrait */
+    /**
+     * @see froq\collection\trait\SortTrait
+     * @see froq\collection\trait\EachTrait
+     * @see froq\collection\trait\FilterTrait
+     * @see froq\collection\trait\MapTrait
+     * @see froq\collection\trait\ReduceTrait
+     * @see froq\collection\trait\ApplyTrait
+     * @see froq\collection\trait\AggregateTrait
+     */
     use SortTrait, EachTrait, FilterTrait, MapTrait, ReduceTrait, ApplyTrait, AggregateTrait;
 
     /**
