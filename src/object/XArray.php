@@ -297,13 +297,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      */
     public function entries(): array
     {
-        $ret = [];
-
-        foreach ($this->data as $key => $value) {
-            $ret[] = [$key, $value];
-        }
-
-        return $ret;
+        return array_entries($this->data);
     }
 
     /**

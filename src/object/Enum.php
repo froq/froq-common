@@ -165,13 +165,7 @@ class Enum
      */
     public static final function entries(): array
     {
-        $ret = [];
-
-        foreach (self::toArray() as $name => $value) {
-            $ret[] = [$name, $value];
-        }
-
-        return $ret;
+        return array_entries(self::toArray());
     }
 
     /**
