@@ -27,46 +27,46 @@ trait MutationTrait
      * Set.
      *
      * @param  string $name
-     * @param  any    $value
+     * @param  mixed  $value
      * @return void
      */
-    public function set(string $name, $value)
+    public function set(string $name, mixed $value): void
     {
         if ($this->__strict && !property_exists($this, $name)) {
             return;
         }
 
-        $this->{$name} = $value;
+        $this->$name = $value;
     }
 
     /**
      * Get.
      *
      * @param  string $name
-     * @return any|void
+     * @return mixed
      */
-    public function get(string $name)
+    public function get(string $name): mixed
     {
         if ($this->__strict && !property_exists($this, $name)) {
-            return;
+            return null;
         }
 
-        return $this->{$name};
+        return $this->$name ?? null;
     }
 
     /**
      * Isset.
      *
      * @param  string $name
-     * @return bool|void
+     * @return bool
      */
-    public function isset(string $name)
+    public function isset(string $name): bool
     {
         if ($this->__strict && !property_exists($this, $name)) {
-            return;
+            return false;
         }
 
-        return $this->{$name} !== null;
+        return isset($this->$name);
     }
 
     /**
@@ -75,12 +75,12 @@ trait MutationTrait
      * @param  string $name
      * @return void
      */
-    public function unset(string $name)
+    public function unset(string $name): void
     {
         if ($this->__strict && !property_exists($this, $name)) {
             return;
         }
 
-        $this->{$name} = null;
+        unset($this->$name);
     }
 }

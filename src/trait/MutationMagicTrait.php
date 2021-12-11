@@ -27,46 +27,46 @@ trait MutationMagicTrait
      * Magic - set.
      *
      * @param  string $name
-     * @param  any    $value
+     * @param  mixed  $value
      * @return void
      */
-    public function __set(string $name, $value)
+    public function __set(string $name, mixed $value): void
     {
         if ($this->__strict && !property_exists($this, $name)) {
             return;
         }
 
-        $this->{$name} = $value;
+        $this->$name = $value;
     }
 
     /**
-     * Magic - set.
+     * Magic - get.
      *
      * @param  string $name
-     * @return any|void
+     * @return mixed
      */
-    public function __get(string $name)
+    public function __get(string $name): mixed
     {
         if ($this->__strict && !property_exists($this, $name)) {
-            return;
+            return null;
         }
 
-        return $this->{$name};
+        return $this->$name ?? null;
     }
 
     /**
      * Magic - isset.
      *
      * @param  string $name
-     * @return bool|void
+     * @return bool
      */
-    public function __isset(string $name)
+    public function __isset(string $name): bool
     {
         if ($this->__strict && !property_exists($this, $name)) {
-            return;
+            return false;
         }
 
-        return $this->{$name} !== null;
+        return isset($this->$name);
     }
 
     /**
@@ -75,12 +75,12 @@ trait MutationMagicTrait
      * @param  string $name
      * @return void
      */
-    public function __unset(string $name)
+    public function __unset(string $name): void
     {
         if ($this->__strict && !property_exists($this, $name)) {
             return;
         }
 
-        $this->{$name} = null;
+        unset($this->$name);
     }
 }
