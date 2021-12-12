@@ -33,8 +33,8 @@ trait DataToJsonTrait
     /**
      * @alias of toJson()
      */
-    public function json()
+    public function json(...$args)
     {
-        return $this->toJson();
+        return $this->toJson(...$args);
     }
 }
