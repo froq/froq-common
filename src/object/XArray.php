@@ -19,8 +19,8 @@ use Iterator, Countable, JsonSerializable, Traversable, ReflectionMethod;
 /**
  * X-Array.
  *
- * Represents an abstract but extended array object that provides couple of utility methods which
- * access, modify or iterate `$data` items.
+ * Represents an abstract but very extended array object that provides couple of utility methods
+ * do access, modify or iterate stuff.
  *
  * @package froq\common\object
  * @object  froq\common\object\XArray
@@ -243,14 +243,14 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     /**
      * Copy to.
      *
-     * @param  static (self) $array
+     * @param  static (self) $that
      * @return static
      */
-    public function copyTo(self $array): static
+    public function copyTo(self $that): static
     {
-        $array->setData($this->data);
+        $that->setData($this->data);
 
-        return $array;
+        return $that;
     }
 
     /**
