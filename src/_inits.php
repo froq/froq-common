@@ -191,20 +191,6 @@ declare(strict_types=1);
     {
         return (object) $in;
     }
-
-    /**
-     * Void caster.
-     *
-     * @param  any &...$ins
-     * @return void
-     * @since  3.0
-     */
-    function void(&...$ins): void
-    {
-        foreach ($ins as &$in) {
-            $in = null;
-        }
-    }
 }
 
 // Merge/append/prepend/aggregate.
