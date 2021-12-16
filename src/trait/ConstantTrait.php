@@ -81,10 +81,11 @@ trait ConstantTrait
      * Get constant values.
      *
      * @param  bool $all
+     * @param  bool $withNames
      * @return array<int|string, any>|null
      */
-    public final function getConstantValues(bool $all = true, bool $associative = false): array|null
+    public final function getConstantValues(bool $all = true, bool $withNames = false): array|null
     {
-        return Objects::getConstantValues($this, $all, $associative);
+        return Objects::getConstantValues($this, $all, $withNames);
     }
 }

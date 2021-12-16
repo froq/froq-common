@@ -80,10 +80,11 @@ trait PropertyTrait
      * Get property values.
      *
      * @param  bool $all
+     * @param  bool $withNames
      * @return array<string>|null
      */
-    public final function getPropertyValues(bool $all = true, bool $associative = false): array|null
+    public final function getPropertyValues(bool $all = true, bool $withNames = false): array|null
     {
-        return Objects::getPropertyValues($this, $all, $associative);
+        return Objects::getPropertyValues($this, $all, $withNames);
     }
 }
