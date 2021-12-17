@@ -122,13 +122,10 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     {
         $this->readOnlyCheck();
 
-        // Get key type(s) from child, or self for this method.
-        static $getTypes; $getTypes ??= fn() =>
-            grep((new ReflectionMethod(static::class, 'setData'))->getDocComment() ?: '',
-                '~@param +array<([^,]+).*> +\$data~') ?? 'int|string'
-        ;
-
-        $types = $getTypes();
+        // Get key type from child's getData() or this method.
+        $type = grep((new ReflectionMethod(static::class, 'setData'))->getDocComment() ?: '',
+                     '~@param +array<([^,]+).*> +\$data~'
+                ) ?? 'int|string';
 
         // Validate keys.
         foreach (array_keys($data) as $key) {
@@ -136,7 +133,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
                 'Empty keys not allowed for %s object', static::class
             );
 
-            switch ($types) {
+            switch ($type) {
                 case 'int|string':
                     is_int($key) || is_string($key) || throw new InvalidKeyException(
                         'Only int|string keys allowed for object %s, %s given',
