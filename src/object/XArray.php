@@ -240,7 +240,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     /**
      * Copy to.
      *
-     * @param  static (self) $that
+     * @param  self (static) $that
      * @return static
      */
     public function copyTo(self $that): static
@@ -248,6 +248,19 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
         $that->setData($this->data);
 
         return $that;
+    }
+
+    /**
+     * Copy from.
+     *
+     * @param  self (static) $that
+     * @return static
+     */
+    public function copyFrom(self $that): static
+    {
+        $this->setData($that->getData());
+
+        return $this;
     }
 
     /**
