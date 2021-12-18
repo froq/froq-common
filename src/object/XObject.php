@@ -159,8 +159,9 @@ abstract class XObject implements Arrayable, Stringable
     public function toString(): string
     {
         $vars = get_class_properties($this, scope_check: false);
+        [$objectType, $objectId] = split('#', Objects::getId($this));
 
-        return sprintf('object(%s)#%s (%s) { %s }', $this->getName(), spl_object_id($this),
-            count($vars), join(', ', array_keys($vars)));
+        return sprintf('object(%d) <%s>#%s { %s }',
+            count($vars), $objectType, $objectId, join(', ', array_keys($vars)));
     }
 }
