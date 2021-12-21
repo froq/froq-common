@@ -83,7 +83,7 @@ trait PropertyTrait
      * @param  bool $withNames
      * @return array<string>|null
      */
-    public final function getPropertyValues(bool $all = true, bool $withNames = false): array|null
+    public final function getPropertyValues(bool $all = true, bool $withNames = true): array|null
     {
         return Objects::getPropertyValues($this, $all, $withNames);
     }
