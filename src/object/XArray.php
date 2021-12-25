@@ -389,4 +389,17 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     {
         return new static($data);
     }
+
+    /**
+     * Create an instance with given keys (and value optionally).
+     *
+     * @param  array      $keys
+     * @param  mixed|null $value
+     * @return static
+     * @since  5.14
+     */
+    public static function fromKeys(array $keys, mixed $value = null): static
+    {
+        return new static(array_fill_keys($keys, $value));
+    }
 }
