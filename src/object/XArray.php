@@ -382,10 +382,10 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     /**
      * Create an instance with given data.
      *
-     * @param  iterable $data
+     * @param  iterable|null $data
      * @return static
      */
-    public static function from(iterable $data): static
+    public static function from(iterable|null $data): static
     {
         return new static($data);
     }
