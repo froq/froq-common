@@ -125,12 +125,20 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
      */
     public function setData(array $data, bool $reset = true): self
     {
+        // Call subclass' set() if exists.
+        if (method_exists($this, 'set')) {
+            foreach ($data as $key => $value) {
+                $this->set($key, $value);
+            }
+            return $this;
+        }
+
         $this->readOnlyCheck();
 
         // Get key type from child's getData() or this method.
         $type = grep((new ReflectionMethod(static::class, 'setData'))->getDocComment() ?: '',
                      '~@param +array<([^,]+).*> +\$data~'
-                ) ?? 'int|string';
+                ) ?: 'int|string';
 
         // Validate keys.
         foreach (array_keys($data) as $key) {
