@@ -260,15 +260,15 @@ declare(strict_types=1);
         ob_start(); var_dump($s); $s = ob_get_clean();
         return preg_replace('~\["?(.+?)"?(:(private|protected))?\]=>\s+~', '[\1\2] => ', _ps(trim($s)));
     }
-    function pre($s, $e=false) {
+    function pre($s, $e=0) {
         echo "<pre>", _ps($s), "</pre>", "\n";
         $e && exit;
     }
-    function prs($s, $e=false) {
+    function prs($s, $e=0) {
         echo _ps($s), "\n";
         $e && exit;
     }
-    function prd($s, $e=false) {
+    function prd($s, $e=0) {
         echo _pd($s), "\n";
         $e && exit;
     }
