@@ -9,7 +9,7 @@ namespace froq\common\object;
 
 use froq\common\exception\InvalidKeyException;
 use froq\common\interface\{Arrayable, Objectable, Listable, Jsonable, Yieldable, Iteratable, IteratableReverse};
-use froq\common\trait\{DataCountTrait, DataEmptyTrait, DataListTrait, DataToArrayTrait, DataToObjectTrait,
+use froq\common\trait\{DataCountTrait, DataEmptyTrait, DataToArrayTrait, DataToObjectTrait, DataToListTrait,
     DataToJsonTrait, DataIteratorTrait, ReadOnlyTrait};
 use froq\collection\iterator\{ArrayIterator, ReverseArrayIterator};
 use froq\collection\trait\{SortTrait, EachTrait, FilterTrait, MapTrait, ReduceTrait, ApplyTrait, AggregateTrait,
@@ -49,13 +49,13 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
     /**
      * @see froq\common\trait\DataCountTrait
      * @see froq\common\trait\DataEmptyTrait
-     * @see froq\common\trait\DataListTrait
      * @see froq\common\trait\DataToArrayTrait
      * @see froq\common\trait\DataToObjectTrait
+     * @see froq\common\trait\DataToListTrait
      * @see froq\common\trait\DataToJsonTrait
      * @see froq\common\trait\DataIteratorTrait
      */
-    use DataCountTrait, DataEmptyTrait, DataListTrait, DataToArrayTrait, DataToObjectTrait, DataToJsonTrait,
+    use DataCountTrait, DataEmptyTrait, DataToArrayTrait, DataToObjectTrait, DataToListTrait, DataToJsonTrait,
         DataIteratorTrait;
 
     /** @see froq\common\trait\ReadOnlyTrait */

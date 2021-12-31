@@ -8,28 +8,18 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 /**
- * Data List Trait.
+ * Data To-List Trait.
  *
- * Represents a trait that provides `isList()`, `toList()` and `list()` methods
- * for those classes hold a `$data` property as array.
+ * Represents a trait that provides `toList()` and `list()` methods for those classes
+ * hold a `$data` property as array.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\DataListTrait
+ * @object  froq\common\trait\DataToListTrait
  * @author  Kerem Güneş
  * @since   5.7
  */
-trait DataListTrait
+trait DataToListTrait
 {
-    /**
-     * Check whether data array is a list.
-     *
-     * @return bool
-     */
-    public function isList(): bool
-    {
-        return is_list($this->data);
-    }
-
     /**
      * Get data array as list.
      *
