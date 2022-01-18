@@ -113,10 +113,9 @@ declare(strict_types=1);
 
             if ($value === null) {
                 // Try with getenv() (ini variable order issue).
-                if (($value = getenv($name)) === false) {
-                    if (($value = getenv(strtoupper($name))) === false) {
-                        unset($value); // Set as null back.
-                    }
+                if (($value = getenv($name)) === false &&
+                    ($value = getenv(strtoupper($name))) === false) {
+                    $value = null;
                 }
             }
         }
