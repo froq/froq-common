@@ -64,8 +64,10 @@ trait ThrowableTrait
                     $message = vsprintf($message, $messageParams);
                 }
             } else {
+                // Use message as previous.
+                $previous ??= $message;
+
                 $code     ??= $message->getCode();
-                $previous ??= $message; // Use message as previous.
                 $message    = $message->getMessage();
             }
         }
