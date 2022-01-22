@@ -77,11 +77,22 @@ trait ThrowableTrait
         parent::__construct((string) $message, (int) $code, $previous);
     }
 
-    /**
-     * Magic - string.
-     *
-     * @return string
-     */
+    /** @magic __get() */
+    public function __get(string $property): mixed
+    {
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
+
+        trigger_error(
+            'Undefined property: '. $this::class .'::$' . $property,
+            E_USER_WARNING // Act like original.
+        );
+
+        return null;
+    }
+
+    /** @magic __toString() */
     public function __toString()
     {
         // Eg: Exception: ... => Exception(404): ...
@@ -136,6 +147,16 @@ trait ThrowableTrait
         }
 
         return $cause;
+    }
+
+    /**
+     * Get class name of user object.
+     *
+     * @return string
+     */
+    public final function getName(): string
+    {
+        return $this::class;
     }
 
     /**
