@@ -85,7 +85,7 @@ trait ThrowableTrait
         }
 
         trigger_error(
-            'Undefined property: '. $this::class .'::$' . $property,
+            'Undefined property: '. $this::class .'::$'. $property,
             E_USER_WARNING // Act like original.
         );
 
