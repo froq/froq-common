@@ -93,7 +93,7 @@ trait ThrowableTrait
     }
 
     /** @magic __toString() */
-    public function __toString()
+    public function __toString(): string
     {
         // Eg: Exception: ... => Exception(404): ...
         return preg_replace('~^(.+?): *(.+)~', '\1('. $this->code .'): \2',
