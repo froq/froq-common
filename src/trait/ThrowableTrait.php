@@ -43,7 +43,7 @@ trait ThrowableTrait
                 if ($message === '@error') {
                     $error    = self::getLastError();
                     $code     = $code ?? $error['code'];
-                    $message  = 'Error: '. $error['message'];
+                    $message  = $error['message'];
                 }
                 // Eg: throw new Exception('Error: %s', ['The error!'] or ['@error']).
                 elseif (func_num_args() > 1) {
