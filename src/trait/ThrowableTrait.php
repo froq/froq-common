@@ -12,8 +12,8 @@ use Throwable, Error, Exception;
 /**
  * Throwable Trait.
  *
- * Represents a trait entity which is used by Error and Exception classes, provides a relaxation getting
- * rid of `sprintf()` calls for each throw also having some utility methods and cause option.
+ * A trait that is used by Error/Exception classes, provides a relaxation getting rid of
+ * `sprintf()` calls for each throw also having some utility methods and cause option.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\ThrowableTrait
@@ -69,9 +69,14 @@ trait ThrowableTrait
                         while (array_key_exists($i, $messageParams)
                             && ($offset = strpos($message, '%t')) !== false) {
                             $message = substr_replace(
-                                $message, get_type($messageParams[$i++]),
-                                offset: $offset, length: $length
+                                $message, get_type($messageParams[$i]),
+                                $offset, $length
                             );
+
+                            // Drop used one.
+                            unset($messageParams[$i]);
+
+                            $i++;
                         }
                     }
 
