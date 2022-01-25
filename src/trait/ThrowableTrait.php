@@ -49,7 +49,8 @@ trait ThrowableTrait
                 elseif (func_num_args() > 1) {
                     // Special formats (quoted string, int & error).
                     $message       = str_replace('%e', '@error', $message);
-                    $messageParams = (array) $messageParams;
+                    $messageParams = is_array($messageParams) || is_scalar($messageParams)
+                        ? (array) $messageParams : [$messageParams];
 
                     // Fix for null message params -given- actually.
                     $messageParams = $messageParams ?: [null];
