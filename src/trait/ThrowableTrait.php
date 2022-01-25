@@ -34,7 +34,7 @@ trait ThrowableTrait
      * @param Throwable|null    $previous
      * @param Throwable|null    $cause
      */
-    public function __construct(string|Throwable $message = null, $messageParams = null, int $code = null,
+    public function __construct(string|Throwable $message = null, mixed $messageParams = null, int $code = null,
         Throwable $previous = null, Throwable $cause = null)
     {
         if ($message != null) {
@@ -46,15 +46,13 @@ trait ThrowableTrait
                     $message  = 'Error: '. $error['message'];
                 }
                 // Eg: throw new Exception('Error: %s', ['The error!'] or ['@error']).
-                else {
+                elseif (func_num_args() > 1) {
                     // Special formats (quoted string, int & error).
                     $message       = str_replace('%e', '@error', $message);
                     $messageParams = (array) $messageParams;
 
-                    // Fix for null message params "given" actually.
-                    if (!$messageParams && func_num_args() > 1) {
-                        $messageParams = [null];
-                    }
+                    // Fix for null message params -given- actually.
+                    $messageParams = $messageParams ?: [null];
 
                     foreach ($messageParams as $i => $messageParam) {
                         if ($messageParam === '@error') {
