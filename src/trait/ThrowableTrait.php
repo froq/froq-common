@@ -29,7 +29,7 @@ trait ThrowableTrait
      * Constructor.
      *
      * @param string|Throwable  $message
-     * @param any|null          $messageParams
+     * @param mixed|null        $messageParams
      * @param int|null          $code
      * @param Throwable|null    $previous
      * @param Throwable|null    $cause
@@ -41,15 +41,14 @@ trait ThrowableTrait
             if (is_string($message)) {
                 // Eg: throw new Exception('@error').
                 if ($message === '@error') {
-                    $error         = self::getLastError();
-                    $code          = $code ?? $error['code'];
-                    $messageParams = [$error['message']];
-                    $message = vsprintf('Error: %s', $messageParams);
+                    $error    = self::getLastError();
+                    $code     = $code ?? $error['code'];
+                    $message  = 'Error: '. $error['message'];
                 }
                 // Eg: throw new Exception('Error: %s', ['The error!'] or ['@error']).
                 elseif ($messageParams !== null) {
-                    // Special formats (quoted string & error).
-                    $message       = str_replace(['%q', '%e'], ["'%s'", '@error'], $message);
+                    // Special formats (quoted string, int & error).
+                    $message       = str_replace('%e', '@error', $message);
                     $messageParams = (array) $messageParams;
 
                     foreach ($messageParams as $i => $messageParam) {
@@ -65,22 +64,16 @@ trait ThrowableTrait
                     if (preg_test('~@type|%t~', $message)) {
                         $message = str_replace('@type', '%t', $message);
 
-                        $i = 0; $length = 2;
-                        while (array_key_exists($i, $messageParams)
-                            && ($offset = strpos($message, '%t')) !== false) {
-                            $message = substr_replace(
-                                $message, get_type($messageParams[$i]),
-                                $offset, $length
-                            );
-
-                            // Drop used one.
-                            unset($messageParams[$i]);
-
-                            $i++;
+                        // Replace %t's & params with their types.
+                        foreach (grep_all($message, '~(%[a-z])~') as $i => $op) {
+                            if ($op == '%t') {
+                                $message           = substr_replace($message, '%s', strpos($message, '%t'), 2);
+                                $messageParams[$i] = get_type($messageParams[$i]);
+                            }
                         }
                     }
 
-                    $message = vsprintf($message, $messageParams);
+                    $message = format($message, ...$messageParams);
                 }
             } else {
                 // Use message as previous.
