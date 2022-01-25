@@ -51,6 +51,11 @@ trait ThrowableTrait
                     $message       = str_replace('%e', '@error', $message);
                     $messageParams = (array) $messageParams;
 
+                    // Fix for null message params "given" actually.
+                    if (!$messageParams && func_num_args() > 1) {
+                        $messageParams = [null];
+                    }
+
                     foreach ($messageParams as $i => $messageParam) {
                         if ($messageParam === '@error') {
                             $error             = self::getLastError();
