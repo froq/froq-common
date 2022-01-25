@@ -61,6 +61,20 @@ trait ThrowableTrait
                         }
                     }
 
+                    // Special format for "@type/%t given" messages.
+                    if (preg_test('~@type|%t~', $message)) {
+                        $message = str_replace('@type', '%t', $message);
+
+                        $i = 0; $length = 2;
+                        while (array_key_exists($i, $messageParams)
+                            && ($offset = strpos($message, '%t')) !== false) {
+                            $message = substr_replace(
+                                $message, get_type($messageParams[$i++]),
+                                offset: $offset, length: $length
+                            );
+                        }
+                    }
+
                     $message = vsprintf($message, $messageParams);
                 }
             } else {
