@@ -114,6 +114,12 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
         $this->setData($data);
     }
 
+    /** @magic __debugInfo() */
+    public function __debugInfo()
+    {
+        return $this->data;
+    }
+
     /**
      * Set data.
      *
