@@ -141,9 +141,9 @@ abstract class XObject implements Arrayable, Stringable
      * @param  bool   $strict
      * @return bool
      */
-    public final function isEqualTo(object $object, bool $strict = false): bool
+    public final function isEqualTo(object $object, bool $strict = true): bool
     {
-        return !$strict ? ($this == $object) : ($this === $object);
+        return $strict ? ($this === $object) : ($this == $object);
     }
 
     /**
