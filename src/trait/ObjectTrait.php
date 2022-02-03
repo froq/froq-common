@@ -51,7 +51,7 @@ trait ObjectTrait
      * @param  bool $withRehash
      * @return string
      */
-    public final function getHash(bool $withName = true, bool $withRehash = true): string
+    public final function getHash(bool $withName = true, bool $withRehash = false): string
     {
         return Objects::getHash($this, $withName, $withRehash);
     }
