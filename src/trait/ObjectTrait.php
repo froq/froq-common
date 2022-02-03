@@ -59,12 +59,11 @@ trait ObjectTrait
     /**
      * Get serialized hash.
      *
-     * @param  string|null $algo
      * @return string
      */
-    public final function getSerializedHash(string $algo = null): string
+    public final function getSerializedHash(): string
     {
-        return Objects::getSerializedHash($this, $algo);
+        return Objects::getSerializedHash($this);
     }
 
     /**
