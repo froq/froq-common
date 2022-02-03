@@ -23,7 +23,7 @@ use ReflectionObject, ReflectionObjectExtended;
 trait ObjectTrait
 {
     /**
-     * Reflect & return reflection
+     * Reflect & return reflection.
      *
      * @param  bool $extended
      * @return ReflectionObject|ReflectionObjectExtended
@@ -98,6 +98,16 @@ trait ObjectTrait
     }
 
     /**
+     * Get parent.
+     *
+     * @return string|null
+     */
+    public final function getParent(): string|null
+    {
+        return get_parent_class($this) ?: null;
+    }
+
+    /**
      * Get parents.
      *
      * @return array|null
@@ -126,5 +136,60 @@ trait ObjectTrait
     public final function getTraits(bool $all = true): array|null
     {
         return Objects::getTraits($this, $all);
+    }
+
+    /**
+     * Is type of.
+     *
+     * @param  string $class
+     * @return bool
+     */
+    public final function isTypeOf(string $class): bool
+    {
+        return (static::class == $class);
+    }
+
+    /**
+     * Is type of self.
+     *
+     * @return bool
+     */
+    public final function isTypeOfSelf(): bool
+    {
+        return (static::class == self::class);
+    }
+
+    /**
+     * Is instance of.
+     *
+     * @param  object|string $object
+     * @return bool
+     */
+    public final function isInstanceOf(object|string $object): bool
+    {
+        return ($this instanceof $object);
+    }
+
+    /**
+     * Is equal of.
+     *
+     * @param  object $object
+     * @param  bool   $strict
+     * @return bool
+     */
+    public final function isEqualOf(object $object, bool $strict = true): bool
+    {
+        return ($strict ? $this === $object : $this == $object);
+    }
+
+    /**
+     * Is equal hash of.
+     *
+     * @param  object $object
+     * @return bool
+     */
+    public final function isEqualHashOf(object $object): bool
+    {
+        return Objects::getSerializedHash($this) == Objects::getSerializedHash($object);
     }
 }
