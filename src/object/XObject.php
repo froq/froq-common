@@ -9,13 +9,13 @@ namespace froq\common\object;
 
 use froq\common\interface\{Arrayable, Stringable};
 use froq\util\Objects;
-use ReflectionObject;
+use ReflectionObject, ReflectionObjectExtended;
 
 /**
  * X-Object.
  *
- * Represents an abstract but extended object that provides couple of utility methods which access and
- * check object's attributes.
+ * An abstract & extended object that provides couple of utility methods which access
+ * and check object's attributes.
  *
  * @package froq\common\object
  * @object  froq\common\object\XObject
@@ -24,6 +24,17 @@ use ReflectionObject;
  */
 abstract class XObject implements Arrayable, Stringable
 {
+    /**
+     * Reflect & return reflection
+     *
+     * @param  bool $extended
+     * @return ReflectionObject|ReflectionObjectExtended
+     */
+    public function reflect(bool $extended = false): ReflectionObject|ReflectionObjectExtended
+    {
+        return !$extended ? new ReflectionObject($this) : new ReflectionObjectExtended($this);
+    }
+
     /**
      * Get name.
      *
@@ -53,16 +64,6 @@ abstract class XObject implements Arrayable, Stringable
     public final function getNamespace(bool $baseOnly = false): string
     {
         return Objects::getNamespace($this, $baseOnly);
-    }
-
-    /**
-     * Get reflection.
-     *
-     * @return ReflectionObject
-     */
-    public final function getReflection(): ReflectionObject
-    {
-        return new ReflectionObject($this);
     }
 
     /**
@@ -125,12 +126,12 @@ abstract class XObject implements Arrayable, Stringable
     /**
      * Is instance of.
      *
-     * @param  string|object $class
+     * @param  object|string $object
      * @return bool
      */
-    public final function isInstanceOf(string|object $class): bool
+    public final function isInstanceOf(object|string $object): bool
     {
-        return ($this instanceof $class);
+        return ($this instanceof $object);
     }
 
     /**
