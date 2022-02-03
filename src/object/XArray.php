@@ -141,34 +141,36 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
 
         $this->readOnlyCheck();
 
-        // Get key type from child's getData() or this method.
-        $type = grep((new ReflectionMethod(static::class, 'setData'))->getDocComment() ?: '',
-                     '~@param +array<([^,]+).*> +\$data~'
-                ) ?: 'int|string';
+        // Get key type from child's setData() or this method.
+        $type = grep(
+            (new ReflectionMethod($this, 'setData'))->getDocComment() ?: '',
+            '~@param +array<([^,]+).*> +\$data~'
+        ) ?: 'int|string';
 
         // Validate keys.
-        foreach (array_keys($data) as $key) {
+        foreach (array_keys($data) as $i => $key) {
             if ($key === '') throw new InvalidKeyException(
-                'Empty keys not allowed for %s object', static::class
+                'Empty keys not allowed for %s object [offset: %s]',
+                [static::class, $i]
             );
 
             switch ($type) {
                 case 'int|string':
                     is_int($key) || is_string($key) || throw new InvalidKeyException(
-                        'Only int|string keys allowed for object %s, %s given',
-                        [static::class, get_type($key)]
+                        'Only int|string keys allowed for object %s, %s given [offset: %s]',
+                        [static::class, get_type($key), $i]
                     );
                     break;
                 case 'int':
                     is_int($key) || throw new InvalidKeyException(
-                        'Only int keys allowed for object %s, %s given',
-                        [static::class, get_type($key)]
+                        'Only int keys allowed for object %s, %s given [offset: %s]',
+                        [static::class, get_type($key), $i]
                     );
                     break;
                 case 'string':
                     is_string($key) || throw new InvalidKeyException(
-                        'Only string keys allowed for object %s, %s given',
-                        [static::class, get_type($key)]
+                        'Only string keys allowed for object %s, %s given [offset: %s]',
+                        [static::class, get_type($key), $i]
                     );
                     break;
             }
