@@ -134,7 +134,7 @@ abstract class XArray implements Arrayable, Objectable, Listable, Jsonable, Yiel
         $checkedKeys = false; // For key checks.
         // $checkedReadonly = false; // @todo
 
-        $class = new \XClass($this);
+        $class = new \XObject($this);
 
         // Call childs keyCheck() if exists.
         if ($data && $class->existsMethod('keyCheck')) {
