@@ -30,7 +30,7 @@ abstract class XObject implements Arrayable, Stringable
      * @param  bool $extended
      * @return ReflectionObject|ReflectionObjectExtended
      */
-    public function reflect(bool $extended = false): ReflectionObject|ReflectionObjectExtended
+    public final function reflect(bool $extended = false): ReflectionObject|ReflectionObjectExtended
     {
         return !$extended ? new ReflectionObject($this) : new ReflectionObjectExtended($this);
     }
