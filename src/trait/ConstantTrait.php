@@ -29,8 +29,7 @@ trait ConstantTrait
      */
     public final function hasConstant(string $name): bool
     {
-        // Seems working for private/protected constants also due to called scope.
-        return defined(static::class .'::'. $name);
+        return constant_exists($this, $name);
     }
 
     /**
