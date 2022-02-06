@@ -31,7 +31,7 @@ final class Config extends Collection
      */
     public function update(array $data): self
     {
-        $this->setData(self::mergeSources($data, $this->getData()));
+        $this->data = self::mergeSources($data, $this->data);
 
         return $this;
     }
