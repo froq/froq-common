@@ -10,7 +10,7 @@ namespace froq\common\object;
 /**
  * Registry.
  *
- * Represents an registry entity which is able to store/unstore objects only.
+ * A registry class which is able to store/unstore objects only.
  *
  * @package froq\common\object
  * @object  froq\common\object\Registry
@@ -59,8 +59,11 @@ final class Registry
         $current = self::$stack[$id] ?? null;
 
         if ($current && $current['locked']) {
-            throw new RegistryException('Object `%s` is already registered and locked with id `%s`, call replace()'
-                . ' instead to force it to change with set().', [$current['object']::class, $id]);
+            throw new RegistryException(
+                'Object `%s` is already registered and locked with id `%s`, '.
+                'call replace() instead to force it to change with set().',
+                [$current['object']::class, $id]
+            );
         }
 
         self::register($id, $object, $locked);

@@ -263,19 +263,19 @@ class Enum
      */
     public static final function toString(): string
     {
-        $ret = "Enum(". static::class .") {\n";
+        $ret = "Enum(" . static::class . ") {\n";
 
         foreach (self::toArray() as $name => $value) {
             $ret .= "  {$name} ";
             if (is_null($value) || is_scalar($value)) {
-                $ret .=  "= ". var_export($value, true) ."\n";
+                $ret .=  "= " . var_export($value, true) . "\n";
             } elseif (is_array($value)) {
-                $values = "";
+                $values = [];
                 foreach ($value as $k => $v) {
-                    is_int($k) ? $values .= "{$v}, "
-                               : $values .= "'{$k}' => {$v}, ";
+                    is_int($k) ? $values[] = "{$v}"
+                               : $values[] = "'{$k}' => {$v}";
                 }
-                $ret .=  "= [". trim($values, ", ") ."]\n";
+                $ret .=  "= [" . join(", ", $values) . "]\n";
             }
         }
 

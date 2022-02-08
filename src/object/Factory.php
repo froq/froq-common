@@ -10,8 +10,8 @@ namespace froq\common\object;
 /**
  * Factory.
  *
- * Represents a factory entity that creates instances from given class names with/without arguments, and caches
- * using singleton way when requested.
+ * A factory class that creates instances from given class names with/without arguments,
+ * and caches using singleton way when requested.
  *
  * @package froq\common\object
  * @object  froq\common\object\Factory
@@ -37,12 +37,12 @@ final class Factory
             return new $class(...$classArgs);
         }
 
-        throw new FactoryException('No class exists such ' . $class);
+        throw new FactoryException('No class exists such `%s`', $class);
     }
 
     /**
-     * Create an instance from given class as singleton with/without its arguments and cache it or return
-     * cached one that was previously created.
+     * Create an instance from given class as singleton with/without its arguments
+     * and cache it or return cached one that was previously created.
      *
      * @param  string $class
      * @param  ...    $classArgs
@@ -55,6 +55,6 @@ final class Factory
             return self::$instances[$class] ??= new $class(...$classArgs);
         }
 
-        throw new FactoryException('No class exists such ' . $class);
+        throw new FactoryException('No class exists such `%s`', $class);
     }
 }
