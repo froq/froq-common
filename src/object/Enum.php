@@ -8,12 +8,11 @@ declare(strict_types=1);
 namespace froq\common\object;
 
 use froq\common\Exception;
-use ReflectionClass;
 
 /**
  * Enum.
  *
- * Represents an enumerable set of named values. We wish it was part of PHP but not (http://wiki.php.net/rfc/enum).
+ * An enumerable set of named values, not just like internal "enum" but a bit extended.
  *
  * @package froq\common\object
  * @object  froq\common\object\Enum
@@ -25,104 +24,122 @@ class Enum
     /** @var array */
     private static array $cache;
 
-    /** @var any|null */
-    protected $value;
+    /** @var int|float|string|bool|array|null */
+    protected int|float|string|bool|array|null $value;
 
     /**
      * Constructor.
      *
-     * @param any|null $value
+     * @param int|float|string|bool|array|null $value
      */
-    public function __construct($value = null)
+    public function __construct(int|float|string|bool|array|null $value = null)
     {
         $this->value = $value;
     }
 
     /**
-     * Magic - string: get value as string.
-     *
-     * @return string
+     * @magic
+     * @throws froq\common\Exception
      */
-    public function __toString()
+    public function __toString(): string
     {
+        if (is_array($this->value)) {
+            throw new Exception('Cannot cast array value to string');
+        }
+
         return (string) $this->value;
     }
 
     /**
-     * Magic - call: provide call routines such as "$foo->isBar()", that prefixed with "is".
+     * Provides call routines such as "$foo->isBar()", that prefixed with "is".
      *
+     * @magic
      * @param  string $name
      * @param  array  $arguments
      * @return bool
      * @throws froq\common\Exception
      */
-    public function __call($name, $arguments)
+    public function __call(string $name, array $arguments): bool
     {
-        if (!str_starts_with($name, 'is')) {
-            throw new Exception('No valid call as %s::%s(), call must be prefixed with `is` and'
-                . ' followed by an existing constant name', [static::class, $name, __function__]);
+        if (!str_starts_with($name, 'is') || strlen($name) == 2) {
+            throw new Exception(
+                'No valid call as %s::%s(), call must be prefixed '.
+                'with `is` and followed by an existing constant name',
+                [static::class, $name]
+            );
         }
 
+        $constant  = strtoupper(substr($name, 2));
         $constants = self::toArray();
 
-        $name = strtoupper(substr($name, 2));
-        if (!array_key_exists($name, $constants)) {
-            throw new Exception('No constant exists such %s::%s', [static::class, $name]);
+        if (!array_key_exists($constant, $constants)) {
+            throw new Exception(
+                'No constant exists such %s::%s',
+                [static::class, $constant]
+            );
         }
 
-        return ($this->value === $constants[$name]);
+        return ($this->value === $constants[$constant]);
     }
 
     /**
-     * Magic - call static: provide static call routines such as "Foo::isBar()", that prefixed with "is".
+     * Provides static call routines such as "Foo::isBar()", that prefixed with "is".
      *
+     * @magic
      * @param  string $name
      * @param  array  $arguments
      * @return bool
      * @throws froq\common\Exception
      */
-    public static function __callStatic($name, $arguments)
+    public static function __callStatic(string $name, array $arguments): bool
     {
-        if (!str_starts_with($name, 'is')) {
-            throw new Exception('No valid call as %s::%s(), call must be prefixed with `is` and'
-                . ' followed by an existing constant name', [static::class, $name]);
+        if (!str_starts_with($name, 'is') || strlen($name) == 2) {
+            throw new Exception(
+                'No valid call as %s::%s(), call must be prefixed '.
+                'with `is` and followed by an existing constant name',
+                [static::class, $name]
+            );
         }
 
+        $constant  = strtoupper(substr($name, 2));
         $constants = self::toArray();
 
-        $name = strtoupper(substr($name, 2));
-        if (!array_key_exists($name, $constants)) {
-            throw new Exception('No constant exists such %s::%s', [static::class, $name]);
+        if (!array_key_exists($constant, $constants)) {
+            throw new Exception(
+                'No constant exists such %s::%s',
+                [static::class, $constant]
+            );
         }
         if (!array_key_exists(0, $arguments)) {
             throw new Exception('No value given in arguments');
         }
 
-        return ($arguments[0] === $constants[$name]);
+        return ($arguments[0] === $constants[$constant]);
     }
 
     /**
      * Set/get value.
      *
-     * @param  any|null $value
-     * @return any|null
+     * @param  int|float|string|bool|array|null $value
+     * @return int|float|string|bool|array|null
      * @since  5.0
      */
-    public function value($value = null)
+    public function value(int|float|string|bool|array|null $value = null): int|float|string|bool|array|null
     {
         if (func_num_args()) {
             $this->setValue($value);
         }
+
         return $this->getValue();
     }
 
     /**
      * Set value.
      *
-     * @param  any $value
+     * @param  int|float|string|bool|array|null $value
      * @return void
      */
-    public function setValue($value): void
+    public function setValue(int|float|string|bool|array|null $value): void
     {
         $this->value = $value;
     }
@@ -130,9 +147,9 @@ class Enum
     /**
      * Get value.
      *
-     * @return any|null
+     * @return int|float|string|bool|array|null
      */
-    public function getValue()
+    public function getValue(): int|float|string|bool|array|null
     {
         return $this->value;
     }
@@ -150,7 +167,7 @@ class Enum
     /**
      * Get all constant values.
      *
-     * @return array<any>
+     * @return array<int|float|string|bool|array|null>
      */
     public static final function values(): array
     {
@@ -160,7 +177,7 @@ class Enum
     /**
      * Get all constant entries.
      *
-     * @return array<array>
+     * @return array<array<int|float|string|bool|array|null>>
      * @since  5.0
      */
     public static final function entries(): array
@@ -185,29 +202,29 @@ class Enum
     /**
      * Check whether a value is valid.
      *
-     * @param  any  $value
-     * @param  bool $strict
+     * @param  int|float|string|bool|array|null $value
      * @return bool
      */
-    public static final function validValue($value, bool $strict = true): bool
+    public static final function validValue(int|float|string|bool|array|null $value): bool
     {
-        return in_array($value, self::values(), $strict);
+        return in_array($value, self::values(), true);
     }
 
     /**
      * Get a name of value or return null when no value exists.
      *
-     * @param  any  $value
-     * @param  bool $lower
-     * @param  bool $strict
+     * @param  int|float|string|bool|array|null $value
+     * @param  bool                             $lower
      * @return string|null
      * @since  4.7
      */
-    public static final function nameOf($value, bool $lower = false, bool $strict = true): string|null
+    public static final function nameOf(int|float|string|bool|array|null $value, bool $lower = false): string|null
     {
-        $name = array_search($value, self::toArray(), $strict);
+        $name = array_search($value, self::toArray(), true);
 
-        $lower && $name && $name = strtolower($name);
+        if ($lower && $name) {
+            $name = strtolower($name);
+        }
 
         return ($name !== false) ? $name : null;
     }
@@ -217,12 +234,14 @@ class Enum
      *
      * @param  string $name
      * @param  bool   $upper
-     * @return any|null
+     * @return int|float|string|bool|array|null|null
      * @since  4.7
      */
-    public static final function valueOf(string $name, bool $upper = false)
+    public static final function valueOf(string $name, bool $upper = false): int|float|string|bool|array|null
     {
-        $upper && $name = strtoupper($name);
+        if ($upper) {
+            $name = strtoupper($name);
+        }
 
         return self::toArray()[$name] ?? null;
     }
@@ -230,11 +249,13 @@ class Enum
     /**
      * Generate an array copy of defined constants with key/value pairs or return cacheed one.
      *
-     * @return array<string, any>
+     * @return array<string, int|float|string|bool|array|null>
      */
     public static final function toArray(): array
     {
-        return self::$cache[static::class] ??= (new ReflectionClass(static::class))->getConstants();
+        return self::$cache[static::class] ??= (
+            (new \ReflectionClass(static::class))->getConstants()
+        );
     }
 
     /**
