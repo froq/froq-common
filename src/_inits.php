@@ -35,9 +35,12 @@ declare(strict_types=1);
      */
     function get_global(string $key, $default = null)
     {
-        if ($key === '*') { // All.
+        // All.
+        if ($key === '*') {
             $value = $GLOBALS['@froq'];
-        } elseif ($key[-1] === '*') { // All subs (eg: "foo*" or "foo.*").
+        }
+        // All subs (eg: "foo*" or "foo.*").
+        elseif ($key && $key[-1] === '*') {
             $values = [];
             $search = substr($key, 0, -1);
             foreach ($GLOBALS['@froq'] as $key => $value) {
@@ -46,9 +49,12 @@ declare(strict_types=1);
                 }
             }
             $value = $values;
-        } else { // Sub only (eg: "foo" or "foo.bar").
+        }
+        // Sub only (eg: "foo" or "foo.bar").
+        else {
             $value = $GLOBALS['@froq'][$key] ?? $default;
         }
+
         return $value;
     }
 
