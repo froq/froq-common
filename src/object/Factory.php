@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace froq\common\object;
 
-use froq\common\Exception;
-
 /**
  * Factory.
  *
@@ -31,7 +29,7 @@ final class Factory
      * @param  string $class
      * @param  ...    $classArgs
      * @return object
-     * @throws froq\common\Exception
+     * @throws froq\common\object\FactoryException
      */
     public static function init(string $class, ...$classArgs): object
     {
@@ -39,7 +37,7 @@ final class Factory
             return new $class(...$classArgs);
         }
 
-        throw new Exception('No class exists such ' . $class);
+        throw new FactoryException('No class exists such ' . $class);
     }
 
     /**
@@ -49,7 +47,7 @@ final class Factory
      * @param  string $class
      * @param  ...    $classArgs
      * @return object
-     * @throws froq\common\Exception
+     * @throws froq\common\object\FactoryException
      */
     public static function initOnce(string $class, ...$classArgs): object
     {
@@ -57,6 +55,6 @@ final class Factory
             return self::$instances[$class] ??= new $class(...$classArgs);
         }
 
-        throw new Exception('No class exists such ' . $class);
+        throw new FactoryException('No class exists such ' . $class);
     }
 }

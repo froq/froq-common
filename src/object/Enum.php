@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace froq\common\object;
 
-use froq\common\Exception;
-
 /**
  * Enum.
  *
@@ -39,12 +37,12 @@ class Enum
 
     /**
      * @magic
-     * @throws froq\common\Exception
+     * @throws froq\common\object\EnumException
      */
     public function __toString(): string
     {
         if (is_array($this->value)) {
-            throw new Exception('Cannot cast array value to string');
+            throw new EnumException('Cannot cast array value to string');
         }
 
         return (string) $this->value;
@@ -57,12 +55,12 @@ class Enum
      * @param  string $name
      * @param  array  $arguments
      * @return bool
-     * @throws froq\common\Exception
+     * @throws froq\common\object\EnumException
      */
     public function __call(string $name, array $arguments): bool
     {
         if (!str_starts_with($name, 'is') || strlen($name) == 2) {
-            throw new Exception(
+            throw new EnumException(
                 'No valid call as %s::%s(), call must be prefixed '.
                 'with `is` and followed by an existing constant name',
                 [static::class, $name]
@@ -73,7 +71,7 @@ class Enum
         $constants = self::toArray();
 
         if (!array_key_exists($constant, $constants)) {
-            throw new Exception(
+            throw new EnumException(
                 'No constant exists such %s::%s',
                 [static::class, $constant]
             );
@@ -89,12 +87,12 @@ class Enum
      * @param  string $name
      * @param  array  $arguments
      * @return bool
-     * @throws froq\common\Exception
+     * @throws froq\common\object\EnumException
      */
     public static function __callStatic(string $name, array $arguments): bool
     {
         if (!str_starts_with($name, 'is') || strlen($name) == 2) {
-            throw new Exception(
+            throw new EnumException(
                 'No valid call as %s::%s(), call must be prefixed '.
                 'with `is` and followed by an existing constant name',
                 [static::class, $name]
@@ -105,13 +103,13 @@ class Enum
         $constants = self::toArray();
 
         if (!array_key_exists($constant, $constants)) {
-            throw new Exception(
+            throw new EnumException(
                 'No constant exists such %s::%s',
                 [static::class, $constant]
             );
         }
         if (!array_key_exists(0, $arguments)) {
-            throw new Exception('No value given in arguments');
+            throw new EnumException('No value given in arguments');
         }
 
         return ($arguments[0] === $constants[$constant]);

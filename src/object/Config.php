@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace froq\common\object;
 
-use froq\common\Exception;
 use froq\collection\Collection;
 
 /**
@@ -69,7 +68,7 @@ final class Config extends Collection
      *
      * @param  string $file
      * @return array
-     * @throws froq\common\Exception
+     * @throws froq\common\object\ConfigException
      * @since  4.1
      */
     public static function parseDotenv(string $file): array
@@ -77,12 +76,12 @@ final class Config extends Collection
         $ret = [];
 
         if (!is_file($file)) {
-            throw new Exception('No .env file exists such `%s`', $file);
+            throw new ConfigException('No .env file exists such `%s`', $file);
         }
 
         $lines = file($file);
         if ($lines === false) {
-            throw new Exception('Cannot read .env file `%s`, [error: %s]', [$file, '@error']);
+            throw new ConfigException('Cannot read .env file `%s`, [error: %s]', [$file, '@error']);
         }
 
         foreach ($lines as $i => $line) {
@@ -95,12 +94,12 @@ final class Config extends Collection
 
             $pairs = array_map('trim', explode('=', $line, 2));
             if (count($pairs) != 2) {
-                throw new Exception('Invalid .env entry `%s` at file `%s:%s`', [$line, $file, $i + 1]);
+                throw new ConfigException('Invalid .env entry `%s` at file `%s:%s`', [$line, $file, $i + 1]);
             }
 
             [$name, $value] = $pairs;
             if (isset($ret[$name])) {
-                throw new Exception('Duplicated .env entry `%s` at file `%s:%s`', [$name, $file, $i + 1]);
+                throw new ConfigException('Duplicated .env entry `%s` at file `%s:%s`', [$name, $file, $i + 1]);
             }
 
             $ret[$name] = $value;

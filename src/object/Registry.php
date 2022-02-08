@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace froq\common\object;
 
-use froq\common\Exception;
-
 /**
  * Registry.
  *
@@ -54,14 +52,14 @@ final class Registry
      * @param  object $object
      * @param  bool   $locked
      * @return void
-     * @throws froq\common\Exception
+     * @throws froq\common\object\RegistryException
      */
     public static function set(string $id, object $object, bool $locked = true): void
     {
         $current = self::$stack[$id] ?? null;
 
         if ($current && $current['locked']) {
-            throw new Exception('Object `%s` is already registered and locked with id `%s`, call replace()'
+            throw new RegistryException('Object `%s` is already registered and locked with id `%s`, call replace()'
                 . ' instead to force it to change with set().', [$current['object']::class, $id]);
         }
 
@@ -73,7 +71,6 @@ final class Registry
      *
      * @param  string $id
      * @return object|null
-     * @throws froq\common\Exception
      */
     public static function get(string $id): object|null
     {
