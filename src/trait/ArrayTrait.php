@@ -64,12 +64,6 @@ trait ArrayTrait
         $this->data = $data;
     }
 
-    /** @magic */
-    public function __debugInfo(): array
-    {
-        return $this->data;
-    }
-
     /**
      * Copy.
      *
