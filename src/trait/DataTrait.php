@@ -41,10 +41,10 @@ trait DataTrait
     public function dataOnly(array|string $keys, bool $combine = true): array
     {
         if (is_string($keys)) {
-            $keys = mb_split(' +', $keys);
+            $keys = split('[, ]', $keys);
         }
 
-        return (array) array_select($this->data, $keys, combine: $combine);
+        return array_select($this->data, $keys, combine: $combine);
     }
 
     /**
