@@ -23,6 +23,7 @@ trait DataToJsonTrait
     /**
      * Get data array as JSON string.
      *
+     * @param  int $flags
      * @return string
      */
     public function toJson(int $flags = 0): string
