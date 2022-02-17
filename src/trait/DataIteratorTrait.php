@@ -50,13 +50,13 @@ trait DataIteratorTrait
         return key($this->data) !== null;
     }
 
-    /** @alias of current() */
+    /** @alias current() */
     public function value()
     {
         return $this->current();
     }
 
-    /** @alias of rewind() */
+    /** @alias rewind() */
     public function reset()
     {
         $this->rewind();
