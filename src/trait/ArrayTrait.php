@@ -200,7 +200,7 @@ trait ArrayTrait
     }
 
     /**
-     * Create an instance with given data.
+     * Static constructor.
      *
      * @param  iterable|null $data
      * @return static
@@ -211,7 +211,7 @@ trait ArrayTrait
     }
 
     /**
-     * Create an instance with given keys (and value optionally).
+     * Static constructor from given keys (and value optionally).
      *
      * @param  array      $keys
      * @param  mixed|null $value
