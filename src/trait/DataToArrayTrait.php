@@ -31,7 +31,7 @@ trait DataToArrayTrait
     }
 
     /**
-     * @alias of toArray()
+     * @alias toArray()
      */
     public function array()
     {

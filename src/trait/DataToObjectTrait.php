@@ -31,7 +31,7 @@ trait DataToObjectTrait
     }
 
     /**
-     * @alias of toObject()
+     * @alias toObject()
      */
     public function object()
     {

@@ -31,7 +31,7 @@ trait DataToListTrait
     }
 
     /**
-     * @alias of toList()
+     * @alias toList()
      */
     public function list()
     {

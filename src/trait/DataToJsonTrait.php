@@ -32,7 +32,7 @@ trait DataToJsonTrait
     }
 
     /**
-     * @alias of toJson()
+     * @alias toJson()
      */
     public function json(...$args)
     {
