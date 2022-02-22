@@ -220,7 +220,7 @@ trait ThrowableTrait
      */
     public final function toString(bool $pretty = false): string
     {
-        [$class, $code, $line, $file, $message, $messageTrace] = [
+        [$class, $code, $line, $file, $message, $trace] = [
             $this->getClass(), $this->code, $this->line, $this->file,
             $this->getMessage(), $this->getTraceString()
         ];
@@ -230,17 +230,19 @@ trait ThrowableTrait
             $class = str_replace('\\', '.', $class);
 
             // Change dotable stuffs and remove php extensions.
-            $message      = preg_replace(['~(\w)(?:\\\|::|->)(\w)~', '~\.php~'], ['\1.\2', ''], $message);
-            $messageTrace = preg_replace_callback('~(?:\.php[(]|(?:\\\|::|->))~',
-                fn($m) => $m[0] == '.php(' ? '(' : '.', $messageTrace);
+            $message = preg_replace(['~(\w)(?:\\\|::|->)(\w)~', '~\.php~'], ['\1.\2', ''], $message);
+            $trace   = preg_replace_callback('~(?:\.php[(]|(?:\\\|::|->))~',
+                fn($m) => $m[0] == '.php(' ? '(' : '.', $trace);
         }
 
+        $messageLine = $message ? trim($message, '.') . ".\n" : '';
+        $detailLine  = sprintf("Code: %d | Line: %d | File: %s\n", $code, $line, $file);
+
         return sprintf(
-            "%s\n%s\n\n%s(%d): %s at %s:%d\n-\n%s",
-            sprintf("%s.", trim($message, '.')),
-            sprintf("Code: %d | Line: %d | File: %s", $code, $line, $file),
+            "%s%s\n%s(%d): %s at %s:%d\n-\n%s",
+            $messageLine, $detailLine,
             $class, $code, $message,
-            $file, $line, $messageTrace
+            $file, $line, $trace
         );
     }
 
