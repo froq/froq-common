@@ -112,8 +112,8 @@ trait ThrowableTrait
     public function __toString(): string
     {
         // Eg: Exception: ... => Exception(404): ...
-        return preg_replace('~^(.+?): *(.+)~', '\1('. $this->code .'): \2',
-            parent::__toString());
+        return preg_replace('~^([^: ]+):* (.+)~', '\1('. $this->code .'): \2',
+            trim(parent::__toString()), 1);
     }
 
     /**
