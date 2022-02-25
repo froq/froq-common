@@ -71,65 +71,6 @@ declare(strict_types=1);
     }
 }
 
-// System stuff.
-{
-    /**
-     * Get an ini directive with bool option.
-     *
-     * @param  string   $name
-     * @param  any|null $default
-     * @param  bool     $bool
-     * @return string|bool|null
-     * @since  4.0
-     */
-    function ini(string $name, $default = null, bool $bool = false)
-    {
-        $value = (string) ini_get($name);
-        if ($value === '') {
-            $value = $default;
-        }
-
-        if ($bool) {
-            $value = $value && in_array(
-                strtolower($value), ['on', 'yes', 'true', '1'], true
-            );
-        }
-
-        return $value;
-    }
-
-    /**
-     * Get an environment variable.
-     *
-     * @param  string   $name
-     * @param  any|null $default
-     * @param  bool     $server_lookup
-     * @return any|null
-     * @since  4.0
-     */
-    function env(string $name, $default = null, bool $server_lookup = true)
-    {
-        $value = $_ENV[$name] ?? $_ENV[strtoupper($name)] ?? null;
-
-        if ($value === null) {
-            // Try with server global.
-            if ($server_lookup) {
-                $value = $_SERVER[$name] ?? $_SERVER[strtoupper($name)] ?? null;
-            }
-
-            if ($value === null) {
-                // Try with getenv() (ini variable order issue).
-                if (($value = getenv($name)) === false &&
-                    ($value = getenv(strtoupper($name))) === false) {
-                    $value = null;
-                }
-            }
-        }
-
-        return $value ?? $default;
-    }
-}
-
 // Casting utility stuff.
 {
     /**
