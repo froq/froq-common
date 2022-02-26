@@ -13,7 +13,7 @@ use Throwable, Error, Exception;
  * Throwable Trait.
  *
  * A trait that is used by Error/Exception classes, provides a relaxation getting rid of
- * `sprintf()` calls for each throw also having some utility methods and cause option.
+ * `sprintf()` calls for each throw also having some utility methods and cause property.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\ThrowableTrait
@@ -37,7 +37,7 @@ trait ThrowableTrait
     public function __construct(string|Throwable $message = null, mixed $messageParams = null, int $code = null,
         Throwable $previous = null, Throwable $cause = null)
     {
-        if ($message != null) {
+        if ($message) {
             if (is_string($message)) {
                 // Eg: throw new Exception('@error').
                 if ($message === '@error') {
@@ -47,13 +47,10 @@ trait ThrowableTrait
                 }
                 // Eg: throw new Exception('Error: %s', ['The error!'] or ['@error']).
                 elseif (func_num_args() > 1) {
-                    // Special formats (quoted string, int & error).
-                    $message       = str_replace('%e', '@error', $message);
+                    // Special formats (%e, @error, @type).
+                    $message       = str_replace(['%e', '@type'], ['@error', '%t'], $message);
                     $messageParams = is_array($messageParams) || is_scalar($messageParams)
                         ? (array) $messageParams : [$messageParams];
-
-                    // Fix for null message params -given- actually.
-                    $messageParams = $messageParams ?: [null];
 
                     foreach ($messageParams as $i => $messageParam) {
                         if ($messageParam === '@error') {
@@ -64,30 +61,17 @@ trait ThrowableTrait
                         }
                     }
 
-                    // Special format for "@type/%t given" messages.
-                    if (preg_test('~@type|%t~', $message)) {
-                        $message = str_replace('@type', '%t', $message);
-
-                        // Replace %t's & params with their types.
-                        foreach (grep_all($message, '~(%[a-z])~') as $i => $op) {
-                            if ($op == '%t') {
-                                $message           = substr_replace($message, '%s', strpos($message, '%t'), 2);
-                                $messageParams[$i] = get_type($messageParams[$i]);
-                            }
-                        }
-                    }
-
                     $message = format($message, ...$messageParams);
                 }
             } else {
                 // Use message as previous.
                 $previous ??= $message;
-
                 $code     ??= $message->getCode();
                 $message    = $message->getMessage();
             }
         }
 
+        // Special for froq.
         $this->cause = $cause;
 
         parent::__construct((string) $message, (int) $code, $previous);
@@ -233,7 +217,7 @@ trait ThrowableTrait
             $file  = str_replace('.php', '', $file);
             $class = str_replace('\\', '.', $class);
 
-            // Change dotable stuffs and remove php extensions.
+            // Change dotable stuff and remove php extensions.
             $message = preg_replace(['~(\w)(?:\\\|::|->)(\w)~', '~\.php~'], ['\1.\2', ''], $message);
             $trace   = preg_replace_callback('~(?:\.php[(]|(?:\\\|::|->))~',
                 fn($m) => $m[0] == '.php(' ? '(' : '.', $trace);
