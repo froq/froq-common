@@ -71,7 +71,6 @@ trait ThrowableTrait
             }
         }
 
-        // Special for froq.
         $this->cause = $cause;
 
         parent::__construct((string) $message, (int) $code, $previous);
