@@ -10,7 +10,7 @@ namespace froq\common\object;
 /**
  * Registry.
  *
- * A registry class which is able to store/unstore objects only.
+ * A registry class, able to store/unstore objects only.
  *
  * @package froq\common\object
  * @object  froq\common\object\Registry
@@ -19,9 +19,7 @@ namespace froq\common\object;
  */
 final class Registry
 {
-    /**
-     * @var array<string, object>
-     */
+    /** @var array<string, object> */
     private static array $stack = [];
 
     /**
@@ -105,12 +103,7 @@ final class Registry
     }
 
     /**
-     * Register an object.
-     *
-     * @param  string $id
-     * @param  object $object
-     * @param  bool   $locked
-     * @return void
+     * Internal registry wrapper.
      */
     private static function register(string $id, object $object, bool $locked): void
     {

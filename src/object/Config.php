@@ -17,7 +17,7 @@ use froq\collection\Collection;
  * @package froq\common\object
  * @object  froq\common\object\Config
  * @author  Kerem Güneş
- * @since   1.0, 5.0 Moved from "froq\config" module.
+ * @since   1.0, 5.0
  */
 final class Config extends Collection
 {

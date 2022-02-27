@@ -10,7 +10,7 @@ namespace froq\common\object;
 /**
  * Enum.
  *
- * An enumerable set of named values, not just like internal "enum" but a bit extended.
+ * An enum class, not just like internal `enum` but a bit extended.
  *
  * @package froq\common\object
  * @object  froq\common\object\Enum
@@ -49,7 +49,7 @@ class Enum
     }
 
     /**
-     * Provides call routines such as "$foo->isBar()", that prefixed with "is".
+     * Provides call routines such as `$foo->isBar()`, that prefixed with `is`.
      *
      * @magic
      * @param  string $name
@@ -81,7 +81,7 @@ class Enum
     }
 
     /**
-     * Provides static call routines such as "Foo::isBar()", that prefixed with "is".
+     * Provides static call routines such as `Foo::isBar()`, that prefixed with `is`.
      *
      * @magic
      * @param  string $name

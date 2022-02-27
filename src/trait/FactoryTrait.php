@@ -10,7 +10,7 @@ namespace froq\common\trait;
 /**
  * Factory Trait.
  *
- * Represents a trait entity which is able to create static instances or a single static instance from user class.
+ * A trait, able to create static instances or a single static instances from user classes.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\FactoryTrait
@@ -25,10 +25,10 @@ trait FactoryTrait
     /**
      * Create a static (user class) instance.
      *
-     * @param  ... $args
+     * @param  mixed ...$args
      * @return static
      */
-    public static final function init(...$args): static
+    public static final function init(mixed ...$args): static
     {
         return new static(...$args);
     }
@@ -36,10 +36,10 @@ trait FactoryTrait
     /**
      * Create a static (user class) instance as singleton.
      *
-     * @param  ... $args
+     * @param  mixed ...$args
      * @return static
      */
-    public static final function initOnce(...$args): static
+    public static final function initOnce(mixed ...$args): static
     {
         return self::$instance ??= new static(...$args);
     }

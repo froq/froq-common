@@ -26,35 +26,35 @@ final class Factory
     /**
      * Create an instance from given class with/without its arguments.
      *
-     * @param  string $class
-     * @param  ...    $classArgs
+     * @param  string   $class
+     * @param  mixed ...$classArgs
      * @return object
      * @throws froq\common\object\FactoryException
      */
-    public static function init(string $class, ...$classArgs): object
+    public static function init(string $class, mixed ...$classArgs): object
     {
         if (class_exists($class)) {
             return new $class(...$classArgs);
         }
 
-        throw new FactoryException('No class exists such `%s`', $class);
+        throw new FactoryException('No class exists such ' . $class);
     }
 
     /**
      * Create an instance from given class as singleton with/without its arguments
      * and cache it or return cached one that was previously created.
      *
-     * @param  string $class
-     * @param  ...    $classArgs
+     * @param  string   $class
+     * @param  mixed ...$classArgs
      * @return object
      * @throws froq\common\object\FactoryException
      */
-    public static function initOnce(string $class, ...$classArgs): object
+    public static function initOnce(string $class, mixed ...$classArgs): object
     {
         if (class_exists($class)) {
             return self::$instances[$class] ??= new $class(...$classArgs);
         }
 
-        throw new FactoryException('No class exists such `%s`', $class);
+        throw new FactoryException('No class exists such ' . $class);
     }
 }

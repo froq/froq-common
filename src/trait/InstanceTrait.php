@@ -10,12 +10,12 @@ namespace froq\common\trait;
 /**
  * Instance Trait.
  *
- * Represents a trait entity that used for implementing Singleton pattern.
+ * A trait, used for implementing Singleton pattern.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\InstanceTrait
  * @author  Kerem Güneş
- * @since   1.0, 5.0 Replaced with SingletonTrait.
+ * @since   1.0, 5.0
  */
 trait InstanceTrait
 {
@@ -25,10 +25,10 @@ trait InstanceTrait
     /**
      * Initialize user object.
      *
-     * @param  ... $args
+     * @param  mixed ...$args
      * @return static
      */
-    public static final function init(...$args): static
+    public static final function init(mixed ...$args): static
     {
         return self::$instance ??= new static(...$args);
     }
@@ -36,7 +36,7 @@ trait InstanceTrait
     /**
      * Get instance.
      *
-     * @alias of init()
+     * @alias init()
      * @since 4.0
      */
     public static final function getInstance(...$args)
