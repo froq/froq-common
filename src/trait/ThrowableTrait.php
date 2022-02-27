@@ -39,7 +39,7 @@ trait ThrowableTrait
     {
         // For multi-lines.
         if (is_array($message)) {
-            $message = join(' ', $message);
+            $message = join(' ', array_map('trim', $message));
         }
 
         if ($message) {
