@@ -57,6 +57,9 @@ trait ThrowableTrait
                     $messageParams = is_array($messageParams) || is_scalar($messageParams)
                         ? (array) $messageParams : [$messageParams];
 
+                    // Prevent named argument stuff for format.
+                    $messageParams = array_list($messageParams);
+
                     foreach ($messageParams as $i => $messageParam) {
                         if ($messageParam === '@error') {
                             $error             = self::getLastError();
