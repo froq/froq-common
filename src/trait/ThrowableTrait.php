@@ -28,15 +28,20 @@ trait ThrowableTrait
     /**
      * Constructor.
      *
-     * @param string|Throwable  $message
-     * @param mixed|null        $messageParams
-     * @param int|null          $code
-     * @param Throwable|null    $previous
-     * @param Throwable|null    $cause
+     * @param string|array|Throwable message
+     * @param mixed|null             $messageParams
+     * @param int|null               $code
+     * @param Throwable|null         $previous
+     * @param Throwable|null         $cause
      */
-    public function __construct(string|Throwable $message = null, mixed $messageParams = null, int $code = null,
+    public function __construct(string|array|Throwable $message = null, mixed $messageParams = null, int $code = null,
         Throwable $previous = null, Throwable $cause = null)
     {
+        // For multi-lines.
+        if (is_array($message)) {
+            $message = join(' ', $message);
+        }
+
         if ($message) {
             if (is_string($message)) {
                 // Eg: throw new Exception('@error').
