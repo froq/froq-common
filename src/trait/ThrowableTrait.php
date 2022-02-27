@@ -12,8 +12,8 @@ use Throwable, Error, Exception;
 /**
  * Throwable Trait.
  *
- * A trait that is used by Error/Exception classes, provides a relaxation getting rid of
- * `sprintf()` calls for each throw also having some utility methods and cause property.
+ * A trait, used by Error/Exception classes, provides a relaxation getting rid of
+ * `sprintf()` calls for each throw, has some utility methods and cause property.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\ThrowableTrait
@@ -44,11 +44,15 @@ trait ThrowableTrait
 
         if ($message) {
             if (is_string($message)) {
+                $error = self::getLastError();
+
+                // Replace '@error' directive with last (current) error.
+                $message = str_replace('@error', $error['message'], $message);
+
                 // Eg: throw new Exception('@error').
                 if ($message === '@error') {
-                    $error    = self::getLastError();
-                    $code     = $code ?? $error['code'];
-                    $message  = $error['message'];
+                    $code  ??= $error['code'];
+                    $message = $error['message'];
                 }
                 // Eg: throw new Exception('Error: %s', ['The error!'] or ['@error']).
                 elseif (func_num_args() > 1) {
@@ -62,8 +66,7 @@ trait ThrowableTrait
 
                     foreach ($messageParams as $i => $messageParam) {
                         if ($messageParam === '@error') {
-                            $error             = self::getLastError();
-                            $code              = $code ?? $error['code'];
+                            $code            ??= $error['code'];
                             $messageParams[$i] = $error['message'];
                             break;
                         }
@@ -84,7 +87,7 @@ trait ThrowableTrait
         parent::__construct((string) $message, (int) $code, $previous);
     }
 
-    /** @magic __get() */
+    /** @magic */
     public function __get(string $property): mixed
     {
         if (property_exists($this, $property)) {
@@ -99,7 +102,7 @@ trait ThrowableTrait
         return null;
     }
 
-    /** @magic __toString() */
+    /** @magic */
     public function __toString(): string
     {
         $ret = trim(parent::__toString());
