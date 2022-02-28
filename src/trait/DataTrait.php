@@ -40,8 +40,9 @@ trait DataTrait
      */
     public function dataOnly(array|string $keys, bool $combine = true): array
     {
+        // Comma-separated list.
         if (is_string($keys)) {
-            $keys = split('[, ]', $keys);
+            $keys = split('\s*,\s*', $keys);
         }
 
         return array_select($this->data, $keys, combine: $combine);
