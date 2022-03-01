@@ -28,11 +28,11 @@ trait ThrowableTrait
     /**
      * Constructor.
      *
-     * @param string|array|Throwable message
-     * @param mixed|null             $messageParams
-     * @param int|null               $code
-     * @param Throwable|null         $previous
-     * @param Throwable|null         $cause
+     * @param string|array|Throwable|null message
+     * @param mixed|null                  $messageParams
+     * @param int|null                    $code
+     * @param Throwable|null              $previous
+     * @param Throwable|null              $cause
      */
     public function __construct(string|array|Throwable $message = null, mixed $messageParams = null, int $code = null,
         Throwable $previous = null, Throwable $cause = null)
