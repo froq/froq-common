@@ -10,13 +10,13 @@ namespace froq\common\trait;
 /**
  * Read-Only Call Trait.
  *
- * Represents a trait that provides read-only state check call method if the user class
- * has `readOnlyCheck()` method (where defined in `ReadOnlyTrait` trait as well).
+ * A trait, provides read-only state check call method if the user class has
+ * `readOnlyCheck()` method (that defined in `ReadOnlyTrait` trait as well).
  *
  * @package froq\common\trait
  * @object  froq\common\trait\ReadOnlyCallTrait
  * @author  Kerem Güneş
- * @since   5.4, 5.7 Moved from "collection.trait" subpackage.
+ * @since   5.4, 5.7
  */
 trait ReadOnlyCallTrait
 {

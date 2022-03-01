@@ -41,7 +41,7 @@ final class Config extends Collection
      * @param  array $source1
      * @param  array $source2
      * @return array
-     * @since  1.0, 4.0 Derived from merge().
+     * @since  1.0, 4.0
      */
     public static function mergeSources(array $source1, array $source2): array
     {
