@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace froq\common;
 
-use froq\common\trait\ThrowableTrait;
-
 /**
  * Exception.
  *
@@ -20,5 +18,5 @@ use froq\common\trait\ThrowableTrait;
 class Exception extends \Exception
 {
     /** @see froq\common\trait\ThrowableTrait */
-    use ThrowableTrait;
+    use trait\ThrowableTrait;
 }
