@@ -18,7 +18,7 @@ use froq\util\Objects;
  * @package froq\common\trait
  * @object  froq\common\trait\ReadOnlyTrait
  * @author  Kerem Güneş
- * @since   5.4, 5.7 Moved from "collection.trait" subpackage.
+ * @since   5.4, 5.7
  */
 trait ReadOnlyTrait
 {

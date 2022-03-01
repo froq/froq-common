@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace froq\common\exception;
 
-use froq\common\exception\LogicException;
-
 /**
  * Invalid Value Exception.
  *

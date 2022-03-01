@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace froq\common\exception;
 
-use froq\common\exception\RuntimeException;
-
 /**
  * Invalid Argument Exception.
  *
@@ -17,5 +15,5 @@ use froq\common\exception\RuntimeException;
  * @author  Kerem Güneş
  * @since   4.0
  */
-class InvalidArgumentException extends RuntimeException
+class InvalidArgumentException extends LogicException
 {}
