@@ -56,12 +56,10 @@ trait ThrowableTrait
                 }
                 // Eg: throw new Exception('Error: %s', ['The error!'] or ['@error']).
                 elseif (func_num_args() > 1) {
-                    // Special formats (%e, @error, @type).
-                    $message       = str_replace(['%e', '@type'], ['@error', '%t'], $message);
                     $messageParams = is_array($messageParams) || is_scalar($messageParams)
                         ? (array) $messageParams : [$messageParams];
 
-                    // Prevent named argument stuff for format.
+                    // Prevent named argument stuff for format().
                     $messageParams = array_list($messageParams);
 
                     foreach ($messageParams as $i => $messageParam) {
