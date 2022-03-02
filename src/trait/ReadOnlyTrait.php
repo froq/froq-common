@@ -78,28 +78,4 @@ trait ReadOnlyTrait
     {
         return self::$__READ_ONLY_STATES ?? null;
     }
-
-    /**
-     * Lock, read-only state as true.
-     *
-     * @return self
-     */
-    public final function lock(): self
-    {
-        $this->readOnly(true);
-
-        return $this;
-    }
-
-    /**
-     * Unlock, read-only state as false.
-     *
-     * @return self
-     */
-    public final function unlock(): self
-    {
-        $this->readOnly(false);
-
-        return $this;
-    }
 }
