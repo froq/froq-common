@@ -17,7 +17,7 @@ namespace froq\common\object;
  * @author  Kerem Güneş
  * @since   4.0
  */
-final class Registry
+class Registry
 {
     /** @var array<string, object> */
     private static array $stack = [];
@@ -27,7 +27,7 @@ final class Registry
      *
      * @return array<string, object>
      */
-    public static function stack(): array
+    public static final function stack(): array
     {
         return self::$stack;
     }
@@ -38,7 +38,7 @@ final class Registry
      * @param  string $id
      * @return bool
      */
-    public static function has(string $id): bool
+    public static final function has(string $id): bool
     {
         return isset(self::$stack[$id]);
     }
@@ -52,7 +52,7 @@ final class Registry
      * @return void
      * @throws froq\common\object\RegistryException
      */
-    public static function set(string $id, object $object, bool $locked = true): void
+    public static final function set(string $id, object $object, bool $locked = true): void
     {
         $current = self::$stack[$id] ?? null;
 
@@ -73,7 +73,7 @@ final class Registry
      * @param  string $id
      * @return object|null
      */
-    public static function get(string $id): object|null
+    public static final function get(string $id): object|null
     {
         return self::$stack[$id]['object'] ?? null;
     }
@@ -84,7 +84,7 @@ final class Registry
      * @param  string $id
      * @return void
      */
-    public static function remove(string $id): void
+    public static final function remove(string $id): void
     {
         unset(self::$stack[$id]);
     }
@@ -97,7 +97,7 @@ final class Registry
      * @param  bool   $locked
      * @return void
      */
-    public static function replace(string $id, object $object, bool $locked = true): void
+    public static final function replace(string $id, object $object, bool $locked = true): void
     {
         self::register($id, $object, $locked);
     }

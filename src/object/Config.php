@@ -19,7 +19,7 @@ use froq\collection\Collection;
  * @author  Kerem Güneş
  * @since   1.0, 5.0
  */
-final class Config extends Collection
+class Config extends Collection
 {
     /**
      * Update current options.
@@ -43,7 +43,7 @@ final class Config extends Collection
      * @return array
      * @since  1.0, 4.0
      */
-    public static function mergeSources(array $source1, array $source2): array
+    public static final function mergeSources(array $source1, array $source2): array
     {
         $ret = $source2;
 
@@ -71,7 +71,7 @@ final class Config extends Collection
      * @throws froq\common\object\ConfigException
      * @since  4.1
      */
-    public static function parseDotenv(string $file): array
+    public static final function parseDotenv(string $file): array
     {
         $ret = [];
 

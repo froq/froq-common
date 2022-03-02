@@ -18,7 +18,7 @@ namespace froq\common\object;
  * @author  Kerem Güneş
  * @since   4.0
  */
-final class Factory
+class Factory
 {
     /** @var array<string, object> */
     private static array $instances = [];
@@ -31,7 +31,7 @@ final class Factory
      * @return object
      * @throws froq\common\object\FactoryException
      */
-    public static function init(string $class, mixed ...$classArgs): object
+    public static final function init(string $class, mixed ...$classArgs): object
     {
         if (class_exists($class)) {
             return new $class(...$classArgs);
@@ -49,7 +49,7 @@ final class Factory
      * @return object
      * @throws froq\common\object\FactoryException
      */
-    public static function initOnce(string $class, mixed ...$classArgs): object
+    public static final function initOnce(string $class, mixed ...$classArgs): object
     {
         if (class_exists($class)) {
             return self::$instances[$class] ??= new $class(...$classArgs);
