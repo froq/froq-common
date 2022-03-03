@@ -12,7 +12,7 @@ use Closure;
 /**
  * Apply Trait.
  *
- * Represents a trait entity which is able to access the hidden properties/methods for modify/call purposes
+ * A trait, able to access the hidden properties/methods for modify/call purposes
  * in owner class.
  *
  * @package froq\common\trait
@@ -30,9 +30,7 @@ trait ApplyTrait
      */
     public final function apply(callable $func): self
     {
-        ($func instanceof Closure) || (
-            $func = Closure::fromCallable($func)
-        );
+        $func instanceof Closure || $func = Closure::fromCallable($func);
 
         $func->bindTo($this)->call($this);
 

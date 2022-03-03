@@ -10,8 +10,7 @@ namespace froq\common\trait;
 /**
  * Data Access Magic Trait.
  *
- * Represents a trait that provides some access & modify actions via magic methods
- * for those classes hold a `$data` property as array.
+ * A trait, provides magic-access methods for the classes defining `$data` property as array.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\DataAccessMagicTrait
@@ -20,46 +19,25 @@ namespace froq\common\trait;
  */
 trait DataAccessMagicTrait
 {
-    /**
-     * Magic - isset.
-     *
-     * @param  int|string $key
-     * @return bool
-     */
+    /** @magic */
     public function __isset(int|string $key): bool
     {
         return isset($this->data[$key]);
     }
 
-    /**
-     * Magic - set.
-     *
-     * @param  int|string $key
-     * @param  mixed      $value
-     * @return void
-     */
+    /** @magic */
     public function __set(int|string $key, mixed $value): void
     {
         $this->data[$key] = $value;
     }
 
-    /**
-     * Magic - get.
-     *
-     * @param  int|string $key
-     * @return mixed
-     */
+    /** @magic */
     public function __get(int|string $key): mixed
     {
         return $this->data[$key] ?? null;
     }
 
-    /**
-     * Magic - unset.
-     *
-     * @param  int|string $key
-     * @return void
-     */
+    /** @magic */
     public function __unset(int|string $key): void
     {
         unset($this->data[$key]);

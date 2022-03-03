@@ -10,8 +10,8 @@ namespace froq\common\trait;
 /**
  * Data To-Json Trait.
  *
- * Represents a trait that provides `toJson()` and `json()` methods for those classes
- * hold a `$data` property as array.
+ * A trait, provides `toJson()` and `json()` methods for the classes defining `$data`
+ * property as array.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\DataToJsonTrait

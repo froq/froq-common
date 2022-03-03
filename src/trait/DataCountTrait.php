@@ -10,8 +10,7 @@ namespace froq\common\trait;
 /**
  * Data Count Trait.
  *
- * Represents a trait that provides `count()` method for those classes hold a `$data` property
- * as array.
+ * A trait, provides `count()` method for the classes defining `$data` property as array.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\DataCountTrait

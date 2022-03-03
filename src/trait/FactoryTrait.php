@@ -10,7 +10,7 @@ namespace froq\common\trait;
 /**
  * Factory Trait.
  *
- * A trait, able to create static instances or a single static instances from user classes.
+ * A trait, for creating static or a single static instances from user classes.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\FactoryTrait

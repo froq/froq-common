@@ -12,7 +12,7 @@ use froq\util\Objects;
 /**
  * Constant Trait.
  *
- * Represents a trait entity for objects which may be used with ObjectTrait, PropertyTrait and MethodTrait.
+ * A trait, for objects and can be used with ObjectTrait, PropertyTrait and MethodTrait.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\ConstantTrait

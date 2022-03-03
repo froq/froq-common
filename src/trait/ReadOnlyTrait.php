@@ -13,7 +13,7 @@ use froq\util\Objects;
 /**
  * Read-Only Trait.
  *
- * Represents a trait that provides read-only state check and other read-only utilities.
+ * A trait, provides read-only state check and other read-only utilities.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\ReadOnlyTrait

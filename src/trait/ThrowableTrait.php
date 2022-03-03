@@ -13,7 +13,8 @@ use Throwable, Error, Exception;
  * Throwable Trait.
  *
  * A trait, used by Error/Exception classes, provides a relaxation getting rid of
- * `sprintf()` calls for each throw, has some utility methods and cause property.
+ * `sprintf()` calls for each throw, has some utility methods and cause property
+ * as well.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\ThrowableTrait

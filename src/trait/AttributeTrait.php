@@ -10,7 +10,7 @@ namespace froq\common\trait;
 /**
  * Attribute Trait.
  *
- * Represents a trait entity which is able to set, get or check attributes on user object.
+ * A trait, able to set/get/check attributes on user object.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\AttributeTrait

@@ -10,6 +10,8 @@ namespace froq\common\trait;
 /**
  * Option Trait.
  *
+ * A trait, able to set/get/check options on user object.
+ *
  * @package froq\common\trait
  * @object  froq\common\trait\OptionTrait
  * @author  Kerem Güneş

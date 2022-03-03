@@ -10,8 +10,8 @@ namespace froq\common\trait;
 /**
  * Data To-Array Trait.
  *
- * Represents a trait that provides `toArray()` and `array()` methods for those classes
- * hold a `$data` property as array.
+ * A trait, provides `toArray()` and `array()` methods for the classes defining `$data`
+ * property as array.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\DataToArrayTrait

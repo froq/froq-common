@@ -10,8 +10,7 @@ namespace froq\common\trait;
 /**
  * Data Trait.
  *
- * Represents a trait that provides some access & modify actions for those classes hold
- * a `$data` property as array.
+ * A trait, provides access/modify methods for the classes defining `$data` property as array.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\DataTrait

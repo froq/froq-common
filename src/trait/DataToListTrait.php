@@ -10,8 +10,8 @@ namespace froq\common\trait;
 /**
  * Data To-List Trait.
  *
- * Represents a trait that provides `toList()` and `list()` methods for those classes
- * hold a `$data` property as array.
+ * A trait, provides `toList()` and `list()` methods for the classes defining `$data`
+ * property as array.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\DataToListTrait

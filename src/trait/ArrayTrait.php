@@ -16,7 +16,7 @@ use froq\collection\iterator\{ArrayIterator, ReverseArrayIterator};
 /**
  * Array Trait.
  *
- * A trait for array-like classes these hold a `$data` property as array.
+ * A trait, for array-like classes defining `$data` property as array.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\ArrayTrait
