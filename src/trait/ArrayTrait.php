@@ -160,7 +160,6 @@ trait ArrayTrait
     /**
      * @inheritDoc froq\common\interface\Yieldable
      * @since 5.4
-     * @note Return is permissive.
      */
     public function yield(bool $reverse = false): iterable
     {
