@@ -10,7 +10,7 @@ namespace froq\common\trait;
 /**
  * Data Empty Trait.
  *
- * A trait that provides `empty()`, `isEmpty()` and `isNotEmpty()` methods for the classes
+ * A trait, provides `empty()`, `isEmpty()` and `isNotEmpty()` methods for the classes
  * defining `$data` property as array.
  *
  * @package froq\common\trait

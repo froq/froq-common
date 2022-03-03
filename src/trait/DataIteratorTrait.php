@@ -10,8 +10,8 @@ namespace froq\common\trait;
 /**
  * Data Iterator Trait.
  *
- * A trait, provides `Iterator` interface methods for the classes defining `$data`
- * property as array.
+ * A trait, provides related methods for the classes defining `$data` property as array
+ * and implementing `Iterator` interface..
  *
  * @package froq\common\trait
  * @object  froq\common\trait\DataIteratorTrait
