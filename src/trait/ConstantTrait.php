@@ -36,7 +36,7 @@ trait ConstantTrait
      * Get a detailed constant info.
      *
      * @param  string $name
-     * @return array<string, any>|null
+     * @return array|null
      */
     public final function getConstant(string $name): array|null
     {
@@ -47,9 +47,9 @@ trait ConstantTrait
      * Get a constant value.
      *
      * @param  string $name
-     * @return any
+     * @return mixed
      */
-    public final function getConstantValue(string $name)
+    public final function getConstantValue(string $name): mixed
     {
         return Objects::getConstantValue($this, $name);
     }
@@ -58,7 +58,7 @@ trait ConstantTrait
      * Get constants.
      *
      * @param  bool $all
-     * @return array<string, array>|null
+     * @return array|null
      */
     public final function getConstants(bool $all = true): array|null
     {
@@ -69,7 +69,7 @@ trait ConstantTrait
      * Get constant names.
      *
      * @param  bool $all
-     * @return array<string>|null
+     * @return array|null
      */
     public final function getConstantNames(bool $all = true): array|null
     {
@@ -80,11 +80,11 @@ trait ConstantTrait
      * Get constant values.
      *
      * @param  bool $all
-     * @param  bool $withNames
-     * @return array<int|string, any>|null
+     * @param  bool $assoc
+     * @return array|null
      */
-    public final function getConstantValues(bool $all = true, bool $withNames = false): array|null
+    public final function getConstantValues(bool $all = true, bool $assoc = false): array|null
     {
-        return Objects::getConstantValues($this, $all, $withNames);
+        return Objects::getConstantValues($this, $all, $assoc);
     }
 }

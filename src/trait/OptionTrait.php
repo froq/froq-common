@@ -19,17 +19,17 @@ namespace froq\common\trait;
  */
 trait OptionTrait
 {
-    /** @var array<string, any> */
+    /** @var array<string, mixed> */
     protected array $options = [];
 
     /**
      * Set/get an option.
      *
-     * @param  string   $key
-     * @param  any|null $value
-     * @return any|null|self
+     * @param  string     $key
+     * @param  mixed|null $value
+     * @return mixed|null or self
      */
-    public final function option(string $key, $value = null)
+    public final function option(string $key, mixed $value = null): mixed
     {
         return func_num_args() == 1 ? $this->getOption($key)
                                     : $this->setOption($key, $value);
@@ -61,10 +61,10 @@ trait OptionTrait
      * Set an option by given key and value.
      *
      * @param  string $key
-     * @param  any    $value
+     * @param  mixed  $value
      * @return self
      */
-    public final function setOption(string $key, $value): self
+    public final function setOption(string $key, mixed $value): self
     {
         $this->options[$key] = $value;
 
@@ -74,11 +74,11 @@ trait OptionTrait
     /**
      * Get an option by given key.
      *
-     * @param  string   $key
-     * @param  any|null $default
-     * @return any|null
+     * @param  string     $key
+     * @param  mixed|null $default
+     * @return mixed|null
      */
-    public final function getOption(string $key, $default = null)
+    public final function getOption(string $key, mixed $default = null): mixed
     {
         return $this->options[$key] ?? $default;
     }
@@ -99,16 +99,16 @@ trait OptionTrait
     /**
      * Set options with optional defaults.
      *
-     * @param  array<string, any>|null $options
-     * @param  array<string, any>|null $defaults
-     * @param  bool                    $recursive
+     * @param  array<string, mixed>|null $options
+     * @param  array<string, mixed>|null $defaults
+     * @param  bool                      $recursive
      * @return self
      */
     public final function setOptions(?array $options, ?array $defaults = null, bool $recursive = true): self
     {
         $options ??= [];
 
-        if ($defaults != null) {
+        if ($defaults) {
             $options = $recursive ? array_replace_recursive($defaults, $options)
                 : array_replace($defaults, $options);
         }
@@ -124,7 +124,7 @@ trait OptionTrait
      * Get options by given keys.
      *
      * @return array<string>|null $keys
-     * @return array<any>
+     * @return array<mixed>
      */
     public final function getOptions(array $keys = null): array
     {
@@ -134,7 +134,6 @@ trait OptionTrait
         }
 
         $values = [];
-
         foreach ($keys as $key) {
             $values[] = $this->getOption($key);
         }

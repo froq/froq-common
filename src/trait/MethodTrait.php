@@ -36,7 +36,7 @@ trait MethodTrait
      * Get a detailed method info.
      *
      * @param  string $name
-     * @return array<string, any>|null
+     * @return array|null
      */
     public final function getMethod(string $name): array|null
     {
@@ -47,7 +47,7 @@ trait MethodTrait
      * Get methods.
      *
      * @param  bool $all
-     * @return array<string, array>|null
+     * @return array|null
      */
     public final function getMethods(bool $all = true): array|null
     {
@@ -58,7 +58,7 @@ trait MethodTrait
      * Get method names.
      *
      * @param  bool $all
-     * @return array<string>|null
+     * @return array|null
      */
     public final function getMethodNames(bool $all = true): array|null
     {
