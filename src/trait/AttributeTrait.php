@@ -123,10 +123,11 @@ trait AttributeTrait
     /**
      * Get attributes by given names.
      *
-     * @return array<string>|null $names
+     * @param  array<string>|null $names
+     * @param  bool               $combine
      * @return array<mixed>
      */
-    public final function getAttributes(array $names = null): array
+    public final function getAttributes(array $names = null, bool $combine = false): array
     {
         // All wanted.
         if ($names === null) {
@@ -138,7 +139,7 @@ trait AttributeTrait
             $values[] = $this->getAttribute($name);
         }
 
-        return $values;
+        return $combine ? array_combine($names, $values) : $values;
     }
 
     /**

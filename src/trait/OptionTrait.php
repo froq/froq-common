@@ -123,10 +123,11 @@ trait OptionTrait
     /**
      * Get options by given keys.
      *
-     * @return array<string>|null $keys
+     * @param  array<string>|null $keys
+     * @param  bool               $combine
      * @return array<mixed>
      */
-    public final function getOptions(array $keys = null): array
+    public final function getOptions(array $keys = null, bool $combine = false): array
     {
         // All wanted.
         if ($keys === null) {
@@ -138,7 +139,7 @@ trait OptionTrait
             $values[] = $this->getOption($key);
         }
 
-        return $values;
+        return $combine ? array_combine($keys, $values) : $values;
     }
 
     /**
