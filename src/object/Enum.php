@@ -153,6 +153,14 @@ class Enum
     }
 
     /**
+     * @alias toArray()
+     */
+    public static final function all(): array
+    {
+        return self::toArray();
+    }
+
+    /**
      * Get all constant names.
      *
      * @return array<string>
