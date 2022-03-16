@@ -156,4 +156,14 @@ trait OptionTrait
 
         return $this;
     }
+
+    /**
+     * Get default options if defined as static in user class.
+     *
+     * @return array|null
+     */
+    public static final function getDefaultOptions(): array|null
+    {
+        return static::$optionsDefault ?? null;
+    }
 }
