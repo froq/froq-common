@@ -7,7 +7,8 @@ declare(strict_types=1);
 
 namespace froq\common\trait;
 
-use Throwable, Error, Exception;
+use froq\common\{Error, Exception};
+use Throwable;
 
 /**
  * Throwable Trait.
@@ -110,7 +111,14 @@ trait ThrowableTrait
         $ret = preg_replace('~Stack trace:~', 'Trace:', $ret, 1);
 
         // Error: ... => Error(123): ...
-        return preg_replace('~^([^: ]+):* (.+)~', '\1('. $this->code .'): \2', $ret, 1);
+        $ret = preg_replace('~^([^: ]+):* (.+)~', '\1('. $this->code .'): \2', $ret, 1);
+
+        // Add cause info.
+        if ($cause = $this->getCause()) {
+            $ret .= "\n\n". 'Cause:' . "\n" . $cause;
+        }
+
+        return $ret;
     }
 
     /**
@@ -132,17 +140,16 @@ trait ThrowableTrait
      */
     public final function getCauses(): array|null
     {
-        $causes = null;
-
         if ($cause = $this->getCause()) {
             $causes[] = $cause;
 
-            while ($root = $cause?->getCause()) {
+            while (is_class_of($cause, Error::class, Exception::class)
+                && ($root = $cause?->getCause())) {
                 $causes[] = $cause = $root;
             }
         }
 
-        return $causes;
+        return $causes ?? null;
     }
 
     /**
@@ -153,10 +160,11 @@ trait ThrowableTrait
      */
     public final function getRootCause(): Throwable|null
     {
-        $cause = $this->getCause();
-
-        while ($root = $cause?->getCause()) {
-            $cause = $root;
+        if ($cause = $this->getCause()) {
+            while (is_class_of($cause, Error::class, Exception::class)
+                && ($root = $cause?->getCause())) {
+                $cause = $root;
+            }
         }
 
         return $cause;
@@ -250,7 +258,7 @@ trait ThrowableTrait
      */
     public final function isError(): bool
     {
-        return ($this instanceof Error);
+        return ($this instanceof \Error);
     }
 
     /**
@@ -260,7 +268,7 @@ trait ThrowableTrait
      */
     public final function isException(): bool
     {
-        return ($this instanceof Exception);
+        return ($this instanceof \Exception);
     }
 
     /**
