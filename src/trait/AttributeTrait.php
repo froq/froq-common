@@ -10,7 +10,8 @@ namespace froq\common\trait;
 /**
  * Attribute Trait.
  *
- * A trait, able to set/get/check attributes on user object.
+ * A trait, defines `$attributes` property as array able to set/get/check attributes
+ * on user object.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\AttributeTrait
