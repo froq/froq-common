@@ -93,11 +93,14 @@ trait ThrowableTrait
         if (property_exists($this, $property)) {
             return $this->$property;
         }
+        if ($property == 'trace') {
+            return $this->getTrace();
+        }
 
-        trigger_error(
-            'Undefined property: '. $this::class .'::$'. $property,
-            E_USER_WARNING // Act like original.
-        );
+        // Act as original.
+        trigger_error(sprintf(
+            'Undefined property: %s::$%s', static::class, $property
+        ), E_USER_WARNING);
 
         return null;
     }
