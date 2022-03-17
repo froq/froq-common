@@ -8,7 +8,8 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 /**
- * A trait, defines `$options` property and provides `setInput()`, `getInput()` methods.
+ * A trait, defines `$options` property and provides `setInput()`, `getInput()`
+ * and `hasInput()` methods.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\InputTrait
