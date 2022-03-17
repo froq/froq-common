@@ -42,4 +42,21 @@ trait InputTrait
     {
         return $this->input;
     }
+
+    /**
+     * Has input.
+     *
+     * @return bool
+     */
+    public function hasInput(): bool
+    {
+        try {
+            // Just for: "Typed property ... $input must not be accessed before initialization".
+            !$this->input;
+
+            return true;
+        } catch (\Error) {
+            return false;
+        }
+    }
 }
