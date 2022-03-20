@@ -52,12 +52,29 @@ trait InputTrait
     public function hasInput(): bool
     {
         try {
-            // Just for: "Typed property ... $input must not be accessed before initialization".
+            // Just for: "Typed property ... $input must not be
+            // accessed before initialization".
             !$this->input;
-
             return true;
         } catch (\Error) {
             return false;
+        }
+    }
+
+    /**
+     * Ensure input.
+     *
+     * @param  string      $throwable
+     * @param  string|null $message
+     * @return void
+     * @throws Throwable
+     */
+    public function ensureInput(string $throwable = 'Exception', string $message = null): void
+    {
+        if (!$this->hasInput()) {
+            throw new $throwable($message ?? sprintf(
+                'No input given yet, call %s::setInput() first', static::class
+            ));
         }
     }
 }
