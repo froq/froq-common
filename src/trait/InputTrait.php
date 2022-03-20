@@ -62,14 +62,14 @@ trait InputTrait
     }
 
     /**
-     * Ensure input.
+     * Check input.
      *
      * @param  string      $throwable
      * @param  string|null $message
      * @return void
      * @throws Throwable
      */
-    public function ensureInput(string $throwable = 'Exception', string $message = null): void
+    public function checkInput(string $throwable = 'Exception', string $message = null): void
     {
         if (!$this->hasInput()) {
             throw new $throwable($message ?? sprintf(
