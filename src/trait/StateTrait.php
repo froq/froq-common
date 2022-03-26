@@ -1,0 +1,50 @@
+<?php
+/**
+ * Copyright (c) 2015 · Kerem Güneş
+ * Apache License 2.0 · http://github.com/froq/froq-common
+ */
+declare(strict_types=1);
+
+namespace froq\common\trait;
+
+use State;
+
+/**
+ * A trait, provides `$state` property, `setState()` and `getState()` methods.
+ *
+ * @package froq\common\trait
+ * @object  froq\common\trait\StateTrait
+ * @author  Kerem Güneş
+ * @since   6.0
+ */
+trait StateTrait
+{
+    /** @var State */
+    protected readonly State $state;
+
+    /**
+     * Set a state.
+     *
+     * @param  string $name
+     * @param  mixed  $value
+     * @return self
+     */
+    public function setState(string $name, mixed $value): self
+    {
+        $this->state->setState($name, $value);
+
+        return $this;
+    }
+
+    /**
+     * Get a state or default.
+     *
+     * @param  string     $name
+     * @param  mixed|null $default
+     * @return mixed|null
+     */
+    public function getState(string $name, mixed $default = null): mixed
+    {
+        return $this->state->getState($name, $default);
+    }
+}
