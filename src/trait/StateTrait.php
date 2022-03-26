@@ -20,7 +20,7 @@ use State;
 trait StateTrait
 {
     /** @var State */
-    protected readonly State $state;
+    private readonly State $state;
 
     /**
      * Set a state.
