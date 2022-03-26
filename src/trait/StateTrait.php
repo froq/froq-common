@@ -31,7 +31,7 @@ trait StateTrait
      */
     public function setState(string $name, mixed $value): self
     {
-        $this->state->setState($name, $value);
+        $this->state->set($name, $value);
 
         return $this;
     }
@@ -45,6 +45,6 @@ trait StateTrait
      */
     public function getState(string $name, mixed $default = null): mixed
     {
-        return $this->state->getState($name, $default);
+        return $this->state->get($name, $default);
     }
 }
