@@ -54,15 +54,37 @@ trait StateTrait
     }
 
     /**
-     * Reset states.
+     * Set states.
      *
      * @param  mixed ...$states
      * @return self
      */
-    public function resetStates(mixed ...$states): self
+    public function setStates(mixed ...$states): self
     {
         $this->state->reset(...$states);
 
         return $this;
+    }
+
+    /**
+     * Get states.
+     *
+     * @return array|object
+     */
+    public function getStates(bool $object = false): array|object
+    {
+        $states = (array) $this->state;
+
+        return $object ? (object) $states : $states;
+    }
+
+    /**
+     * Clear all states.
+     *
+     * @return void
+     */
+    public function clearStates(): void
+    {
+        $this->state->clear();
     }
 }
