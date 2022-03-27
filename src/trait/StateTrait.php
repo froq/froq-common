@@ -47,4 +47,17 @@ trait StateTrait
     {
         return $this->state->get($name, $default);
     }
+
+    /**
+     * Reset states.
+     *
+     * @param  mixed ...$states
+     * @return self
+     */
+    public function resetStates(mixed ...$states): self
+    {
+        $this->state->reset(...$states);
+
+        return $this;
+    }
 }
