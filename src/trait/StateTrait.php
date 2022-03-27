@@ -81,10 +81,12 @@ trait StateTrait
     /**
      * Clear all states.
      *
-     * @return void
+     * @return self
      */
-    public function clearStates(): void
+    public function clearStates(): self
     {
         $this->state->clear();
+
+        return $this;
     }
 }
