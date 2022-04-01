@@ -20,28 +20,16 @@ namespace froq\common\trait;
 trait DataTrait
 {
     /**
-     * Set/get data array.
+     * Get data fields by given keys or all data array.
      *
-     * @param  array $data
-     * @return array|self
-     */
-    public function data(array $data = []): array|self
-    {
-        return func_num_args() ? $this->setData($data) : $this->getData();
-    }
-
-    /**
-     * Get data fields by given keys.
-     *
-     * @param  array|string $keys
-     * @param  bool         $combine
+     * @param  array<string|int>|string|int $keys
+     * @param  bool                         $combine
      * @return array
      */
-    public function dataOnly(array|string $keys, bool $combine = true): array
+    public function data(array|string|int $keys = null, bool $combine = true): array
     {
-        // Comma-separated list.
-        if (is_string($keys)) {
-            $keys = split('\s*,\s*', $keys);
+        if ($keys === null) {
+            return $this->data;
         }
 
         return array_select($this->data, $keys, combine: $combine);
