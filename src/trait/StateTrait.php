@@ -28,6 +28,19 @@ trait StateTrait
     private State $state;
 
     /**
+     * Init state.
+     *
+     * @param  mixed ...$states
+     * @return self
+     */
+    public function initState(mixed ...$states): self
+    {
+        $this->state = new State(...$states);
+
+        return $this;
+    }
+
+    /**
      * Set a state.
      *
      * @param  string $name
