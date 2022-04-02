@@ -32,9 +32,9 @@ trait DataAccessMagicTrait
     }
 
     /** @magic */
-    public function __get(int|string $key): mixed
+    public function &__get(int|string $key): mixed
     {
-        return $this->data[$key] ?? null;
+        return $this->data[$key];
     }
 
     /** @magic */

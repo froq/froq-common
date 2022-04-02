@@ -36,9 +36,9 @@ trait DataAccessTrait
     }
 
     /** @inheritDoc ArrayAccess */
-    public function offsetGet(mixed $key): mixed
+    public function &offsetGet(mixed $key): mixed
     {
-        return $this->data[$key] ?? null;
+        return $this->data[$key];
     }
 
     /** @inheritDoc ArrayAccess */
