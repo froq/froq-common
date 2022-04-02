@@ -8,10 +8,8 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 /**
- * Data Access Trait.
- *
- * A trait, provides related methods for the classes defining `$data` property as array
- * and implementing `ArrayAccess` interface.
+ * A trait, provides related methods for the classes defining `$data`
+ * property as array and implementing `ArrayAccess` interface.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\DataAccessTrait
