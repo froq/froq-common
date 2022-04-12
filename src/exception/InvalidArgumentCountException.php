@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\exception;
 
 /**
- * Invalid Argument Count Exception.
- *
  * @package froq\common\exception
  * @object  froq\common\exception\InvalidArgumentCountException
  * @author  Kerem Güneş

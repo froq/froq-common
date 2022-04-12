@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\interface;
 
 /**
- * Floatable.
- *
  * @package froq\common\interface
  * @object  froq\common\interface\Floatable
  * @author  Kerem Güneş
@@ -18,8 +16,6 @@ namespace froq\common\interface;
 interface Floatable
 {
     /**
-     * To float.
-     *
      * @return float
      */
     public function toFloat(): float;

@@ -11,8 +11,6 @@ use froq\common\{Error, Exception};
 use Throwable;
 
 /**
- * Throwable Trait.
- *
  * A trait, used by Error/Exception classes, provides a relaxation getting rid of
  * `sprintf()` calls for each throw, has some utility methods and cause property
  * as well.

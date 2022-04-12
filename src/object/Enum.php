@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\object;
 
 /**
- * Enum.
- *
  * An enum class, not just like internal `enum` but a bit extended.
  *
  * @package froq\common\object

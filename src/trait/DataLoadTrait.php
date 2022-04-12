@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 /**
- * Data Load Trait.
- *
  * A trait, provides `load() and `unload()` methods for the classes define `$data` property
  * as array.
  *

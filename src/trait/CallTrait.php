@@ -8,9 +8,7 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 /**
- * Call Trait.
- *
- * A trait, provides `call()` method if user class has given method.
+ * A trait, provides `call()` method to call if user class has given method.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\CallTrait

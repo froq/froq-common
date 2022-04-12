@@ -10,7 +10,7 @@ namespace froq\common;
 use froq\common\trait\ThrowableTrait;
 
 /**
- * Error.
+ * Base error class extended by all other Froq! error classes.
  *
  * @package froq\common
  * @object  froq\common\Error

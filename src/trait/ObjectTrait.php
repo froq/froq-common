@@ -11,8 +11,6 @@ use froq\util\Objects;
 use ReflectionObject, ReflectionObjectExtended;
 
 /**
- * Object Trait.
- *
  * A trait, for objects and can be used with ConstantTrait, PropertyTrait and MethodTrait.
  *
  * @package froq\common\trait

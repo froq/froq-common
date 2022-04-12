@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 /**
- * Instance Trait.
- *
  * A trait, used for implementing Singleton pattern.
  *
  * @package froq\common\trait

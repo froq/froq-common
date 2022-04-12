@@ -7,15 +7,11 @@ declare(strict_types=1);
 
 namespace froq\common\exception;
 
-use froq\common\Exception;
-
 /**
- * Logic Exception.
- *
  * @package froq\common\exception
  * @object  froq\common\exception\LogicException
  * @author  Kerem Güneş
  * @since   4.0
  */
-class LogicException extends Exception
+class LogicException extends \froq\common\Exception
 {}

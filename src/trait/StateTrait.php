@@ -10,7 +10,7 @@ namespace froq\common\trait;
 use State;
 
 /**
- * A trait, provides `$state` property, `setState()` and `getState()` methods.
+ * A trait, provides `$state` property and related methods.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\StateTrait

@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\exception;
 
 /**
- * Out-Of-Bounds Exception.
- *
  * @package froq\common\exception
  * @object  froq\common\exception\OutOfBoundsException
  * @author  Kerem Güneş

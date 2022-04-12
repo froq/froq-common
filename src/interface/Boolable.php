@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\interface;
 
 /**
- * Boolable.
- *
  * @package froq\common\interface
  * @object  froq\common\interface\Boolable
  * @author  Kerem Güneş
@@ -18,8 +16,6 @@ namespace froq\common\interface;
 interface Boolable
 {
     /**
-     * To bool.
-     *
      * @return bool
      */
     public function toBool(): bool;

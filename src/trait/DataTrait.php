@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 /**
- * Data Trait.
- *
  * A trait, provides access/modify methods for the classes defining `$data` property as array.
  *
  * @package froq\common\trait

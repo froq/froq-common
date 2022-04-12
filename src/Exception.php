@@ -10,7 +10,7 @@ namespace froq\common;
 use froq\common\trait\ThrowableTrait;
 
 /**
- * Exception.
+ * Base exception class extended by all other Froq! exception classes.
  *
  * @package froq\common
  * @object  froq\common\Exception

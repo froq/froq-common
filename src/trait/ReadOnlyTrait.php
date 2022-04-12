@@ -11,8 +11,6 @@ use froq\common\exception\ReadOnlyException;
 use froq\util\Objects;
 
 /**
- * Read-Only Trait.
- *
  * A trait, provides read-only state check and other read-only utilities.
  *
  * @package froq\common\trait

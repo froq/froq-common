@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\interface;
 
 /**
- * Jsonable.
- *
  * @package froq\common\interface
  * @object  froq\common\interface\Jsonable
  * @author  Kerem Güneş
@@ -18,8 +16,6 @@ namespace froq\common\interface;
 interface Jsonable
 {
     /**
-     * To json.
-     *
      * @param  int $flags
      * @return string
      */

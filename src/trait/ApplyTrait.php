@@ -10,8 +10,6 @@ namespace froq\common\trait;
 use Closure;
 
 /**
- * Apply Trait.
- *
  * A trait, able to access the hidden properties/methods for modify/call purposes
  * in owner class.
  *

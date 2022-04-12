@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\object;
 
 /**
- * Registry.
- *
  * A registry class, able to store/unstore objects only.
  *
  * @package froq\common\object

@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\interface;
 
 /**
- * Listable.
- *
  * @package froq\common\interface
  * @object  froq\common\interface\Listable
  * @author  Kerem Güneş
@@ -18,8 +16,6 @@ namespace froq\common\interface;
 interface Listable
 {
     /**
-     * To list.
-     *
      * @return array
      */
     public function toList(): array;

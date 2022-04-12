@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\interface;
 
 /**
- * Iteratable-Reverse.
- *
  * @package froq\common\interface
  * @object  froq\common\interface\IteratableReverse
  * @author  Kerem Güneş
@@ -18,7 +16,6 @@ namespace froq\common\interface;
 interface IteratableReverse
 {
     /**
-     * @note   Return is permissive.
      * @return iterable
      */
     public function getReverseIterator(): iterable;

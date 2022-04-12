@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\interface;
 
 /**
- * Objectable.
- *
  * @package froq\common\interface
  * @object  froq\common\interface\Objectable
  * @author  Kerem Güneş
@@ -18,8 +16,6 @@ namespace froq\common\interface;
 interface Objectable
 {
     /**
-     * To object.
-     *
      * @return object
      */
     public function toObject(): object;

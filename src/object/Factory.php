@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\object;
 
 /**
- * Factory.
- *
  * A factory class that creates instances from given class names with/without arguments,
  * and caches using singleton way when requested.
  *

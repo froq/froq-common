@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 /**
- * Factory Trait.
- *
  * A trait, for creating static or a single static instances from user classes.
  *
  * @package froq\common\trait

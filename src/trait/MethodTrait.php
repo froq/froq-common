@@ -10,8 +10,6 @@ namespace froq\common\trait;
 use froq\util\Objects;
 
 /**
- * Method Trait.
- *
  * A trait, for objects and can be used with ObjectTrait, ConstantTrait and PropertyTrait.
  *
  * @package froq\common\trait

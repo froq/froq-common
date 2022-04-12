@@ -10,8 +10,6 @@ namespace froq\common\object;
 use froq\collection\Collection;
 
 /**
- * Config.
- *
  * A config collection class.
  *
  * @package froq\common\object
