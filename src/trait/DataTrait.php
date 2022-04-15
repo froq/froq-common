@@ -21,14 +21,16 @@ trait DataTrait
      * Get data fields by given keys or all data array.
      *
      * @param  array<string|int>|string|int $keys
-     * @param  bool                         $combine
-     * @return array
+     * @param  bool|null                    $combine
+     * @return mixed
      */
-    public function data(array|string|int $keys = null, bool $combine = true): array
+    public function data(array|string|int $keys = null, bool $combine = null): mixed
     {
         if ($keys === null) {
             return $this->data;
         }
+
+        $combine ??= is_array($keys);
 
         return array_select($this->data, $keys, combine: $combine);
     }
