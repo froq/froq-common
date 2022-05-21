@@ -25,7 +25,7 @@ trait MethodTrait
      * @param  string $name
      * @return bool
      */
-    public final function hasMethod(string $name): bool
+    public function hasMethod(string $name): bool
     {
         return method_exists($this, $name);
     }
@@ -36,7 +36,7 @@ trait MethodTrait
      * @param  string $name
      * @return array|null
      */
-    public final function getMethod(string $name): array|null
+    public function getMethod(string $name): array|null
     {
         return Objects::getMethod($this, $name);
     }
@@ -47,7 +47,7 @@ trait MethodTrait
      * @param  bool $all
      * @return array|null
      */
-    public final function getMethods(bool $all = true): array|null
+    public function getMethods(bool $all = true): array|null
     {
         return Objects::getMethods($this, $all);
     }
@@ -58,7 +58,7 @@ trait MethodTrait
      * @param  bool $all
      * @return array|null
      */
-    public final function getMethodNames(bool $all = true): array|null
+    public function getMethodNames(bool $all = true): array|null
     {
         return Objects::getMethodNames($this, $all);
     }

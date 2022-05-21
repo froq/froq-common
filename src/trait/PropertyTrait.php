@@ -25,7 +25,7 @@ trait PropertyTrait
      * @param  string $name
      * @return bool
      */
-    public final function hasProperty(string $name): bool
+    public function hasProperty(string $name): bool
     {
         return property_exists($this, $name);
     }
@@ -36,7 +36,7 @@ trait PropertyTrait
      * @param  string $name
      * @return array|null
      */
-    public final function getProperty(string $name): array|null
+    public function getProperty(string $name): array|null
     {
         return Objects::getProperty($this, $name);
     }
@@ -47,7 +47,7 @@ trait PropertyTrait
      * @param  string $name
      * @return mixed
      */
-    public final function getPropertyValue(string $name): mixed
+    public function getPropertyValue(string $name): mixed
     {
         return Objects::getPropertyValue($this, $name);
     }
@@ -58,7 +58,7 @@ trait PropertyTrait
      * @param  bool $all
      * @return array|null
      */
-    public final function getProperties(bool $all = true): array|null
+    public function getProperties(bool $all = true): array|null
     {
         return Objects::getProperties($this, $all);
     }
@@ -69,7 +69,7 @@ trait PropertyTrait
      * @param  bool $all
      * @return array|null
      */
-    public final function getPropertyNames(bool $all = true): array|null
+    public function getPropertyNames(bool $all = true): array|null
     {
         return Objects::getPropertyNames($this, $all);
     }
@@ -81,7 +81,7 @@ trait PropertyTrait
      * @param  bool $assoc
      * @return array|null
      */
-    public final function getPropertyValues(bool $all = true, bool $assoc = false): array|null
+    public function getPropertyValues(bool $all = true, bool $assoc = false): array|null
     {
         return Objects::getPropertyValues($this, $all, $assoc);
     }

@@ -25,7 +25,7 @@ trait ConstantTrait
      * @param  string $name
      * @return bool
      */
-    public final function hasConstant(string $name): bool
+    public function hasConstant(string $name): bool
     {
         return constant_exists($this, $name);
     }
@@ -36,7 +36,7 @@ trait ConstantTrait
      * @param  string $name
      * @return array|null
      */
-    public final function getConstant(string $name): array|null
+    public function getConstant(string $name): array|null
     {
         return Objects::getConstant($this, $name);
     }
@@ -47,7 +47,7 @@ trait ConstantTrait
      * @param  string $name
      * @return mixed
      */
-    public final function getConstantValue(string $name): mixed
+    public function getConstantValue(string $name): mixed
     {
         return Objects::getConstantValue($this, $name);
     }
@@ -58,7 +58,7 @@ trait ConstantTrait
      * @param  bool $all
      * @return array|null
      */
-    public final function getConstants(bool $all = true): array|null
+    public function getConstants(bool $all = true): array|null
     {
         return Objects::getConstants($this, $all);
     }
@@ -69,7 +69,7 @@ trait ConstantTrait
      * @param  bool $all
      * @return array|null
      */
-    public final function getConstantNames(bool $all = true): array|null
+    public function getConstantNames(bool $all = true): array|null
     {
         return Objects::getConstantNames($this, $all);
     }
@@ -81,7 +81,7 @@ trait ConstantTrait
      * @param  bool $assoc
      * @return array|null
      */
-    public final function getConstantValues(bool $all = true, bool $assoc = false): array|null
+    public function getConstantValues(bool $all = true, bool $assoc = false): array|null
     {
         return Objects::getConstantValues($this, $all, $assoc);
     }
