@@ -102,7 +102,7 @@ trait ObjectTrait
      */
     public final function getParent(): string|null
     {
-        return get_parent_class($this) ?: null;
+        return Objects::getParent($this);
     }
 
     /**
