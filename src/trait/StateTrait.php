@@ -19,13 +19,8 @@ use State;
  */
 trait StateTrait
 {
-    /**
-     * Note: Private, so user class' subclasses (eg: Entity subclasses)
-     * can define a property with name 'state' without signature check.
-     *
-     * @var State
-     */
-    private State $state;
+    /** @var State */
+    protected State $state;
 
     /**
      * Init state.
