@@ -77,6 +77,7 @@ trait StateTrait
     /**
      * Get states.
      *
+     * @param  bool $object
      * @return array|object
      */
     public function getStates(bool $object = false): array|object
