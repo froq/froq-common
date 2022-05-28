@@ -88,9 +88,14 @@ trait ThrowableTrait
     /** @magic */
     public function __get(string $property): mixed
     {
-        // Note: Subclasses must define properties as "protected".
         if (property_exists($this, $property)) {
-            return $this->$property;
+            try {
+                return $this->$property;
+            } catch (Throwable) {
+                // If subclasses define the property as "private".
+                $ref = new \ReflectionProperty($this, $property);
+                return $ref->isInitialized($this) ? $ref->getValue($this) : $ref->getDefaultValue();
+            }
         }
 
         if ($property == 'trace') {
