@@ -8,52 +8,52 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 /**
- * A trait, provides `$input` property and related methods.
+ * A trait, provides `$output` property and related methods.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\InputTrait
+ * @object  froq\common\trait\OutputTrait
  * @author  Kerem Güneş
  * @since   6.0
  */
-trait InputTrait
+trait OutputTrait
 {
     /** @var mixed */
-    protected mixed $input;
+    protected mixed $output;
 
     /**
-     * Set input.
+     * Set output.
      *
-     * @param  mixed $input
+     * @param  mixed $output
      * @return self
      */
-    public function setInput(mixed $input): self
+    public function setOutput(mixed $output): self
     {
-        $this->input = $input;
+        $this->output = $output;
 
         return $this;
     }
 
     /**
-     * Get input.
+     * Get output.
      *
      * @return mixed
      */
-    public function getInput(): mixed
+    public function getOutput(): mixed
     {
-        return $this->input;
+        return $this->output;
     }
 
     /**
-     * Has input.
+     * Has output.
      *
      * @return bool
      */
-    public function hasInput(): bool
+    public function hasOutput(): bool
     {
         try {
-            // Just check for: "Typed property ... $input
+            // Just check for: "Typed property ... $output
             // must not be accessed before initialization".
-            !$this->input;
+            !$this->output;
             return true;
         } catch (\Error) {
             return false;
@@ -61,18 +61,18 @@ trait InputTrait
     }
 
     /**
-     * Check input.
+     * Check output.
      *
      * @param  string      $throwable
      * @param  string|null $message
      * @return void
      * @throws Throwable
      */
-    public function checkInput(string $throwable = 'Exception', string $message = null): void
+    public function checkOutput(string $throwable = 'Exception', string $message = null): void
     {
-        if (!$this->hasInput()) {
+        if (!$this->hasOutput()) {
             throw new $throwable($message ?? sprintf(
-                'No input given yet, call %s::setInput() first',
+                'No output given yet, call %s::setOutput() first',
                 static::class
             ));
         }
