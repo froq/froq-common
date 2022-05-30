@@ -23,11 +23,11 @@ trait SealTrait
      * Note: This method must be called in user's `__construct()` method
      * since cannot find a different way to check permission state, yet.
      *
-     * @param  array $permits
+     * @param  string ...$permits
      * @return void
      * @throws Error
      */
-    private static function seal(array $permits): void
+    private static function seal(string ...$permits): void
     {
         if (get_parent_class(static::class) != self::class) {
             return;
