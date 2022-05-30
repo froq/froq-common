@@ -59,22 +59,4 @@ trait OutputTrait
             return false;
         }
     }
-
-    /**
-     * Check output.
-     *
-     * @param  string      $throwable
-     * @param  string|null $message
-     * @return void
-     * @throws Throwable
-     */
-    public function checkOutput(string $throwable = 'Exception', string $message = null): void
-    {
-        if (!$this->hasOutput()) {
-            throw new $throwable($message ?? sprintf(
-                'No output given yet, call %s::setOutput() first',
-                static::class
-            ));
-        }
-    }
 }

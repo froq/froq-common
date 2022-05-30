@@ -59,22 +59,4 @@ trait InputTrait
             return false;
         }
     }
-
-    /**
-     * Check input.
-     *
-     * @param  string      $throwable
-     * @param  string|null $message
-     * @return void
-     * @throws Throwable
-     */
-    public function checkInput(string $throwable = 'Exception', string $message = null): void
-    {
-        if (!$this->hasInput()) {
-            throw new $throwable($message ?? sprintf(
-                'No input given yet, call %s::setInput() first',
-                static::class
-            ));
-        }
-    }
 }
