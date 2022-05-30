@@ -23,7 +23,7 @@ trait SealTrait
      * Note: This method must be called in user's `__construct()` method
      * since cannot find a different way to check permission state, yet.
      *
-     * @param  string ...$permits
+     * @param  string ...$permits List of allowed class names.
      * @return void
      * @throws Error
      */
