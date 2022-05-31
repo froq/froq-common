@@ -58,7 +58,7 @@ class Registry
             throw new RegistryException(
                 'Object `%s` is already registered and locked with id `%s`, '.
                 'call replace() instead to force it to change with set().',
-                [$current['object']::class, $id]
+                [get_object_id($current['object']), $id]
             );
         }
 
