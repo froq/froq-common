@@ -34,8 +34,8 @@ class Enum
     }
 
     /**
-     * @magic
      * @throws froq\common\object\EnumException
+     * @magic
      */
     public function __toString(): string
     {
@@ -49,11 +49,11 @@ class Enum
     /**
      * Provides call routines such as `$foo->isBar()`, that prefixed with `is`.
      *
-     * @magic
      * @param  string $name
      * @param  array  $arguments
      * @return bool
      * @throws froq\common\object\EnumException
+     * @magic
      */
     public function __call(string $name, array $arguments): bool
     {
@@ -81,11 +81,11 @@ class Enum
     /**
      * Provides static call routines such as `Foo::isBar()`, that prefixed with `is`.
      *
-     * @magic
      * @param  string $name
      * @param  array  $arguments
      * @return bool
      * @throws froq\common\object\EnumException
+     * @magic
      */
     public static function __callStatic(string $name, array $arguments): bool
     {
