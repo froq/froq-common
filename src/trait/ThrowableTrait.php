@@ -88,6 +88,15 @@ trait ThrowableTrait
     /** @magic */
     public function __get(string $property): mixed
     {
+        switch ($property) {
+            case 'trace':
+                return $this->getTrace();
+            case 'traceString':
+                return $this->getTraceAsString();
+            case 'cause':
+                return $this->getCause();
+        }
+
         if (property_exists($this, $property)) {
             try {
                 return $this->$property;
@@ -96,13 +105,6 @@ trait ThrowableTrait
                 $ref = new \ReflectionProperty($this, $property);
                 return $ref->isInitialized($this) ? $ref->getValue($this) : $ref->getDefaultValue();
             }
-        }
-
-        if ($property == 'trace') {
-            return $this->getTrace();
-        }
-        if ($property == 'traceString') {
-            return $this->getTraceAsString();
         }
 
         // Act as original.
