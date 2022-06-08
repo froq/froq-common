@@ -25,7 +25,7 @@ class Registry
      *
      * @return array<string, object>
      */
-    public static final function stack(): array
+    public static function stack(): array
     {
         return self::$stack;
     }
@@ -36,7 +36,7 @@ class Registry
      * @param  string $id
      * @return bool
      */
-    public static final function has(string $id): bool
+    public static function has(string $id): bool
     {
         return isset(self::$stack[$id]);
     }
@@ -50,7 +50,7 @@ class Registry
      * @return void
      * @throws froq\common\object\RegistryException
      */
-    public static final function set(string $id, object $object, bool $locked = true): void
+    public static function set(string $id, object $object, bool $locked = true): void
     {
         $current = self::$stack[$id] ?? null;
 
@@ -71,7 +71,7 @@ class Registry
      * @param  string $id
      * @return object|null
      */
-    public static final function get(string $id): object|null
+    public static function get(string $id): object|null
     {
         return self::$stack[$id]['object'] ?? null;
     }
@@ -82,7 +82,7 @@ class Registry
      * @param  string $id
      * @return void
      */
-    public static final function remove(string $id): void
+    public static function remove(string $id): void
     {
         unset(self::$stack[$id]);
     }
@@ -95,7 +95,7 @@ class Registry
      * @param  bool   $locked
      * @return void
      */
-    public static final function replace(string $id, object $object, bool $locked = true): void
+    public static function replace(string $id, object $object, bool $locked = true): void
     {
         self::register($id, $object, $locked);
     }
