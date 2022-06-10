@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 use froq\util\Objects;
-use ReflectionObject, ReflectionObjectExtended;
+use ReflectionObject, XReflectionObject;
 
 /**
  * A trait, for objects and can be used with ConstantTrait, PropertyTrait and MethodTrait.
@@ -24,11 +24,11 @@ trait ObjectTrait
      * Reflect & return reflection.
      *
      * @param  bool $extended
-     * @return ReflectionObject|ReflectionObjectExtended
+     * @return ReflectionObject|XReflectionObject
      */
-    public final function reflect(bool $extended = false): ReflectionObject|ReflectionObjectExtended
+    public final function reflect(bool $extended = false): ReflectionObject|XReflectionObject
     {
-        return !$extended ? new ReflectionObject($this) : new ReflectionObjectExtended($this);
+        return !$extended ? new ReflectionObject($this) : new XReflectionObject($this);
     }
 
     /**
