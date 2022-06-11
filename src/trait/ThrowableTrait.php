@@ -28,20 +28,15 @@ trait ThrowableTrait
     /**
      * Constructor.
      *
-     * @param string|array|Throwable|null message
-     * @param mixed|null                  $messageParams
-     * @param int|null                    $code
-     * @param Throwable|null              $previous
-     * @param Throwable|null              $cause
+     * @param string|Throwable|null $message
+     * @param mixed|null            $messageParams
+     * @param int|null              $code
+     * @param Throwable|null        $previous
+     * @param Throwable|null        $cause
      */
-    public function __construct(string|array|Throwable $message = null, mixed $messageParams = null, int $code = null,
+    public function __construct(string|Throwable $message = null, mixed $messageParams = null, int $code = null,
         Throwable $previous = null, Throwable $cause = null)
     {
-        // For multi-lines.
-        if (is_array($message)) {
-            $message = join(' ', array_map('trim', $message));
-        }
-
         if ($message) {
             if (is_string($message)) {
                 $error = self::getLastError();
@@ -73,10 +68,10 @@ trait ThrowableTrait
                     $message = format($message, ...$messageParams);
                 }
             } else {
-                // Use message as previous.
-                $previous ??= $message;
-                $code     ??= $message->getCode();
-                $message    = $message->getMessage();
+                // Use cause.
+                $cause   ??= $message;
+                $code    ??= $message->getCode();
+                $message   = $message->getMessage();
             }
         }
 
