@@ -23,7 +23,7 @@ use Throwable;
 trait ThrowableTrait
 {
     /** @var Throwable|null */
-    private Throwable|null $cause;
+    private Throwable|null $cause = null;
 
     /**
      * Constructor.
