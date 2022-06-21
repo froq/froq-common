@@ -37,9 +37,10 @@ trait ThrowableTrait
      * @param Throwable|null        $previous
      * @param Throwable|null        $cause
      * @param int|bool|null         $reduce
+     * @param bool|null             $extract
      */
     public function __construct(string|Throwable $message = null, mixed $messageParams = null, int $code = null,
-        Throwable $previous = null, Throwable $cause = null, int|bool $reduce = null)
+        Throwable $previous = null, Throwable $cause = null, int|bool $reduce = null, bool $extract = null)
     {
         if ($message) {
             if (is_string($message)) {
@@ -77,6 +78,9 @@ trait ThrowableTrait
                 $code    ??= $message->getCode();
                 $message   = $message->getMessage();
             }
+
+            // Drop eg: "RegexIterator::__construct():" part.
+            $extract && $message = self::extractMessage($message);
         }
 
         parent::__construct((string) $message, (int) $code, $previous);
@@ -335,6 +339,23 @@ trait ThrowableTrait
             'code'    => $error['type']    ?? null,
             'message' => $error['message'] ?? 'unknown'
         ];
+    }
+
+    /**
+     * Extract a message dropping e.g. "RegexIterator::__construct():".
+     *
+     * @param  string|Throwable $e
+     * @return string
+     */
+    public static function extractMessage(string|Throwable $e): string
+    {
+        $message = is_string($e) ? $e : $e->getMessage();
+
+        if (strsrc($message, '):')) {
+            $message = stracut($message, '):');
+        }
+
+        return trim($message);
     }
 
     /**
