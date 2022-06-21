@@ -22,8 +22,9 @@ use Throwable;
  */
 trait ThrowableTrait
 {
-    /** @var Throwable|null */
-    private Throwable|null $cause = null;
+    /** @var ?Throwable */
+    private ?Throwable $cause = null;
+
 
     /**
      * Constructor.
