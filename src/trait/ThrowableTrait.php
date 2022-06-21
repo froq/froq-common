@@ -261,7 +261,7 @@ trait ThrowableTrait
             $ret[] = sprintf('#%d %s: %s()', $i, $trace['location'], $trace['function']);
         }
 
-        $ret[] = sprintf('#%d {main}', $i + 1);
+        $ret[] = sprintf('#%d {main}', ($i ?? -1) + 1);
 
         return join("\n", $ret);
     }
