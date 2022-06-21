@@ -134,7 +134,7 @@ trait ThrowableTrait
      * @return Throwable|null
      * @since  5.0
      */
-    public final function getCause(): Throwable|null
+    public function getCause(): Throwable|null
     {
         return $this->cause;
     }
@@ -145,7 +145,7 @@ trait ThrowableTrait
      * @return array<Throwable>|null
      * @since  5.0
      */
-    public final function getCauses(): array|null
+    public function getCauses(): array|null
     {
         if ($cause = $this->getCause()) {
             $causes[] = $cause;
@@ -165,7 +165,7 @@ trait ThrowableTrait
      * @return Throwable|null
      * @since  5.0
      */
-    public final function getRootCause(): Throwable|null
+    public function getRootCause(): Throwable|null
     {
         if ($cause = $this->getCause()) {
             while (is_class_of($cause, Error::class, Exception::class)
@@ -182,7 +182,7 @@ trait ThrowableTrait
      *
      * @return string
      */
-    public final function getName(): string
+    public function getName(): string
     {
         return $this::class;
     }
@@ -193,7 +193,7 @@ trait ThrowableTrait
      * @param  bool $short
      * @return string
      */
-    public final function getClass(bool $short = false): string
+    public function getClass(bool $short = false): string
     {
         $class = $this::class;
 
@@ -209,7 +209,7 @@ trait ThrowableTrait
      *
      * @return string
      */
-    public final function getType(): string
+    public function getType(): string
     {
         return $this->isError() ? 'error' : 'exception';
     }
@@ -219,7 +219,7 @@ trait ThrowableTrait
      *
      * @return string
      */
-    public final function getTraceString(): string
+    public function getTraceString(): string
     {
         return $this->getTraceAsString();
     }
@@ -230,7 +230,7 @@ trait ThrowableTrait
      * @param  bool $pretty
      * @return string
      */
-    public final function toString(bool $pretty = false): string
+    public function toString(bool $pretty = false): string
     {
         [$class, $code, $line, $file, $message, $trace] = [
             $this->getClass(), $this->code, $this->line, $this->file,
@@ -263,7 +263,7 @@ trait ThrowableTrait
      *
      * @return bool
      */
-    public final function isError(): bool
+    public function isError(): bool
     {
         return ($this instanceof \Error);
     }
@@ -273,7 +273,7 @@ trait ThrowableTrait
      *
      * @return bool
      */
-    public final function isException(): bool
+    public function isException(): bool
     {
         return ($this instanceof \Exception);
     }
@@ -283,7 +283,7 @@ trait ThrowableTrait
      *
      * @return array<string, string|int>
      */
-    public static final function getLastError(): array
+    public static function getLastError(): array
     {
         // Better calling when sure there is an error happened.
         $error = error_get_last();
