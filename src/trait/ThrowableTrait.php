@@ -25,6 +25,8 @@ trait ThrowableTrait
     /** @var ?Throwable */
     private ?Throwable $cause = null;
 
+    /** @var ?int */
+    private ?int $reduce = null;
 
     /**
      * Constructor.
@@ -34,9 +36,10 @@ trait ThrowableTrait
      * @param int|null              $code
      * @param Throwable|null        $previous
      * @param Throwable|null        $cause
+     * @param int|bool|null         $reduce
      */
     public function __construct(string|Throwable $message = null, mixed $messageParams = null, int $code = null,
-        Throwable $previous = null, Throwable $cause = null)
+        Throwable $previous = null, Throwable $cause = null, int|bool $reduce = null)
     {
         if ($message) {
             if (is_string($message)) {
@@ -76,9 +79,23 @@ trait ThrowableTrait
             }
         }
 
-        $this->cause = $cause;
-
         parent::__construct((string) $message, (int) $code, $previous);
+
+        // Try to detect that this created via some static::for*() method.
+        // Eg: if ($id < 0) throw UserError::forInvalidID($id).
+        if ($reduce === null) {
+            $trace =@ $this->getTrace()[0];
+            if (isset($trace['class'], $trace['function'])
+                && is_class_of($trace['class'], Throwable::class)
+                && str_starts_with($trace['function'], 'for')) {
+                $reduce = 1;
+            }
+        }
+
+        $this->cause  = $cause;
+        $this->reduce = (int) $reduce;
+
+        $this->applyReduce();
     }
 
     /** @magic */
@@ -88,7 +105,7 @@ trait ThrowableTrait
             case 'trace':
                 return $this->getTrace();
             case 'traceString':
-                return $this->getTraceAsString();
+                return $this->getTraceString();
             case 'cause':
                 return $this->getCause();
         }
@@ -113,13 +130,15 @@ trait ThrowableTrait
     /** @magic */
     public function __toString(): string
     {
-        $ret = trim(parent::__toString());
+        // Must call here/first for reduce since reduce
+        // option changes file & line in applyReduce().
+        $trace = $this->getTraceString();
 
-        // Stack trace: ... => Trace: ...
-        $ret = preg_replace('~Stack trace:~', 'Trace:', $ret, 1);
-
-        // Error: ... => Error(123): ...
-        $ret = preg_replace('~^([^: ]+):* (.+)~', '\1('. $this->code .'): \2', $ret, 1);
+        $ret = sprintf(
+            "%s(%d): %s in %s:%d\nTrace:\n%s",
+            $this->getClass(), $this->getCode(), $this->getMessage(),
+            $this->getFile(), $this->getLine(), $trace
+        );
 
         // Add cause info.
         if ($cause = $this->getCause()) {
@@ -216,13 +235,31 @@ trait ThrowableTrait
     }
 
     /**
-     * Get the trace string of user object (alias of getTraceAsString()).
+     * Get trace string.
      *
      * @return string
      */
     public function getTraceString(): string
     {
-        return $this->getTraceAsString();
+        $ret = [];
+
+        foreach ($this->getTrace() as $i => $trace) {
+            if (isset($trace['file'], $trace['line'])) {
+                $trace['location'] = $trace['file'] . '(' . $trace['line'] . ')';
+            } else {
+                $trace['location'] = '[internal function]';
+            }
+
+            if (isset($trace['class'], $trace['function'])) {
+                $trace['function'] = $trace['class'] . $trace['type'] . $trace['function'];
+            }
+
+            $ret[] = sprintf('#%d %s: %s()', $i, $trace['location'], $trace['function']);
+        }
+
+        $ret[] = sprintf('#%d {main}', $i + 1);
+
+        return join("\n", $ret);
     }
 
     /**
@@ -233,9 +270,14 @@ trait ThrowableTrait
      */
     public function toString(bool $pretty = false): string
     {
-        [$class, $code, $line, $file, $message, $trace] = [
-            $this->getClass(), $this->code, $this->line, $this->file,
-            $this->getMessage(), $this->getTraceString()
+        // Must call here/first for reduce since reduce
+        // option changes file & line in applyReduce().
+        $trace = $this->getTraceString();
+
+        [$class, $code, $line, $file, $message] = [
+            $this->getClass(), $this->getCode(),
+            $this->getLine(), $this->getFile(),
+            $this->getMessage(),
         ];
 
         if ($pretty) {
@@ -282,7 +324,7 @@ trait ThrowableTrait
     /**
      * Get last internal error if exists.
      *
-     * @return array<string, string|int>
+     * @return array
      */
     public static function getLastError(): array
     {
@@ -293,5 +335,49 @@ trait ThrowableTrait
             'code'    => $error['type']    ?? null,
             'message' => $error['message'] ?? 'unknown'
         ];
+    }
+
+    /**
+     * Apply "reduce" option that given via constructor. This option is useful
+     * for creating throwable instances via methods or functions and dropping
+     * this creation footprints from the stack trace.
+     *
+     * For example creating & throwing an error:
+     *
+     * ```
+     * // Somewhere in UserError.
+     * static function forInvalidID($id) {
+     *   return static('Invalid ID: ' . $id, reduce: true);
+     * }
+     *
+     * // Somewhere in project.
+     * if ($id < 0) throw UserError::forInvalidID($id);
+     * ```
+     */
+    private function applyReduce(): void
+    {
+        if ($this->reduce > 0) {
+            $traces = $this->getTrace();
+
+            // Reduce traces.
+            while ($this->reduce--) {
+                $trace = array_shift($traces);
+
+                // Set file & line info to shifted trace.
+                if (isset($trace['file'], $trace['line'])) {
+                    $this->file = $trace['file'];
+                    $this->line = $trace['line'];
+                }
+            }
+
+            // Find base/top parent (so Error or Exception).
+            $ref = new \ReflectionObject($this);
+            while ($parent = $ref->getParentClass()) {
+                $ref = $parent;
+            }
+
+            // Update trace property with changed traces as well.
+            $ref->getProperty('trace')->setValue($this, $traces);
+        }
     }
 }
