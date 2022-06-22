@@ -60,7 +60,7 @@ trait ThrowableTrait
                         ? (array) $messageParams : [$messageParams];
 
                     // Prevent named argument stuff for format().
-                    $messageParams = array_list($messageParams);
+                    $messageParams = array_values($messageParams);
 
                     foreach ($messageParams as $i => $messageParam) {
                         if ($messageParam === '@error') {
