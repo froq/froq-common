@@ -36,6 +36,17 @@ trait StateTrait
     }
 
     /**
+     * Check a state.
+     *
+     * @param  string $name
+     * @return bool
+     */
+    public function hasState(string $name): bool
+    {
+        return $this->state->has($name);
+    }
+
+    /**
      * Set a state.
      *
      * @param  string $name
@@ -62,6 +73,19 @@ trait StateTrait
     }
 
     /**
+     * Remove a state.
+     *
+     * @param  string $name
+     * @return self
+     */
+    public function removeState(string $name): self
+    {
+        $this->state->remove($name);
+
+        return $this;
+    }
+
+    /**
      * Set states.
      *
      * @param  mixed ...$states
@@ -85,6 +109,19 @@ trait StateTrait
         $states = (array) $this->state;
 
         return $object ? (object) $states : $states;
+    }
+
+    /**
+     * Remove states.
+     *
+     * @param  string ...$names
+     * @return self
+     */
+    public function removeStates(string ...$names): self
+    {
+        $this->state->remove(...$names);
+
+        return $this;
     }
 
     /**
