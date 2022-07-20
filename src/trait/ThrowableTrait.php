@@ -368,11 +368,14 @@ trait ThrowableTrait
      * ```
      * // Somewhere in UserError.
      * static function forInvalidID($id) {
-     *   return static('Invalid ID: ' . $id, reduce: true);
+     *   return new static('Invalid ID: ' . $id); // or
+     *   // return new static('Invalid ID: ' . $id, reduce: true);
      * }
      *
      * // Somewhere in project.
-     * if ($id < 0) throw UserError::forInvalidID($id);
+     * if ($id < 0) {
+     *   throw UserError::forInvalidID($id);
+     * }
      * ```
      */
     private function applyReduce(): void
