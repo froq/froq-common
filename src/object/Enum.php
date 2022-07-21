@@ -114,6 +114,16 @@ class Enum
     }
 
     /**
+     * Get name of self value.
+     *
+     * @return string|null
+     */
+    public function name(): string|null
+    {
+        return self::nameOf($this->value);
+    }
+
+    /**
      * Set/get value.
      *
      * @param  int|float|string|bool|array|null $value
@@ -192,13 +202,20 @@ class Enum
     /**
      * Check whether a name is valid.
      *
-     * @param  string $name
-     * @param  bool   $upper
+     * @param  string      $name
+     * @param  string|null $case
      * @return bool
+     * @throws froq\common\object\EnumException
      */
-    public static final function validName(string $name, bool $upper = false): bool
+    public static final function validName(string $name, string $case = null): bool
     {
-        $upper && $name = strtoupper($name);
+        if ($case !== null) {
+            $name = match ($case) {
+                'upper' => strtoupper($name),
+                'lower' => strtolower($name),
+                default => throw new EnumException('Invalid case: %q', $case),
+            };
+        };
 
         return in_array($name, self::names(), true);
     }
@@ -218,17 +235,22 @@ class Enum
      * Get a name of value or return null when no value exists.
      *
      * @param  int|float|string|bool|array|null $value
-     * @param  bool                             $lower
+     * @param  string|null                      $case
      * @return string|null
+     * @throws froq\common\object\EnumException
      * @since  4.7
      */
-    public static final function nameOf(int|float|string|bool|array|null $value, bool $lower = false): string|null
+    public static final function nameOf(int|float|string|bool|array|null $value, string $case = null): string|null
     {
         $name = array_search($value, self::toArray(), true);
 
-        if ($lower && $name) {
-            $name = strtolower($name);
-        }
+        if ($name && $case !== null) {
+            $name = match ($case) {
+                'upper' => strtoupper($name),
+                'lower' => strtolower($name),
+                default => throw new EnumException('Invalid case: %q', $case),
+            };
+        };
 
         return $name ?: null;
     }
@@ -236,16 +258,21 @@ class Enum
     /**
      * Get value of a name or return null when no name exists.
      *
-     * @param  string $name
-     * @param  bool   $upper
+     * @param  string      $name
+     * @param  string|null $case
      * @return int|float|string|bool|array|null|null
+     * @throws froq\common\object\EnumException
      * @since  4.7
      */
-    public static final function valueOf(string $name, bool $upper = false): int|float|string|bool|array|null
+    public static final function valueOf(string $name, string $case = null): int|float|string|bool|array|null
     {
-        if ($upper) {
-            $name = strtoupper($name);
-        }
+        if ($case !== null) {
+            $name = match ($case) {
+                'upper' => strtoupper($name),
+                'lower' => strtolower($name),
+                default => throw new EnumException('Invalid case: %q', $case),
+            };
+        };
 
         return self::toArray()[$name] ?? null;
     }
