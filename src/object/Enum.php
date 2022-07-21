@@ -230,7 +230,7 @@ class Enum
             $name = strtolower($name);
         }
 
-        return ($name !== false) ? $name : null;
+        return $name ?: null;
     }
 
     /**
