@@ -57,11 +57,12 @@ trait ObjectTrait
     /**
      * Get serialized hash.
      *
+     * @param  bool $withName
      * @return string
      */
-    public final function getSerializedHash(): string
+    public final function getSerializedHash(bool $withName = true): string
     {
-        return Objects::getSerializedHash($this);
+        return Objects::getSerializedHash($this, $withName);
     }
 
     /**
