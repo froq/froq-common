@@ -73,7 +73,6 @@ trait ThrowableTrait
                     $message = format($message, ...$messageParams);
                 }
             } else {
-                // Use cause.
                 $cause   ??= $message;
                 $code    ??= $message->getCode();
                 $message   = $message->getMessage();
