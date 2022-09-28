@@ -8,37 +8,37 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 /**
- * A trait, provides magic-access methods for the classes defining `$data`
- * property as array.
+ * A trait, provides magic-access via offset methods for the classes defining
+ * `$data` property as array and implementing `ArrayAccess` interface.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\DataAccessMagicTrait
+ * @object  froq\common\trait\DataAccessMagicOffsetTrait
  * @author  Kerem Güneş
- * @since   5.0
+ * @since   6.0
  */
-trait DataAccessMagicTrait
+trait DataAccessMagicOffsetTrait
 {
     /** @magic */
     public function __isset(int|string $key): bool
     {
-        return isset($this->data[$key]);
+        return $this->offsetExists($key);
     }
 
     /** @magic */
     public function &__get(int|string $key): mixed
     {
-        return $this->data[$key];
+        return $this->offsetGet($key);
     }
 
     /** @magic */
     public function __set(int|string $key, mixed $value): void
     {
-        $this->data[$key] = $value;
+        $this->offsetSet($key, $value);
     }
 
     /** @magic */
     public function __unset(int|string $key): void
     {
-        unset($this->data[$key]);
+        $this->offsetUnset($key);
     }
 }

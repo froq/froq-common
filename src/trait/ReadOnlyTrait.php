@@ -11,14 +11,12 @@ use froq\common\exception\ReadOnlyException;
 use froq\util\Objects;
 
 /**
- * Read-Only Trait.
- *
- * Represents a trait that provides read-only state check and other read-only utilities.
+ * A trait, provides read-only state check and other read-only utilities.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\ReadOnlyTrait
  * @author  Kerem Güneş
- * @since   5.4, 5.7 Moved from "collection.trait" subpackage.
+ * @since   5.4, 5.7
  */
 trait ReadOnlyTrait
 {
@@ -77,29 +75,5 @@ trait ReadOnlyTrait
     public static final function readOnlyStates(): array|null
     {
         return self::$__READ_ONLY_STATES ?? null;
-    }
-
-    /**
-     * Lock, read-only state as true.
-     *
-     * @return self
-     */
-    public final function lock(): self
-    {
-        $this->readOnly(true);
-
-        return $this;
-    }
-
-    /**
-     * Unlock, read-only state as false.
-     *
-     * @return self
-     */
-    public final function unlock(): self
-    {
-        $this->readOnly(false);
-
-        return $this;
     }
 }

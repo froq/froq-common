@@ -7,18 +7,17 @@ declare(strict_types=1);
 
 namespace froq\common;
 
-use Exception as _Exception;
+use froq\common\trait\ThrowableTrait;
 
 /**
- * Exception.
+ * Base exception class extended by all other Froq! exception classes.
  *
  * @package froq\common
  * @object  froq\common\Exception
  * @author  Kerem Güneş
  * @since   4.0
  */
-class Exception extends _Exception
+class Exception extends \Exception
 {
-    /** @see froq\common\trait\ThrowableTrait */
-    use trait\ThrowableTrait;
+    use ThrowableTrait;
 }

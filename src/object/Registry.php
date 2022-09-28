@@ -7,23 +7,17 @@ declare(strict_types=1);
 
 namespace froq\common\object;
 
-use froq\common\Exception;
-
 /**
- * Registry.
- *
- * Represents an registry entity which is able to store/unstore objects only.
+ * A registry class, able to store/unstore objects only.
  *
  * @package froq\common\object
  * @object  froq\common\object\Registry
  * @author  Kerem Güneş
  * @since   4.0
  */
-final class Registry
+class Registry
 {
-    /**
-     * @var array<string, object>
-     */
+    /** @var array<string, object> */
     private static array $stack = [];
 
     /**
@@ -54,15 +48,18 @@ final class Registry
      * @param  object $object
      * @param  bool   $locked
      * @return void
-     * @throws froq\common\Exception
+     * @throws froq\common\object\RegistryException
      */
     public static function set(string $id, object $object, bool $locked = true): void
     {
         $current = self::$stack[$id] ?? null;
 
         if ($current && $current['locked']) {
-            throw new Exception('Object `%s` is already registered and locked with id `%s`, call replace()'
-                . ' instead to force it to change with set().', [$current['object']::class, $id]);
+            throw new RegistryException(
+                'Object `%s` is already registered and locked with id `%s`, '.
+                'call replace() instead to force it to change with set().',
+                [get_object_id($current['object']), $id]
+            );
         }
 
         self::register($id, $object, $locked);
@@ -73,7 +70,6 @@ final class Registry
      *
      * @param  string $id
      * @return object|null
-     * @throws froq\common\Exception
      */
     public static function get(string $id): object|null
     {
@@ -105,12 +101,7 @@ final class Registry
     }
 
     /**
-     * Register an object.
-     *
-     * @param  string $id
-     * @param  object $object
-     * @param  bool   $locked
-     * @return void
+     * Internal registry wrapper.
      */
     private static function register(string $id, object $object, bool $locked): void
     {

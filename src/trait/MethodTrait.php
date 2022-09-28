@@ -10,9 +10,7 @@ namespace froq\common\trait;
 use froq\util\Objects;
 
 /**
- * Method Trait.
- *
- * Represents a trait entity for objects which may be used with ObjectTrait, ConstantTrait and PropertyTrait.
+ * A trait, for objects and can be used with ObjectTrait, ConstantTrait and PropertyTrait.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\MethodTrait
@@ -27,7 +25,7 @@ trait MethodTrait
      * @param  string $name
      * @return bool
      */
-    public final function hasMethod(string $name): bool
+    public function hasMethod(string $name): bool
     {
         return method_exists($this, $name);
     }
@@ -36,9 +34,9 @@ trait MethodTrait
      * Get a detailed method info.
      *
      * @param  string $name
-     * @return array<string, any>|null
+     * @return array|null
      */
-    public final function getMethod(string $name): array|null
+    public function getMethod(string $name): array|null
     {
         return Objects::getMethod($this, $name);
     }
@@ -47,9 +45,9 @@ trait MethodTrait
      * Get methods.
      *
      * @param  bool $all
-     * @return array<string, array>|null
+     * @return array|null
      */
-    public final function getMethods(bool $all = true): array|null
+    public function getMethods(bool $all = true): array|null
     {
         return Objects::getMethods($this, $all);
     }
@@ -58,9 +56,9 @@ trait MethodTrait
      * Get method names.
      *
      * @param  bool $all
-     * @return array<string>|null
+     * @return array|null
      */
-    public final function getMethodNames(bool $all = true): array|null
+    public function getMethodNames(bool $all = true): array|null
     {
         return Objects::getMethodNames($this, $all);
     }

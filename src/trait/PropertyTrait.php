@@ -10,9 +10,7 @@ namespace froq\common\trait;
 use froq\util\Objects;
 
 /**
- * Property Trait.
- *
- * Represents a trait entity for objects which may be used with ObjectTrait, ConstantTrait and MethodTrait.
+ * A trait, for objects and can be used with ObjectTrait, ConstantTrait and MethodTrait.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\PropertyTrait
@@ -27,7 +25,7 @@ trait PropertyTrait
      * @param  string $name
      * @return bool
      */
-    public final function hasProperty(string $name): bool
+    public function hasProperty(string $name): bool
     {
         return property_exists($this, $name);
     }
@@ -36,9 +34,9 @@ trait PropertyTrait
      * Get a detailed property info.
      *
      * @param  string $name
-     * @return array<string, any>|null
+     * @return array|null
      */
-    public final function getProperty(string $name): array|null
+    public function getProperty(string $name): array|null
     {
         return Objects::getProperty($this, $name);
     }
@@ -47,9 +45,9 @@ trait PropertyTrait
      * Get a property value.
      *
      * @param  string $name
-     * @return any
+     * @return mixed
      */
-    public final function getPropertyValue(string $name)
+    public function getPropertyValue(string $name): mixed
     {
         return Objects::getPropertyValue($this, $name);
     }
@@ -58,9 +56,9 @@ trait PropertyTrait
      * Get properties.
      *
      * @param  bool $all
-     * @return array<string, array>|null
+     * @return array|null
      */
-    public final function getProperties(bool $all = true): array|null
+    public function getProperties(bool $all = true): array|null
     {
         return Objects::getProperties($this, $all);
     }
@@ -69,9 +67,9 @@ trait PropertyTrait
      * Get property names.
      *
      * @param  bool $all
-     * @return array<string>|null
+     * @return array|null
      */
-    public final function getPropertyNames(bool $all = true): array|null
+    public function getPropertyNames(bool $all = true): array|null
     {
         return Objects::getPropertyNames($this, $all);
     }
@@ -80,11 +78,11 @@ trait PropertyTrait
      * Get property values.
      *
      * @param  bool $all
-     * @param  bool $withNames
-     * @return array<string>|null
+     * @param  bool $assoc
+     * @return array|null
      */
-    public final function getPropertyValues(bool $all = true, bool $withNames = false): array|null
+    public function getPropertyValues(bool $all = true, bool $assoc = false): array|null
     {
-        return Objects::getPropertyValues($this, $all, $withNames);
+        return Objects::getPropertyValues($this, $all, $assoc);
     }
 }

@@ -8,10 +8,8 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 /**
- * Data Access Trait.
- *
- * Represents a trait that provides some access & modify actions via implemented methods
- * for those classes hold a `$data` property as array and implement `ArrayAccess` interface.
+ * A trait, provides related methods for the classes defining `$data`
+ * property as array and implementing `ArrayAccess` interface.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\DataAccessTrait
@@ -20,33 +18,28 @@ namespace froq\common\trait;
  */
 trait DataAccessTrait
 {
-    /**
-     * @inheritDoc ArrayAccess
-     */
+    /** @inheritDoc ArrayAccess */
     public function offsetExists(mixed $key): bool
     {
         return isset($this->data[$key]);
     }
 
-    /**
-     * @inheritDoc ArrayAccess
-     */
+    /** @inheritDoc ArrayAccess */
+    public function &offsetGet(mixed $key): mixed
+    {
+        return $this->data[$key];
+    }
+
+    /** @inheritDoc ArrayAccess */
     public function offsetSet(mixed $key, mixed $value): void
     {
+        // For calls like `items[] = item`.
+        $key ??= count($this->data);
+
         $this->data[$key] = $value;
     }
 
-    /**
-     * @inheritDoc ArrayAccess
-     */
-    public function offsetGet(mixed $key): mixed
-    {
-        return $this->data[$key] ?? null;
-    }
-
-    /**
-     * @inheritDoc ArrayAccess
-     */
+    /** @inheritDoc ArrayAccess */
     public function offsetUnset(mixed $key): void
     {
         unset($this->data[$key]);

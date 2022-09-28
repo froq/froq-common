@@ -7,20 +7,17 @@ declare(strict_types=1);
 
 namespace froq\common\object;
 
-use froq\common\Exception;
 use froq\collection\Collection;
 
 /**
- * Config.
- *
- * Represents a config collection entity.
+ * A config collection class.
  *
  * @package froq\common\object
  * @object  froq\common\object\Config
  * @author  Kerem Güneş
- * @since   1.0, 5.0 Moved from "froq\config" module.
+ * @since   1.0, 5.0
  */
-final class Config extends Collection
+class Config extends Collection
 {
     /**
      * Update current options.
@@ -31,7 +28,7 @@ final class Config extends Collection
      */
     public function update(array $data): self
     {
-        $this->setData(self::mergeSources($data, $this->getData()));
+        $this->data = self::mergeSources($data, $this->data);
 
         return $this;
     }
@@ -42,9 +39,9 @@ final class Config extends Collection
      * @param  array $source1
      * @param  array $source2
      * @return array
-     * @since  1.0, 4.0 Derived from merge().
+     * @since  1.0, 4.0
      */
-    public static function mergeSources(array $source1, array $source2): array
+    public static final function mergeSources(array $source1, array $source2): array
     {
         $ret = $source2;
 
@@ -69,38 +66,50 @@ final class Config extends Collection
      *
      * @param  string $file
      * @return array
-     * @throws froq\common\Exception
+     * @throws froq\common\object\ConfigException
      * @since  4.1
      */
-    public static function parseDotenv(string $file): array
+    public static final function parseDotenv(string $file): array
     {
         $ret = [];
 
         if (!is_file($file)) {
-            throw new Exception('No .env file exists such `%s`', $file);
+            throw new ConfigException(
+                'No .env file exists such `%s`',
+                $file
+            );
         }
 
         $lines = file($file);
         if ($lines === false) {
-            throw new Exception('Cannot read .env file `%s`, [error: %s]', [$file, '@error']);
+            throw new ConfigException(
+                'Cannot read .env file `%s`, [error: %s]',
+                [$file, '@error']
+            );
         }
 
         foreach ($lines as $i => $line) {
             $line = trim($line);
 
             // Skip empty & comment lines.
-            if (!$line || $line[0] === '#') {
+            if (!$line || $line[0] == '#') {
                 continue;
             }
 
             $pairs = array_map('trim', explode('=', $line, 2));
             if (count($pairs) != 2) {
-                throw new Exception('Invalid .env entry `%s` at file `%s:%s`', [$line, $file, $i + 1]);
+                throw new ConfigException(
+                    'Invalid .env entry `%s` at file `%s:%s`',
+                    [$line, $file, $i + 1]
+                );
             }
 
             [$name, $value] = $pairs;
             if (isset($ret[$name])) {
-                throw new Exception('Duplicated .env entry `%s` at file `%s:%s`', [$name, $file, $i + 1]);
+                throw new ConfigException(
+                    'Duplicated .env entry `%s` at file `%s:%s`',
+                    [$name, $file, $i + 1]
+                );
             }
 
             $ret[$name] = $value;

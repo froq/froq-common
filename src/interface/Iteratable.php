@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\interface;
 
 /**
- * Iteratable.
- *
  * @package froq\common\interface
  * @object  froq\common\interface\Iteratable
  * @author  Kerem Güneş
@@ -18,7 +16,6 @@ namespace froq\common\interface;
 interface Iteratable
 {
     /**
-     * @note   Return is permissive.
      * @return iterable
      */
     public function getIterator(): iterable;

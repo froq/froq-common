@@ -8,9 +8,8 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 /**
- * Attribute Trait.
- *
- * Represents a trait entity which is able to set, get or check attributes on user object.
+ * A trait, defines `$attributes` property as array and able to set/get/check
+ * attributes on user object.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\AttributeTrait
@@ -19,17 +18,17 @@ namespace froq\common\trait;
  */
 trait AttributeTrait
 {
-    /** @var array<string, any> */
+    /** @var array<string, mixed> */
     protected array $attributes = [];
 
     /**
      * Get/get an attribute.
      *
-     * @param  string   $name
-     * @param  any|null $value
-     * @return any|null|self
+     * @param  string     $name
+     * @param  mixed|null $value
+     * @return mixed|null or self
      */
-    public final function attribute(string $name, $value = null)
+    public final function attribute(string $name, mixed $value = null): mixed
     {
         return func_num_args() == 1 ? $this->getAttribute($name)
                                     : $this->setAttribute($name, $value);
@@ -61,10 +60,10 @@ trait AttributeTrait
      * Set an attribute with given name and value.
      *
      * @param  string $name
-     * @param  any    $value
+     * @param  mixed  $value
      * @return self
      */
-    public final function setAttribute(string $name, $value): self
+    public final function setAttribute(string $name, mixed $value): self
     {
         $this->attributes[$name] = $value;
 
@@ -74,11 +73,11 @@ trait AttributeTrait
     /**
      * Get an attribute with given name.
      *
-     * @param  string   $name
-     * @param  any|null $default
-     * @return any|null
+     * @param  string     $name
+     * @param  mixed|null $default
+     * @return mixed|null
      */
-    public final function getAttribute(string $name, $default = null)
+    public final function getAttribute(string $name, mixed $default = null): mixed
     {
         return $this->attributes[$name] ?? $default;
     }
@@ -99,16 +98,16 @@ trait AttributeTrait
     /**
      * Set attributes with optional defaults.
      *
-     * @param  array<string, any>|null $attributes
-     * @param  array<string, any>|null $defaults
-     * @param  bool                    $recursive
+     * @param  array<string, mixed>|null $attributes
+     * @param  array<string, mixed>|null $defaults
+     * @param  bool                      $recursive
      * @return self
      */
     public final function setAttributes(?array $attributes, ?array $defaults = null, bool $recursive = true): self
     {
         $attributes ??= [];
 
-        if ($defaults != null) {
+        if ($defaults) {
             $attributes = $recursive ? array_replace_recursive($defaults, $attributes)
                 : array_replace($defaults, $attributes);
         }
@@ -123,10 +122,11 @@ trait AttributeTrait
     /**
      * Get attributes by given names.
      *
-     * @return array<string>|null $names
-     * @return array<any>
+     * @param  array<string>|null $names
+     * @param  bool               $combine
+     * @return array<mixed>
      */
-    public final function getAttributes(array $names = null): array
+    public final function getAttributes(array $names = null, bool $combine = false): array
     {
         // All wanted.
         if ($names === null) {
@@ -134,12 +134,11 @@ trait AttributeTrait
         }
 
         $values = [];
-
         foreach ($names as $name) {
             $values[] = $this->getAttribute($name);
         }
 
-        return $values;
+        return $combine ? array_combine($names, $values) : $values;
     }
 
     /**

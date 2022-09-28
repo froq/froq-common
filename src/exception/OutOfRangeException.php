@@ -7,11 +7,7 @@ declare(strict_types=1);
 
 namespace froq\common\exception;
 
-use froq\common\exception\LogicException;
-
 /**
- * Out-Of-Range Exception.
- *
  * @package froq\common\exception
  * @object  froq\common\exception\OutOfRangeException
  * @author  Kerem Güneş

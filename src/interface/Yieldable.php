@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\interface;
 
 /**
- * Yieldable.
- *
  * @package froq\common\interface
  * @object  froq\common\interface\Yieldable
  * @author  Kerem Güneş
@@ -18,8 +16,6 @@ namespace froq\common\interface;
 interface Yieldable
 {
     /**
-     * Yield.
-     *
      * @return iterable
      */
     public function yield(): iterable;

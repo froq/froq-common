@@ -8,12 +8,10 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 use froq\util\Objects;
-use ReflectionObject;
+use ReflectionObject, XReflectionObject;
 
 /**
- * Object Trait.
- *
- * Represents a trait entity for objects which may be used with ConstantTrait, PropertyTrait and MethodTrait.
+ * A trait, for objects and can be used with ConstantTrait, PropertyTrait and MethodTrait.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\ObjectTrait
@@ -23,13 +21,14 @@ use ReflectionObject;
 trait ObjectTrait
 {
     /**
-     * Get reflection.
+     * Reflect & return reflection.
      *
-     * @return ReflectionObject
+     * @param  bool $extended
+     * @return ReflectionObject|XReflectionObject
      */
-    public final function getReflection(): ReflectionObject
+    public final function reflect(bool $extended = false): ReflectionObject|XReflectionObject
     {
-        return new ReflectionObject($this);
+        return !$extended ? new ReflectionObject($this) : new XReflectionObject($this);
     }
 
     /**
@@ -50,7 +49,7 @@ trait ObjectTrait
      * @param  bool $withRehash
      * @return string
      */
-    public final function getHash(bool $withName = true, bool $withRehash = true): string
+    public final function getHash(bool $withName = true, bool $withRehash = false): string
     {
         return Objects::getHash($this, $withName, $withRehash);
     }
@@ -58,12 +57,12 @@ trait ObjectTrait
     /**
      * Get serialized hash.
      *
-     * @param  string|null $algo
+     * @param  bool $withName
      * @return string
      */
-    public final function getSerializedHash(string $algo = null): string
+    public final function getSerializedHash(bool $withName = true): string
     {
-        return Objects::getSerializedHash($this, $algo);
+        return Objects::getSerializedHash($this, $withName);
     }
 
     /**
@@ -98,6 +97,16 @@ trait ObjectTrait
     }
 
     /**
+     * Get parent.
+     *
+     * @return string|null
+     */
+    public final function getParent(): string|null
+    {
+        return Objects::getParent($this);
+    }
+
+    /**
      * Get parents.
      *
      * @return array|null
@@ -126,5 +135,60 @@ trait ObjectTrait
     public final function getTraits(bool $all = true): array|null
     {
         return Objects::getTraits($this, $all);
+    }
+
+    /**
+     * Is type of.
+     *
+     * @param  string $class
+     * @return bool
+     */
+    public final function isTypeOf(string $class): bool
+    {
+        return (static::class == $class);
+    }
+
+    /**
+     * Is type of self.
+     *
+     * @return bool
+     */
+    public final function isTypeOfSelf(): bool
+    {
+        return (static::class == self::class);
+    }
+
+    /**
+     * Is instance of.
+     *
+     * @param  object|string $object
+     * @return bool
+     */
+    public final function isInstanceOf(object|string $object): bool
+    {
+        return ($this instanceof $object);
+    }
+
+    /**
+     * Is equal of.
+     *
+     * @param  object $object
+     * @param  bool   $strict
+     * @return bool
+     */
+    public final function isEqualOf(object $object, bool $strict = true): bool
+    {
+        return ($strict ? $this === $object : $this == $object);
+    }
+
+    /**
+     * Is equal hash of.
+     *
+     * @param  object $object
+     * @return bool
+     */
+    public final function isEqualHashOf(object $object): bool
+    {
+        return Objects::getSerializedHash($this) == Objects::getSerializedHash($object);
     }
 }

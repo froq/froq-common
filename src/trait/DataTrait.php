@@ -8,10 +8,7 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 /**
- * Data Trait.
- *
- * Represents a trait that provides some access & modify actions for those classes hold
- * a `$data` property as array.
+ * A trait, provides access/modify methods for the classes defining `$data` property as array.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\DataTrait
@@ -21,30 +18,21 @@ namespace froq\common\trait;
 trait DataTrait
 {
     /**
-     * Set/get data array.
+     * Get data fields by given keys or all data array.
      *
-     * @param  array $data
-     * @return array|self
+     * @param  array<string|int>|string|int $keys
+     * @param  bool|null                    $combine
+     * @return mixed
      */
-    public function data(array $data = []): array|self
+    public function data(array|string|int $keys = null, bool $combine = null): mixed
     {
-        return func_num_args() ? $this->setData($data) : $this->getData();
-    }
-
-    /**
-     * Get data fields by given keys.
-     *
-     * @param  array|string $keys
-     * @param  bool         $combine
-     * @return array
-     */
-    public function dataOnly(array|string $keys, bool $combine = true): array
-    {
-        if (is_string($keys)) {
-            $keys = mb_split(' +', $keys);
+        if ($keys === null) {
+            return $this->data;
         }
 
-        return (array) array_select($this->data, $keys, combine: $combine);
+        $combine ??= is_array($keys);
+
+        return array_select($this->data, $keys, combine: $combine);
     }
 
     /**

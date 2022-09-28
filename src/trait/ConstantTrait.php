@@ -10,9 +10,7 @@ namespace froq\common\trait;
 use froq\util\Objects;
 
 /**
- * Constant Trait.
- *
- * Represents a trait entity for objects which may be used with ObjectTrait, PropertyTrait and MethodTrait.
+ * A trait, for objects and can be used with ObjectTrait, PropertyTrait and MethodTrait.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\ConstantTrait
@@ -27,19 +25,18 @@ trait ConstantTrait
      * @param  string $name
      * @return bool
      */
-    public final function hasConstant(string $name): bool
+    public function hasConstant(string $name): bool
     {
-        // Seems working for private/protected constants also due to called scope.
-        return defined(static::class .'::'. $name);
+        return constant_exists($this, $name);
     }
 
     /**
      * Get a detailed constant info.
      *
      * @param  string $name
-     * @return array<string, any>|null
+     * @return array|null
      */
-    public final function getConstant(string $name): array|null
+    public function getConstant(string $name): array|null
     {
         return Objects::getConstant($this, $name);
     }
@@ -48,9 +45,9 @@ trait ConstantTrait
      * Get a constant value.
      *
      * @param  string $name
-     * @return any
+     * @return mixed
      */
-    public final function getConstantValue(string $name)
+    public function getConstantValue(string $name): mixed
     {
         return Objects::getConstantValue($this, $name);
     }
@@ -59,9 +56,9 @@ trait ConstantTrait
      * Get constants.
      *
      * @param  bool $all
-     * @return array<string, array>|null
+     * @return array|null
      */
-    public final function getConstants(bool $all = true): array|null
+    public function getConstants(bool $all = true): array|null
     {
         return Objects::getConstants($this, $all);
     }
@@ -70,9 +67,9 @@ trait ConstantTrait
      * Get constant names.
      *
      * @param  bool $all
-     * @return array<string>|null
+     * @return array|null
      */
-    public final function getConstantNames(bool $all = true): array|null
+    public function getConstantNames(bool $all = true): array|null
     {
         return Objects::getConstantNames($this, $all);
     }
@@ -81,11 +78,11 @@ trait ConstantTrait
      * Get constant values.
      *
      * @param  bool $all
-     * @param  bool $withNames
-     * @return array<int|string, any>|null
+     * @param  bool $assoc
+     * @return array|null
      */
-    public final function getConstantValues(bool $all = true, bool $withNames = false): array|null
+    public function getConstantValues(bool $all = true, bool $assoc = false): array|null
     {
-        return Objects::getConstantValues($this, $all, $withNames);
+        return Objects::getConstantValues($this, $all, $assoc);
     }
 }

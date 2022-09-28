@@ -10,8 +10,6 @@ namespace froq\common\interface;
 use froq\collection\CollectionInterface;
 
 /**
- * Collectable.
- *
  * @package froq\common\interface
  * @object  froq\common\interface\Collectable
  * @author  Kerem Güneş

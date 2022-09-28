@@ -7,20 +7,16 @@ declare(strict_types=1);
 
 namespace froq\common\object;
 
-use froq\common\Exception;
-
 /**
- * Factory.
- *
- * Represents a factory entity that creates instances from given class names with/without arguments, and caches
- * using singleton way when requested.
+ * A factory class that creates instances from given class names with/without arguments,
+ * and caches using singleton way when requested.
  *
  * @package froq\common\object
  * @object  froq\common\object\Factory
  * @author  Kerem Güneş
  * @since   4.0
  */
-final class Factory
+class Factory
 {
     /** @var array<string, object> */
     private static array $instances = [];
@@ -28,35 +24,35 @@ final class Factory
     /**
      * Create an instance from given class with/without its arguments.
      *
-     * @param  string $class
-     * @param  ...    $classArgs
+     * @param  string   $class
+     * @param  mixed ...$classArgs
      * @return object
-     * @throws froq\common\Exception
+     * @throws froq\common\object\FactoryException
      */
-    public static function init(string $class, ...$classArgs): object
+    public static final function init(string $class, mixed ...$classArgs): object
     {
         if (class_exists($class)) {
             return new $class(...$classArgs);
         }
 
-        throw new Exception('No class exists such ' . $class);
+        throw new FactoryException('No class exists such ' . $class);
     }
 
     /**
-     * Create an instance from given class as singleton with/without its arguments and cache it or return
-     * cached one that was previously created.
+     * Create an instance from given class as singleton with/without its arguments
+     * and cache it or return cached one that was previously created.
      *
-     * @param  string $class
-     * @param  ...    $classArgs
+     * @param  string   $class
+     * @param  mixed ...$classArgs
      * @return object
-     * @throws froq\common\Exception
+     * @throws froq\common\object\FactoryException
      */
-    public static function initOnce(string $class, ...$classArgs): object
+    public static final function initOnce(string $class, mixed ...$classArgs): object
     {
         if (class_exists($class)) {
             return self::$instances[$class] ??= new $class(...$classArgs);
         }
 
-        throw new Exception('No class exists such ' . $class);
+        throw new FactoryException('No class exists such ' . $class);
     }
 }

@@ -7,13 +7,13 @@ declare(strict_types=1);
 
 namespace froq\common\trait;
 
-use Throwable, Error, Exception;
+use froq\common\{Error, Exception};
+use Throwable;
 
 /**
- * Throwable Trait.
- *
- * Represents a trait entity which is used by Error and Exception classes, provides a relaxation getting
- * rid of `sprintf()` calls for each throw also having some utility methods and cause option.
+ * A trait, used by Error/Exception classes, provides a relaxation getting rid of
+ * `sprintf()` calls for each throw, has some utility methods and cause property
+ * as well.
  *
  * @package froq\common\trait
  * @object  froq\common\trait\ThrowableTrait
@@ -22,69 +22,133 @@ use Throwable, Error, Exception;
  */
 trait ThrowableTrait
 {
-    /** @var Throwable|null */
-    private Throwable|null $cause;
+    /** @var ?Throwable */
+    private ?Throwable $cause = null;
+
+    /** @var ?int */
+    private ?int $reduce = null;
 
     /**
      * Constructor.
      *
-     * @param string|Throwable  $message
-     * @param any|null          $messageParams
-     * @param int|null          $code
-     * @param Throwable|null    $previous
-     * @param Throwable|null    $cause
+     * @param string|Throwable|null $message
+     * @param mixed|null            $messageParams
+     * @param int|null              $code
+     * @param Throwable|null        $previous
+     * @param Throwable|null        $cause
+     * @param int|bool|null         $reduce
+     * @param bool|null             $extract
      */
-    public function __construct(string|Throwable $message = null, $messageParams = null, int $code = null,
-        Throwable $previous = null, Throwable $cause = null)
+    public function __construct(string|Throwable $message = null, mixed $messageParams = null, int $code = null,
+        Throwable $previous = null, Throwable $cause = null, int|bool $reduce = null, bool $extract = null)
     {
-        if ($message != null) {
+        if ($message) {
             if (is_string($message)) {
+                $error = self::getLastError();
+
+                // Replace '@error' directive with last (current) error.
+                $message = str_replace('@error', $error['message'], $message);
+
                 // Eg: throw new Exception('@error').
                 if ($message === '@error') {
-                    $error         = self::getLastError();
-                    $code          = $code ?? $error['code'];
-                    $messageParams = [$error['message']];
-                    $message = vsprintf('Error: %s', $messageParams);
+                    $code  ??= $error['code'];
+                    $message = $error['message'];
                 }
                 // Eg: throw new Exception('Error: %s', ['The error!'] or ['@error']).
-                elseif ($messageParams !== null) {
-                    // Special formats (quoted string & error).
-                    $message       = str_replace(['%q', '%e'], ["'%s'", '@error'], $message);
-                    $messageParams = (array) $messageParams;
+                elseif (func_num_args() > 1) {
+                    $messageParams = is_array($messageParams) || is_scalar($messageParams)
+                        ? (array) $messageParams : [$messageParams];
+
+                    // Prevent named argument stuff for format().
+                    $messageParams = array_values($messageParams);
 
                     foreach ($messageParams as $i => $messageParam) {
                         if ($messageParam === '@error') {
-                            $error             = self::getLastError();
-                            $code              = $code ?? $error['code'];
+                            $code            ??= $error['code'];
                             $messageParams[$i] = $error['message'];
                             break;
                         }
                     }
 
-                    $message = vsprintf($message, $messageParams);
+                    $message = format($message, ...$messageParams);
                 }
             } else {
-                $code     ??= $message->getCode();
-                $previous ??= $message; // Use message as previous.
-                $message    = $message->getMessage();
+                $cause   ??= $message;
+                $code    ??= $message->getCode();
+                $message   = $message->getMessage();
+            }
+
+            // Drop eg: "RegexIterator::__construct():" part.
+            $extract && $message = self::extractMessage($message);
+        }
+
+        parent::__construct((string) $message, (int) $code, $previous);
+
+        // Try to detect that this created via some static::for*() method.
+        // Eg: if ($id < 0) throw UserError::forInvalidID($id).
+        if ($reduce === null) {
+            $trace =@ $this->getTrace()[0];
+            if (isset($trace['class'], $trace['function'])
+                && is_class_of($trace['class'], Throwable::class)
+                && str_starts_with($trace['function'], 'for')) {
+                $reduce = 1;
             }
         }
 
-        $this->cause = $cause;
+        $this->cause  = $cause;
+        $this->reduce = (int) $reduce;
 
-        parent::__construct((string) $message, (int) $code, $previous);
+        $this->applyReduce();
     }
 
-    /**
-     * Magic - string.
-     *
-     * @return string
-     */
-    public function __toString()
+    /** @magic */
+    public function __get(string $property): mixed
     {
-        // Eg: Exception: ... => Exception(404): ...
-        return preg_replace('~^(.+?): *(.+)~', '\1('. $this->code .'): \2',
-            parent::__toString());
+        switch ($property) {
+            case 'trace':
+                return $this->getTrace();
+            case 'traceString':
+                return $this->getTraceString();
+            case 'cause':
+                return $this->getCause();
+        }
+
+        if (property_exists($this, $property)) {
+            try {
+                return $this->$property;
+            } catch (Throwable) {
+                // If subclasses define the property as "private".
+                $ref = new \ReflectionProperty($this, $property);
+                return $ref->isInitialized($this) ? $ref->getValue($this) : $ref->getDefaultValue();
+            }
+        }
+
+        // Act as original.
+        $message = sprintf('Undefined property: %s::$%s', $this::class, $property);
+        trigger_error($message, E_USER_WARNING);
+
+        return null;
+    }
+
+    /** @magic */
+    public function __toString(): string
+    {
+        // Must call here/first for reduce since reduce
+        // option changes file & line in applyReduce().
+        $trace = $this->getTraceString();
+
+        $ret = sprintf(
+            "%s(%d): %s in %s:%d\nTrace:\n%s",
+            $this->getClass(), $this->getCode(), $this->getMessage(),
+            $this->getFile(), $this->getLine(), $trace
+        );
+
+        // Add cause info.
+        if ($cause = $this->getCause()) {
+            $ret .= "\n\n". 'Cause:' . "\n" . $cause;
+        }
+
+        return $ret;
     }
 
     /**
@@ -93,7 +157,7 @@ trait ThrowableTrait
      * @return Throwable|null
      * @since  5.0
      */
-    public final function getCause(): Throwable|null
+    public function getCause(): Throwable|null
     {
         return $this->cause;
     }
@@ -104,19 +168,18 @@ trait ThrowableTrait
      * @return array<Throwable>|null
      * @since  5.0
      */
-    public final function getCauses(): array|null
+    public function getCauses(): array|null
     {
-        $causes = null;
-
         if ($cause = $this->getCause()) {
             $causes[] = $cause;
 
-            while ($root = $cause?->getCause()) {
+            while (is_class_of($cause, Error::class, Exception::class)
+                && ($root = $cause?->getCause())) {
                 $causes[] = $cause = $root;
             }
         }
 
-        return $causes;
+        return $causes ?? null;
     }
 
     /**
@@ -125,15 +188,26 @@ trait ThrowableTrait
      * @return Throwable|null
      * @since  5.0
      */
-    public final function getRootCause(): Throwable|null
+    public function getRootCause(): Throwable|null
     {
-        $cause = $this->getCause();
-
-        while ($root = $cause?->getCause()) {
-            $cause = $root;
+        if ($cause = $this->getCause()) {
+            while (is_class_of($cause, Error::class, Exception::class)
+                && ($root = $cause?->getCause())) {
+                $cause = $root;
+            }
         }
 
         return $cause;
+    }
+
+    /**
+     * Get class name of user object.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this::class;
     }
 
     /**
@@ -142,7 +216,7 @@ trait ThrowableTrait
      * @param  bool $short
      * @return string
      */
-    public final function getClass(bool $short = false): string
+    public function getClass(bool $short = false): string
     {
         $class = $this::class;
 
@@ -158,19 +232,37 @@ trait ThrowableTrait
      *
      * @return string
      */
-    public final function getType(): string
+    public function getType(): string
     {
         return $this->isError() ? 'error' : 'exception';
     }
 
     /**
-     * Get the trace string of user object (alias of getTraceAsString()).
+     * Get trace string.
      *
      * @return string
      */
-    public final function getTraceString(): string
+    public function getTraceString(): string
     {
-        return $this->getTraceAsString();
+        $ret = [];
+
+        foreach ($this->getTrace() as $i => $trace) {
+            if (isset($trace['file'], $trace['line'])) {
+                $trace['location'] = $trace['file'] . '(' . $trace['line'] . ')';
+            } else {
+                $trace['location'] = '[internal function]';
+            }
+
+            if (isset($trace['class'], $trace['function'])) {
+                $trace['function'] = $trace['class'] . $trace['type'] . $trace['function'];
+            }
+
+            $ret[] = sprintf('#%d %s: %s()', $i, $trace['location'], $trace['function']);
+        }
+
+        $ret[] = sprintf('#%d {main}', ($i ?? -1) + 1);
+
+        return join("\n", $ret);
     }
 
     /**
@@ -179,29 +271,36 @@ trait ThrowableTrait
      * @param  bool $pretty
      * @return string
      */
-    public final function toString(bool $pretty = false): string
+    public function toString(bool $pretty = false): string
     {
-        [$class, $code, $line, $file, $message, $messageTrace] = [
-            $this->getClass(), $this->code, $this->line, $this->file,
-            $this->getMessage(), $this->getTraceString()
+        // Must call here/first for reduce since reduce
+        // option changes file & line in applyReduce().
+        $trace = $this->getTraceString();
+
+        [$class, $code, $line, $file, $message] = [
+            $this->getClass(), $this->getCode(),
+            $this->getLine(), $this->getFile(),
+            $this->getMessage(),
         ];
 
         if ($pretty) {
             $file  = str_replace('.php', '', $file);
             $class = str_replace('\\', '.', $class);
 
-            // Change dotable stuffs and remove php extensions.
-            $message      = preg_replace(['~(\w)(?:\\\|::|->)(\w)~', '~\.php~'], ['\1.\2', ''], $message);
-            $messageTrace = preg_replace_callback('~(?:\.php[(]|(?:\\\|::|->))~',
-                fn($m) => $m[0] == '.php(' ? '(' : '.', $messageTrace);
+            // Change dotable stuff and remove php extensions.
+            $message = preg_replace(['~(\w)(?:\\\|::|->)(\w)~', '~\.php~'], ['\1.\2', ''], $message);
+            $trace   = preg_replace_callback('~(?:\.php[(]|(?:\\\|::|->))~',
+                fn($m) => $m[0] == '.php(' ? '(' : '.', $trace);
         }
 
+        $messageLine = $message ? trim($message, '.') . ".\n" : '';
+        $detailLine  = sprintf("Code: %d | Line: %d | File: %s\n", $code, $line, $file);
+
         return sprintf(
-            "%s\n%s\n\n%s(%d): %s at %s:%d\n-\n%s",
-            sprintf("%s.", trim($message, '.')),
-            sprintf("Code: %d | Line: %d | File: %s", $code, $line, $file),
+            "%s%s\n%s(%d): %s at %s:%d\n-\n%s",
+            $messageLine, $detailLine,
             $class, $code, $message,
-            $file, $line, $messageTrace
+            $file, $line, $trace
         );
     }
 
@@ -210,9 +309,9 @@ trait ThrowableTrait
      *
      * @return bool
      */
-    public final function isError(): bool
+    public function isError(): bool
     {
-        return ($this instanceof Error);
+        return ($this instanceof \Error);
     }
 
     /**
@@ -220,17 +319,17 @@ trait ThrowableTrait
      *
      * @return bool
      */
-    public final function isException(): bool
+    public function isException(): bool
     {
-        return ($this instanceof Exception);
+        return ($this instanceof \Exception);
     }
 
     /**
      * Get last internal error if exists.
      *
-     * @return array<string, string|int>
+     * @return array
      */
-    public static final function getLastError(): array
+    public static function getLastError(): array
     {
         // Better calling when sure there is an error happened.
         $error = error_get_last();
@@ -239,5 +338,69 @@ trait ThrowableTrait
             'code'    => $error['type']    ?? null,
             'message' => $error['message'] ?? 'unknown'
         ];
+    }
+
+    /**
+     * Extract a message dropping e.g. "RegexIterator::__construct():".
+     *
+     * @param  string|Throwable $e
+     * @return string
+     */
+    public static function extractMessage(string|Throwable $e): string
+    {
+        $message = is_string($e) ? $e : $e->getMessage();
+
+        if (strsrc($message, '):')) {
+            $message = stracut($message, '):');
+        }
+
+        return trim($message);
+    }
+
+    /**
+     * Apply "reduce" option that given via constructor. This option is useful
+     * for creating throwable instances via methods or functions and dropping
+     * this creation footprints from the stack trace.
+     *
+     * For example creating & throwing an error:
+     *
+     * ```
+     * // Somewhere in UserError.
+     * static function forInvalidID($id) {
+     *   return new static('Invalid ID: ' . $id); // or
+     *   // return new static('Invalid ID: ' . $id, reduce: true);
+     * }
+     *
+     * // Somewhere in project.
+     * if ($id < 0) {
+     *   throw UserError::forInvalidID($id);
+     * }
+     * ```
+     */
+    private function applyReduce(): void
+    {
+        if ($this->reduce > 0) {
+            $traces = $this->getTrace();
+
+            // Reduce traces.
+            while ($this->reduce--) {
+                $trace = array_shift($traces);
+
+                // Set file & line info to shifted trace.
+                if (isset($trace['file'], $trace['line'])) {
+                    $this->file = $trace['file'];
+                    $this->line = $trace['line'];
+                }
+            }
+
+            // Find base/top parent (so Error or Exception).
+            $ref = new \ReflectionObject($this);
+            while ($parent = $ref->getParentClass()) {
+                $ref = $parent;
+            }
+
+            // Update trace property with changed traces as well.
+            $ref->getProperty('trace')->setValue($this, $traces);
+        }
     }
 }

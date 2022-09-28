@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\interface;
 
 /**
- * Intable.
- *
  * @package froq\common\interface
  * @object  froq\common\interface\Intable
  * @author  Kerem Güneş
@@ -18,8 +16,6 @@ namespace froq\common\interface;
 interface Intable
 {
     /**
-     * To int.
-     *
      * @return int
      */
     public function toInt(): int;

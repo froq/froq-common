@@ -8,8 +8,6 @@ declare(strict_types=1);
 namespace froq\common\interface;
 
 /**
- * Stringable.
- *
  * @package froq\common\interface
  * @object  froq\common\interface\Stringable
  * @author  Kerem Güneş
@@ -18,8 +16,6 @@ namespace froq\common\interface;
 interface Stringable
 {
     /**
-     * To string.
-     *
      * @return string
      */
     public function toString(): string;

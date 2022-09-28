@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace froq\common\exception;
+namespace froq\common\object;
 
 /**
- * @package froq\common\exception
- * @object  froq\common\exception\NullException
+ * @package froq\common\object
+ * @object  froq\common\object\EnumException
  * @author  Kerem Güneş
- * @since   4.0
+ * @since   6.0
  */
-class NullException extends RuntimeException
+class EnumException extends \froq\common\Exception
 {}
