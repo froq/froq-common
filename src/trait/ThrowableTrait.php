@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 use froq\common\{Error, Exception};
-use Throwable;
+use Throwable, Trace, TraceEntry;
 
 /**
  * A trait, used by Error/Exception classes, provides a relaxation getting rid of
@@ -36,7 +36,7 @@ trait ThrowableTrait
      * @param int|null              $code
      * @param Throwable|null        $previous
      * @param Throwable|null        $cause
-     * @param int|bool|null         $reduce
+     * @param int|bool|null         $reduce @todo Use "true" type.
      * @param bool|null             $extract
      */
     public function __construct(string|Throwable $message = null, mixed $messageParams = null, int $code = null,
@@ -238,35 +238,74 @@ trait ThrowableTrait
     }
 
     /**
+     * Get a trace by given index.
+     *
+     * @param  int $index
+     * @return array|null
+     */
+    public function getTraceAt(int $index): array|null
+    {
+        return $this->getTrace()[$index] ?? null;
+    }
+
+    /**
+     * Get a trace entry by given index.
+     *
+     * @param  int $index
+     * @return TraceEntry|null
+     */
+    public function getTraceEntry(int $index): TraceEntry|null
+    {
+        $ret = $this->getTraceAt($index);
+
+        return $ret ? new TraceEntry($ret, $index) : null;
+    }
+
+    /**
+     * Get all trace entries.
+     *
+     * @return Trace|null
+     */
+    public function getTraceEntries(): Trace|null
+    {
+        $ret = $this->getTrace();
+
+        return $ret ? new Trace($ret) : null;
+    }
+
+    /**
      * Get trace string.
      *
      * @return string
      */
     public function getTraceString(): string
     {
-        $ret = [];
+        $ret = $this->getTraceEntries();
 
-        foreach ($this->getTrace() as $i => $trace) {
-            if (isset($trace['file'], $trace['line'])) {
-                $trace['location'] = $trace['file'] . '(' . $trace['line'] . ')';
-            } else {
-                $trace['location'] = '[internal function]';
-            }
+        // Act as original.
+        $ret ??= '#0 {main}';
 
-            if (isset($trace['class'], $trace['function'])) {
-                $trace['function'] = $trace['class'] . $trace['type'] . $trace['function'];
-            }
-
-            $ret[] = sprintf('#%d %s: %s()', $i, $trace['location'], $trace['function']);
-        }
-
-        $ret[] = sprintf('#%d {main}', ($i ?? -1) + 1);
-
-        return join("\n", $ret);
+        return (string) $ret;
     }
 
     /**
-     * Get a string representation of user object.
+     * Get array representation.
+     *
+     * @param  bool $string
+     * @return array
+     */
+    public function toArray(bool $string = false): array
+    {
+        return [
+            'message' => $this->getMessage(), 'code' => $this->getCode(),
+            'file' => $this->getFile(), 'line' => $this->getLine(),
+            'class' => $this->getClass(), 'trace' => $this->getTrace(),
+            'traceString' => $string ? $this->getTraceString() : null,
+        ];
+    }
+
+    /**
+     * Get string representation with some details.
      *
      * @param  bool $pretty
      * @return string
@@ -277,9 +316,9 @@ trait ThrowableTrait
         // option changes file & line in applyReduce().
         $trace = $this->getTraceString();
 
-        [$class, $code, $line, $file, $message] = [
+        [$class, $code, $file, $line, $message] = [
             $this->getClass(), $this->getCode(),
-            $this->getLine(), $this->getFile(),
+            $this->getFile(), $this->getLine(),
             $this->getMessage(),
         ];
 
@@ -294,11 +333,11 @@ trait ThrowableTrait
         }
 
         $messageLine = $message ? trim($message, '.') . ".\n" : '';
-        $detailLine  = sprintf("Code: %d | Line: %d | File: %s\n", $code, $line, $file);
+        $detailsLine = sprintf("Class: %s | Code: %d | File: %s | Line: %d\n", $class, $code, $file, $line);
 
         return sprintf(
             "%s%s\n%s(%d): %s at %s:%d\n-\n%s",
-            $messageLine, $detailLine,
+            $messageLine, $detailsLine,
             $class, $code, $message,
             $file, $line, $trace
         );
