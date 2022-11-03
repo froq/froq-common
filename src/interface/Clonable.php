@@ -9,11 +9,11 @@ namespace froq\common\interface;
 
 /**
  * @package froq\common\interface
- * @object  froq\common\interface\Cloneable
+ * @object  froq\common\interface\Clonable
  * @author  Kerem Güneş
  * @since   4.0
  */
-interface Cloneable
+interface Clonable
 {
     /**
      * @return static
