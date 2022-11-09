@@ -25,15 +25,15 @@ trait DataAccessMagicOffsetTrait
     }
 
     /** @magic */
-    public function &__get(int|string $key): mixed
-    {
-        return $this->offsetGet($key);
-    }
-
-    /** @magic */
     public function __set(int|string $key, mixed $value): void
     {
         $this->offsetSet($key, $value);
+    }
+
+    /** @magic */
+    public function &__get(int|string $key): mixed
+    {
+        return $this->offsetGet($key);
     }
 
     /** @magic */

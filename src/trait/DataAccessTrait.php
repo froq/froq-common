@@ -25,18 +25,18 @@ trait DataAccessTrait
     }
 
     /** @inheritDoc ArrayAccess */
-    public function &offsetGet(mixed $key): mixed
-    {
-        return $this->data[$key];
-    }
-
-    /** @inheritDoc ArrayAccess */
     public function offsetSet(mixed $key, mixed $value): void
     {
         // For calls like `items[] = item`.
         $key ??= count($this->data);
 
         $this->data[$key] = $value;
+    }
+
+    /** @inheritDoc ArrayAccess */
+    public function &offsetGet(mixed $key): mixed
+    {
+        return $this->data[$key];
     }
 
     /** @inheritDoc ArrayAccess */

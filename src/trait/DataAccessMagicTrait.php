@@ -25,15 +25,15 @@ trait DataAccessMagicTrait
     }
 
     /** @magic */
-    public function &__get(int|string $key): mixed
-    {
-        return $this->data[$key];
-    }
-
-    /** @magic */
     public function __set(int|string $key, mixed $value): void
     {
         $this->data[$key] = $value;
+    }
+
+    /** @magic */
+    public function &__get(int|string $key): mixed
+    {
+        return $this->data[$key];
     }
 
     /** @magic */
