@@ -28,9 +28,11 @@ trait DataAccessTrait
     public function offsetSet(mixed $key, mixed $value): void
     {
         // For calls like `items[] = item`.
-        $key ??= count($this->data);
-
-        $this->data[$key] = $value;
+        if ($key === null) {
+            $this->data[] = $value;
+        } else {
+            $this->data[$key] = $value;
+        }
     }
 
     /** @inheritDoc ArrayAccess */
