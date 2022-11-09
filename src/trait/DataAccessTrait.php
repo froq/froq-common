@@ -27,7 +27,7 @@ trait DataAccessTrait
     /** @inheritDoc ArrayAccess */
     public function offsetSet(mixed $key, mixed $value): void
     {
-        // For calls like `items[] = item`.
+        // Calls like `items[] = item`.
         if ($key === null) {
             $this->data[] = $value;
         } else {
@@ -38,6 +38,9 @@ trait DataAccessTrait
     /** @inheritDoc ArrayAccess */
     public function &offsetGet(mixed $key): mixed
     {
+        // Calls like `items[][] = item` will put
+        // all nested items into a `["]` field.
+        // So $key must be provided for base array.
         return $this->data[$key];
     }
 
