@@ -18,9 +18,9 @@ interface Serializable
     /**
      * Serialize.
      *
-     * @return string|false
+     * @return string|null
      */
-    public function serialize(): string|false
+    public function serialize(): string|null
 
     /**
      * Unserialize.
