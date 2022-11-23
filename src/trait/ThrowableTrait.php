@@ -218,13 +218,7 @@ trait ThrowableTrait
      */
     public function getClass(bool $short = false): string
     {
-        $class = $this::class;
-
-        if ($short && ($pos = strrpos($class, '\\'))) {
-            $class = substr($class, $pos + 1);
-        }
-
-        return $class;
+        $class = get_class_name($this::class, short: $short);
     }
 
     /**
