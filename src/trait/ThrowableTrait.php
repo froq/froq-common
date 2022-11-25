@@ -321,9 +321,16 @@ trait ThrowableTrait
             $class = str_replace('\\', '.', $class);
 
             // Change dotable stuff and remove php extensions.
-            $message = preg_replace(['~(\w)(?:\\\|::|->)(\w)~', '~\.php~'], ['\1.\2', ''], $message);
-            $trace   = preg_replace_callback('~(?:\.php[(]|(?:\\\|::|->))~',
-                fn($m) => $m[0] == '.php(' ? '(' : '.', $trace);
+            $message = preg_replace(
+                ['~(\w)(?:\\\|::|->)(\w)~', '~\.php~'],
+                ['\1.\2', ''],
+                $message
+            );
+            $trace   = preg_replace_callback(
+                '~(?:\.php[(]|(?:\\\|::|->))~',
+                fn($m): string => $m[0] === '.php(' ? '(' : '.',
+                $trace
+            );
         }
 
         $messageLine = $message ? trim($message, '.') . ".\n" : '';
