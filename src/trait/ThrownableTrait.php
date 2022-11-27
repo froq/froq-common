@@ -101,7 +101,9 @@ trait ThrownableTrait
         $this->applyReduce();
     }
 
-    /** @magic */
+    /**
+     * @magic
+     */
     public function __get(string $property): mixed
     {
         switch ($property) {
@@ -130,7 +132,9 @@ trait ThrownableTrait
         return null;
     }
 
-    /** @magic */
+    /**
+     * @magic
+     */
     public function __toString(): string
     {
         // Must call here/first for reduce since reduce
@@ -158,7 +162,7 @@ trait ThrownableTrait
 
     /**
      * @inheritDoc froq\common\interface\Thrownable
-     * @since 5.0
+     * @since      5.0
      */
     public function getCause(): Throwable|null
     {
@@ -167,7 +171,7 @@ trait ThrownableTrait
 
     /**
      * @inheritDoc froq\common\interface\Thrownable
-     * @since 5.0
+     * @since      5.0
      */
     public function getCauses(): array
     {
