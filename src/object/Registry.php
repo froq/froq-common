@@ -56,7 +56,7 @@ class Registry
 
         if ($current && $current['locked']) {
             throw new RegistryException(
-                'Object `%s` is already registered and locked with id `%s`, '.
+                'Object %q is already registered and locked with id %q, '.
                 'call replace() instead to force it to change with set().',
                 [get_object_id($current['object']), $id]
             );
