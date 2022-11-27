@@ -9,14 +9,19 @@ namespace froq\common\interface;
 
 /**
  * @package froq\common\interface
- * @object  froq\common\interface\Throwable
+ * @object  froq\common\interface\Thrownable
  * @author  Kerem Güneş
  * @since   7.0
  */
-interface Throwable
+interface Thrownable
 {
     /**
      * @return Throwable|null
      */
     public function getCause(): \Throwable|null;
+
+    /**
+     * @return array<Throwable>
+     */
+    public function getCauses(): array;
 }

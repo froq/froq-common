@@ -7,8 +7,8 @@ declare(strict_types=1);
 
 namespace froq\common;
 
-use froq\common\interface\Throwable;
-use froq\common\trait\ThrowableTrait;
+use froq\common\interface\Thrownable;
+use froq\common\trait\ThrownableTrait;
 
 /**
  * Base error class extended by all other Froq! error classes.
@@ -18,7 +18,7 @@ use froq\common\trait\ThrowableTrait;
  * @author  Kerem Güneş
  * @since   4.0
  */
-class Error extends \Error implements Throwable
+class Error extends \Error implements Thrownable
 {
-    use ThrowableTrait;
+    use ThrownableTrait;
 }

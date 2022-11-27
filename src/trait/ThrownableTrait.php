@@ -7,25 +7,25 @@ declare(strict_types=1);
 
 namespace froq\common\trait;
 
-use froq\common\{Error, Exception};
-use Throwable, Trace, TraceEntry;
+use froq\common\interface\Thrownable;
+use Throwable, Error, Exception, Trace, TraceEntry;
 
 /**
- * A trait, used by Error/Exception classes, provides a relaxation getting rid of
- * `sprintf()` calls for each throw, has some utility methods and cause property
+ * A trait, used by error & exception classes, provides a relaxation getting rid
+ * of `sprintf()` calls for messages, has some utility methods and cause property
  * as well.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\ThrowableTrait
+ * @object  froq\common\trait\ThrownableTrait
  * @author  Kerem Güneş
  * @since   4.0
  */
-trait ThrowableTrait
+trait ThrownableTrait
 {
-    /** @var ?Throwable */
+    /** @var Throwable|null */
     private ?Throwable $cause = null;
 
-    /** @var ?int */
+    /** @var int|null */
     private ?int $reduce = null;
 
     /**
@@ -85,7 +85,7 @@ trait ThrowableTrait
         parent::__construct((string) $message, (int) $code, $previous);
 
         // Try to detect that this created via some static::for*() method.
-        // Eg: if ($id < 0) throw UserError::forInvalidID($id).
+        // Eg: if ($id < 0) throw UserError::forInvalidId($id).
         if ($reduce === null) {
             $trace =@ $this->getTrace()[0];
             if (isset($trace['class'], $trace['function'])
@@ -143,7 +143,12 @@ trait ThrowableTrait
             $this->getFile(), $this->getLine(), $trace
         );
 
-        // Add cause info.
+        // Add previous.
+        if ($previous = $this->getPrevious()) {
+            $ret .= "\n\n". 'Previous:' . "\n" . $previous;
+        }
+
+        // Add cause.
         if ($cause = $this->getCause()) {
             $ret .= "\n\n". 'Cause:' . "\n" . $cause;
         }
@@ -152,10 +157,8 @@ trait ThrowableTrait
     }
 
     /**
-     * Get cause.
-     *
-     * @return Throwable|null
-     * @since  5.0
+     * @inheritDoc froq\common\interface\Thrownable
+     * @since 5.0
      */
     public function getCause(): Throwable|null
     {
@@ -163,41 +166,22 @@ trait ThrowableTrait
     }
 
     /**
-     * Get causes.
-     *
-     * @return array<Throwable>|null
-     * @since  5.0
+     * @inheritDoc froq\common\interface\Thrownable
+     * @since 5.0
      */
-    public function getCauses(): array|null
+    public function getCauses(): array
     {
+        $causes = [];
+
         if ($cause = $this->getCause()) {
             $causes[] = $cause;
 
-            while (is_class_of($cause, Error::class, Exception::class)
-                && ($root = $cause?->getCause())) {
+            while ($cause instanceof Thrownable && ($root = $cause?->getCause())) {
                 $causes[] = $cause = $root;
             }
         }
 
-        return $causes ?? null;
-    }
-
-    /**
-     * Get root cause.
-     *
-     * @return Throwable|null
-     * @since  5.0
-     */
-    public function getRootCause(): Throwable|null
-    {
-        if ($cause = $this->getCause()) {
-            while (is_class_of($cause, Error::class, Exception::class)
-                && ($root = $cause?->getCause())) {
-                $cause = $root;
-            }
-        }
-
-        return $cause;
+        return $causes;
     }
 
     /**
@@ -345,23 +329,23 @@ trait ThrowableTrait
     }
 
     /**
-     * Check user object whether instance of Error.
+     * Check user object whether instance of `Error`.
      *
      * @return bool
      */
     public function isError(): bool
     {
-        return ($this instanceof \Error);
+        return ($this instanceof Error);
     }
 
     /**
-     * Check user object whether instance of Exception.
+     * Check user object whether instance of `Exception`.
      *
      * @return bool
      */
     public function isException(): bool
     {
-        return ($this instanceof \Exception);
+        return ($this instanceof Exception);
     }
 
     /**
@@ -406,14 +390,14 @@ trait ThrowableTrait
      *
      * ```
      * // Somewhere in UserError.
-     * static function forInvalidID($id) {
+     * static function forInvalidId($id) {
      *   return new static('Invalid ID: ' . $id); // or
      *   // return new static('Invalid ID: ' . $id, reduce: true);
      * }
      *
      * // Somewhere in project.
      * if ($id < 0) {
-     *   throw UserError::forInvalidID($id);
+     *   throw UserError::forInvalidId($id);
      * }
      * ```
      */
