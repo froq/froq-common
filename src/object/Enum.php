@@ -60,7 +60,7 @@ class Enum
         if (!str_starts_with($name, 'is') || strlen($name) == 2) {
             throw new EnumException(
                 'No valid call as %s::%s(), call must be prefixed '.
-                'with `is` and followed by an existing constant name',
+                'with "is" and followed by an existing constant name',
                 [static::class, $name]
             );
         }
@@ -92,7 +92,7 @@ class Enum
         if (!str_starts_with($name, 'is') || strlen($name) == 2) {
             throw new EnumException(
                 'No valid call as %s::%s(), call must be prefixed '.
-                'with `is` and followed by an existing constant name',
+                'with "is" and followed by an existing constant name',
                 [static::class, $name]
             );
         }
