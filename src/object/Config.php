@@ -62,14 +62,14 @@ class Config extends Collection
     }
 
     /**
-     * Parse a dot-env file and return its options as array.
+     * Parse a dot-env file and return its entries as options.
      *
      * @param  string $file
      * @return array
      * @throws froq\common\object\ConfigException
      * @since  4.1
      */
-    public static final function parseDotenv(string $file): array
+    public static final function parseDotEnv(string $file): array
     {
         $ret = [];
 
