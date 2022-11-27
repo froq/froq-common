@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace froq\common\trait;
 
 use froq\common\interface\Thrownable;
-use Throwable, Error, Exception, Trace, TraceEntry;
+use Throwable, Error, Exception, TraceStack, Trace;
 
 /**
  * A trait, used by error & exception classes, provides a relaxation getting rid
@@ -227,28 +227,15 @@ trait ThrownableTrait
     }
 
     /**
-     * Get a trace entry by given index.
+     * Get trace stack.
      *
-     * @param  int $index
-     * @return TraceEntry|null
+     * @return TraceStack|null
      */
-    public function getTraceEntry(int $index): TraceEntry|null
-    {
-        $ret = $this->getTraceAt($index);
-
-        return $ret ? new TraceEntry($ret, $index) : null;
-    }
-
-    /**
-     * Get all trace entries.
-     *
-     * @return Trace|null
-     */
-    public function getTraceEntries(): Trace|null
+    public function getTraceStack(): TraceStack|null
     {
         $ret = $this->getTrace();
 
-        return $ret ? new Trace($ret) : null;
+        return $ret ? new TraceStack($ret) : null;
     }
 
     /**
@@ -258,7 +245,7 @@ trait ThrownableTrait
      */
     public function getTraceString(): string
     {
-        $ret = $this->getTraceEntries();
+        $ret = $this->getTraceStack();
 
         // Act as original.
         $ret ??= '#0 {main}';
