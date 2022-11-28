@@ -42,14 +42,15 @@ trait ThrownableTrait
     public function __construct(string|Throwable $message = null, mixed $messageParams = null, int $code = null,
         Throwable $previous = null, Throwable $cause = null, mixed ...$options)
     {
-        [$extract, $reduce] = $this->prepareOptions($options);
+        [$extract, $lower, $reduce] = $this->prepareOptions($options);
 
         if ($message) {
             if (is_string($message)) {
                 $error = self::getLastError();
 
-                // Drop eg: "mkdir():" part.
+                // Drop eg: "mkdir():" part & lowerize.
                 $extract && $error['message'] = self::extractMessage($error['message']);
+                $lower   && $error['message'] = lower($error['message']);
 
                 // Replace '@error' directive with last (current) error.
                 $message = str_replace('@error', $error['message'], $message);
@@ -433,6 +434,6 @@ trait ThrownableTrait
      */
     private function prepareOptions(array $options): array
     {
-        return array_select($options, ['extract', 'reduce'], default: [false, null]);
+        return array_select($options, ['extract', 'lower', 'reduce'], default: [false, false, null]);
     }
 }
