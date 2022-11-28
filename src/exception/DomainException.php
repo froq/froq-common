@@ -7,11 +7,16 @@ declare(strict_types=1);
 
 namespace froq\common\exception;
 
+use froq\common\interface\Thrownable;
+use froq\common\trait\ThrownableTrait;
+
 /**
  * @package froq\common\exception
  * @object  froq\common\exception\DomainException
  * @author  Kerem Güneş
  * @since   4.0
  */
-class DomainException extends LogicException
-{}
+class DomainException extends \DomainException implements Thrownable
+{
+    use ThrownableTrait;
+}
