@@ -73,13 +73,14 @@ class Config extends Collection
     {
         $ret = [];
 
-        if (!is_file($file)) {
-            throw new ConfigException('No .env file exists such %q', $file);
+        $path = $file;
+        if (!$file = realpath($file)) {
+            throw ConfigException::forAbsentDotEnvFile($path);
         }
 
         $lines = file($file);
         if ($lines === false) {
-            throw new ConfigException('Cannot read .env file %q [error: %s]', [$file, '@error']);
+            throw ConfigException::forReadDotEnvFileError($file);
         }
 
         foreach ($lines as $i => $line) {
@@ -92,12 +93,12 @@ class Config extends Collection
 
             $pairs = array_map('trim', explode('=', $line, 2));
             if (count($pairs) !== 2) {
-                throw new ConfigException('Invalid .env entry %q at %s:%s', [$line, $file, $i + 1]);
+                throw ConfigException::forInvalidDotEnvEntry($line, $file, $i + 1);
             }
 
             [$name, $value] = $pairs;
             if (isset($ret[$name])) {
-                throw new ConfigException('Duplicated .env entry %q at %s:%s', [$name, $file, $i + 1]);
+                throw ConfigException::forDuplicatedDotEnvEntry($name, $file, $i + 1);
             }
 
             $ret[$name] = $value;
