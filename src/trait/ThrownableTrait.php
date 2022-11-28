@@ -22,11 +22,12 @@ use Throwable, Error, Exception, TraceStack, Trace;
  */
 trait ThrownableTrait
 {
-    /** @var Throwable|null */
+    /**
+     * Cause of this error/exception.
+     *
+     * @var Throwable|null
+     */
     private ?Throwable $cause = null;
-
-    /** @var int|null */
-    private ?int $reduce = null;
 
     /**
      * Constructor.
@@ -36,15 +37,19 @@ trait ThrownableTrait
      * @param int|null              $code
      * @param Throwable|null        $previous
      * @param Throwable|null        $cause
-     * @param int|bool|null         $reduce @todo Use "true" type.
-     * @param bool|null             $extract
+     * @param mixed              ...$options
      */
     public function __construct(string|Throwable $message = null, mixed $messageParams = null, int $code = null,
-        Throwable $previous = null, Throwable $cause = null, int|bool $reduce = null, bool $extract = null)
+        Throwable $previous = null, Throwable $cause = null, mixed ...$options)
     {
+        [$extract, $reduce] = $this->prepareOptions($options);
+
         if ($message) {
             if (is_string($message)) {
                 $error = self::getLastError();
+
+                // Drop eg: "mkdir():" part.
+                $extract && $error['message'] = self::extractMessage($error['message']);
 
                 // Replace '@error' directive with last (current) error.
                 $message = str_replace('@error', $error['message'], $message);
@@ -82,6 +87,8 @@ trait ThrownableTrait
             $extract && $message = self::extractMessage($message);
         }
 
+        $this->cause  = $cause;
+
         parent::__construct((string) $message, (int) $code, $previous);
 
         // Try to detect that this created via some static::for*() method.
@@ -95,10 +102,7 @@ trait ThrownableTrait
             }
         }
 
-        $this->cause  = $cause;
-        $this->reduce = (int) $reduce;
-
-        $this->applyReduce();
+        $this->applyReduce((int) $reduce);
     }
 
     /**
@@ -109,6 +113,8 @@ trait ThrownableTrait
         switch ($property) {
             case 'trace':
                 return $this->getTrace();
+            case 'traceStack':
+                return $this->getTraceStack();
             case 'traceString':
                 return $this->getTraceString();
             case 'cause':
@@ -344,14 +350,14 @@ trait ThrownableTrait
      *
      * @return array
      */
-    public static function getLastError(): array
+    protected static function getLastError(): array
     {
         // Better calling when sure there is an error happened.
         $error = error_get_last();
 
         return [
             'code'    => $error['type']    ?? null,
-            'message' => $error['message'] ?? 'unknown'
+            'message' => $error['message'] ?? 'Unknown'
         ];
     }
 
@@ -361,7 +367,7 @@ trait ThrownableTrait
      * @param  string|Throwable $e
      * @return string
      */
-    public static function extractMessage(string|Throwable $e): string
+    protected static function extractMessage(string|Throwable $e): string
     {
         $message = is_string($e) ? $e : $e->getMessage();
 
@@ -373,7 +379,7 @@ trait ThrownableTrait
     }
 
     /**
-     * Apply "reduce" option that given via constructor. This option is useful
+     * Apply "reduce" option that given in constructor. This option is useful
      * for creating throwable instances via methods or functions and dropping
      * this creation footprints from the stack trace.
      *
@@ -392,13 +398,16 @@ trait ThrownableTrait
      * }
      * ```
      */
-    private function applyReduce(): void
+    private function applyReduce(int $reduce): void
     {
-        if ($this->reduce > 0) {
+        if ($reduce > 0) {
             $traces = $this->getTrace();
+            if (!$traces) {
+                return;
+            }
 
             // Reduce traces.
-            while ($this->reduce--) {
+            while ($reduce--) {
                 $trace = array_shift($traces);
 
                 // Set file & line info to shifted trace.
@@ -408,7 +417,7 @@ trait ThrownableTrait
                 }
             }
 
-            // Find base/top parent (so Error or Exception).
+            // Find base parent (so Error or Exception).
             $ref = new \ReflectionObject($this);
             while ($parent = $ref->getParentClass()) {
                 $ref = $parent;
@@ -417,5 +426,13 @@ trait ThrownableTrait
             // Update trace property with changed traces as well.
             $ref->getProperty('trace')->setValue($this, $traces);
         }
+    }
+
+    /**
+     * Prepare extra options that given in constructor as named parameters.
+     */
+    private function prepareOptions(array $options): array
+    {
+        return array_select($options, ['extract', 'reduce'], default: [false, null]);
     }
 }
