@@ -123,7 +123,7 @@ trait OptionTrait
      *
      * @param  array<string>|null $keys
      * @param  bool               $combine
-     * @return array<mixed>
+     * @return array
      */
     public final function getOptions(array $keys = null, bool $combine = false): array
     {

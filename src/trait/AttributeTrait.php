@@ -123,7 +123,7 @@ trait AttributeTrait
      *
      * @param  array<string>|null $names
      * @param  bool               $combine
-     * @return array<mixed>
+     * @return array
      */
     public final function getAttributes(array $names = null, bool $combine = false): array
     {
