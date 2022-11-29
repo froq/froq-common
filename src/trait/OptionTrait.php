@@ -45,17 +45,6 @@ trait OptionTrait
     }
 
     /**
-     * Check whether an option was set with given key.
-     *
-     * @param  string $key
-     * @return bool
-     */
-    public final function hasOptionValue(string $key): bool
-    {
-        return isset($this->options[$key]);
-    }
-
-    /**
      * Set an option by given key and value.
      *
      * @param  string $key

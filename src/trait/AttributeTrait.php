@@ -45,17 +45,6 @@ trait AttributeTrait
     }
 
     /**
-     * Check whether an attribute was set with given name.
-     *
-     * @param  string $name
-     * @return bool
-     */
-    public final function hasAttributeValue(string $name): bool
-    {
-        return isset($this->attributes[$name]);
-    }
-
-    /**
      * Set an attribute with given name and value.
      *
      * @param  string $name
