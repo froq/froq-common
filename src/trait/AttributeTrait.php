@@ -30,8 +30,7 @@ trait AttributeTrait
      */
     public final function attribute(string $name, mixed $value = null): mixed
     {
-        return func_num_args() == 1 ? $this->getAttribute($name)
-                                    : $this->setAttribute($name, $value);
+        return func_num_args() === 1 ? $this->getAttribute($name) : $this->setAttribute($name, $value);
     }
 
     /**

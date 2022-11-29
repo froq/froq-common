@@ -30,8 +30,7 @@ trait OptionTrait
      */
     public final function option(string $key, mixed $value = null): mixed
     {
-        return func_num_args() == 1 ? $this->getOption($key)
-                                    : $this->setOption($key, $value);
+        return func_num_args() === 1 ? $this->getOption($key) : $this->setOption($key, $value);
     }
 
     /**
