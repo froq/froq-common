@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 /**
@@ -12,13 +10,13 @@ namespace froq\common\trait;
  * attributes on user object.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\AttributeTrait
+ * @class   froq\common\trait\AttributeTrait
  * @author  Kerem Güneş
  * @since   4.0
  */
 trait AttributeTrait
 {
-    /** @var array<string, mixed> */
+    /** Attribute map. */
     protected array $attributes = [];
 
     /**

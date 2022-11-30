@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\object;
 
 /**
@@ -12,13 +10,13 @@ namespace froq\common\object;
  * and caches using singleton way when requested.
  *
  * @package froq\common\object
- * @object  froq\common\object\Factory
+ * @class   froq\common\object\Factory
  * @author  Kerem Güneş
  * @since   4.0
  */
 class Factory
 {
-    /** @var array<string, object> */
+    /** Instance map. */
     private static array $instances = [];
 
     /**

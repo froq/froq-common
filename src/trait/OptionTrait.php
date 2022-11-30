@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 /**
@@ -12,13 +10,13 @@ namespace froq\common\trait;
  * options on user object.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\OptionTrait
+ * @class   froq\common\trait\OptionTrait
  * @author  Kerem Güneş
  * @since   4.0
  */
 trait OptionTrait
 {
-    /** @var array<string, mixed> */
+    /** Option map. */
     protected array $options = [];
 
     /**

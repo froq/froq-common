@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\object;
 
 use froq\collection\Collection;
@@ -13,7 +11,7 @@ use froq\collection\Collection;
  * A config collection class.
  *
  * @package froq\common\object
- * @object  froq\common\object\Config
+ * @class   froq\common\object\Config
  * @author  Kerem Güneş
  * @since   1.0, 5.0
  */

@@ -1,26 +1,24 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\object;
 
 /**
  * An enum class, not just like internal `enum` but a bit extended.
  *
  * @package froq\common\object
- * @object  froq\common\object\Enum
+ * @class   froq\common\object\Enum
  * @author  Kerem Güneş
  * @since   4.0
  */
 class Enum
 {
-    /** @var array */
+    /** Constant cache. */
     private static array $cache;
 
-    /** @var int|float|string|bool|array|null */
+    /** Instance value. */
     protected int|float|string|bool|array|null $value;
 
     /**
@@ -278,7 +276,7 @@ class Enum
     }
 
     /**
-     * Generate an array copy of defined constants with key/value pairs or return cacheed one.
+     * Generate an array copy of defined constants with key/value pairs or return cached one.
      *
      * @return array<string, int|float|string|bool|array|null>
      */

@@ -1,17 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 /**
  * A trait, provides access/modify methods for the classes defining `$data` property as array.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\DataTrait
+ * @class   froq\common\trait\DataTrait
  * @author  Kerem Güneş
  * @since   5.0
  */

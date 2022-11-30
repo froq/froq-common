@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 use froq\common\interface\Thrownable;
@@ -16,17 +14,13 @@ use Throwable, Error, Exception, TraceStack, Trace;
  * as well.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\ThrownableTrait
+ * @class   froq\common\trait\ThrownableTrait
  * @author  Kerem Güneş
  * @since   4.0
  */
 trait ThrownableTrait
 {
-    /**
-     * Cause of this error/exception.
-     *
-     * @var Throwable|null
-     */
+    /** Cause of this error/exception. */
     private ?Throwable $cause = null;
 
     /**

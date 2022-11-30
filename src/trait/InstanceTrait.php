@@ -1,23 +1,21 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 /**
  * A trait, used for implementing Singleton pattern.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\InstanceTrait
+ * @class   froq\common\trait\InstanceTrait
  * @author  Kerem Güneş
  * @since   1.0, 5.0
  */
 trait InstanceTrait
 {
-    /** @var self (static) */
+    /** Instance. */
     private static self $instance;
 
     /**

@@ -1,23 +1,21 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 /**
  * A trait, provides `$output` property and related methods.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\OutputTrait
+ * @class   froq\common\trait\OutputTrait
  * @author  Kerem Güneş
  * @since   6.0
  */
 trait OutputTrait
 {
-    /** @var mixed */
+    /** Output. */
     protected mixed $output;
 
     /**

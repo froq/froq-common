@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 use froq\util\Objects;
@@ -13,7 +11,7 @@ use froq\util\Objects;
  * A trait, for objects and can be used with ObjectTrait, ConstantTrait and PropertyTrait.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\MethodTrait
+ * @class   froq\common\trait\MethodTrait
  * @author  Kerem Güneş
  * @since   4.0
  */

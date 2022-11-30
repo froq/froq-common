@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 /**
@@ -12,7 +10,7 @@ namespace froq\common\trait;
  * property as array and implementing `ArrayAccess` interface.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\DataAccessTrait
+ * @class   froq\common\trait\DataAccessTrait
  * @author  Kerem Güneş
  * @since   5.0
  */
