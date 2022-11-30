@@ -41,7 +41,7 @@ class Config extends Collection
      * @return array
      * @since  1.0, 4.0
      */
-    public static final function mergeSources(array $source1, array $source2): array
+    public static function mergeSources(array $source1, array $source2): array
     {
         $ret = $source2;
 
@@ -69,7 +69,7 @@ class Config extends Collection
      * @throws froq\common\object\ConfigException
      * @since  4.1
      */
-    public static final function parseDotEnv(string $file): array
+    public static function parseDotEnv(string $file): array
     {
         $ret = [];
 

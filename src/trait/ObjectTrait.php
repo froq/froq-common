@@ -26,7 +26,7 @@ trait ObjectTrait
      * @param  bool $extended
      * @return ReflectionObject|XReflectionObject
      */
-    public final function reflect(bool $extended = false): ReflectionObject|XReflectionObject
+    public function reflect(bool $extended = false): ReflectionObject|XReflectionObject
     {
         return !$extended ? new ReflectionObject($this) : new XReflectionObject($this);
     }
@@ -37,7 +37,7 @@ trait ObjectTrait
      * @param  bool $withName
      * @return string
      */
-    public final function getId(bool $withName = true): string
+    public function getId(bool $withName = true): string
     {
         return Objects::getId($this, $withName);
     }
@@ -49,7 +49,7 @@ trait ObjectTrait
      * @param  bool $withRehash
      * @return string
      */
-    public final function getHash(bool $withName = true, bool $withRehash = false): string
+    public function getHash(bool $withName = true, bool $withRehash = false): string
     {
         return Objects::getHash($this, $withName, $withRehash);
     }
@@ -60,7 +60,7 @@ trait ObjectTrait
      * @param  bool $withName
      * @return string
      */
-    public final function getSerializedHash(bool $withName = true): string
+    public function getSerializedHash(bool $withName = true): string
     {
         return Objects::getSerializedHash($this, $withName);
     }
@@ -70,7 +70,7 @@ trait ObjectTrait
      *
      * @return string
      */
-    public final function getName(): string
+    public function getName(): string
     {
         return Objects::getName($this);
     }
@@ -80,7 +80,7 @@ trait ObjectTrait
 
      * @return string
      */
-    public final function getShortName(): string
+    public function getShortName(): string
     {
         return Objects::getShortName($this);
     }
@@ -91,7 +91,7 @@ trait ObjectTrait
      * @param  bool $baseOnly
      * @return string
      */
-    public final function getNamespace(bool $baseOnly = false): string
+    public function getNamespace(bool $baseOnly = false): string
     {
         return Objects::getNamespace($this, $baseOnly);
     }
@@ -101,7 +101,7 @@ trait ObjectTrait
      *
      * @return string|null
      */
-    public final function getParent(): string|null
+    public function getParent(): string|null
     {
         return Objects::getParent($this);
     }
@@ -111,7 +111,7 @@ trait ObjectTrait
      *
      * @return array|null
      */
-    public final function getParents(): array|null
+    public function getParents(): array|null
     {
         return Objects::getParents($this);
     }
@@ -121,7 +121,7 @@ trait ObjectTrait
      *
      * @return array|null
      */
-    public final function getInterfaces(): array|null
+    public function getInterfaces(): array|null
     {
         return Objects::getInterfaces($this);
     }
@@ -132,7 +132,7 @@ trait ObjectTrait
      * @param  bool $all
      * @return array|null
      */
-    public final function getTraits(bool $all = true): array|null
+    public function getTraits(bool $all = true): array|null
     {
         return Objects::getTraits($this, $all);
     }
@@ -143,7 +143,7 @@ trait ObjectTrait
      * @param  string $class
      * @return bool
      */
-    public final function isTypeOf(string $class): bool
+    public function isTypeOf(string $class): bool
     {
         return (static::class == $class);
     }
@@ -153,7 +153,7 @@ trait ObjectTrait
      *
      * @return bool
      */
-    public final function isTypeOfSelf(): bool
+    public function isTypeOfSelf(): bool
     {
         return (static::class == self::class);
     }
@@ -164,7 +164,7 @@ trait ObjectTrait
      * @param  object|string $object
      * @return bool
      */
-    public final function isInstanceOf(object|string $object): bool
+    public function isInstanceOf(object|string $object): bool
     {
         return ($this instanceof $object);
     }
@@ -176,7 +176,7 @@ trait ObjectTrait
      * @param  bool   $strict
      * @return bool
      */
-    public final function isEqualOf(object $object, bool $strict = true): bool
+    public function isEqualOf(object $object, bool $strict = true): bool
     {
         return ($strict ? $this === $object : $this == $object);
     }
@@ -187,7 +187,7 @@ trait ObjectTrait
      * @param  object $object
      * @return bool
      */
-    public final function isEqualHashOf(object $object): bool
+    public function isEqualHashOf(object $object): bool
     {
         return Objects::getSerializedHash($this) == Objects::getSerializedHash($object);
     }

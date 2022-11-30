@@ -26,7 +26,7 @@ trait ApplyTrait
      * @param  callable $func
      * @return self
      */
-    public final function apply(callable $func): self
+    public function apply(callable $func): self
     {
         $func instanceof Closure || $func = Closure::fromCallable($func);
 

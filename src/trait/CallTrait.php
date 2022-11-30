@@ -24,7 +24,7 @@ trait CallTrait
      * @param  mixed  ...$methodArgs
      * @return mixed
      */
-    public final function call(string $method, mixed ...$methodArgs): mixed
+    public function call(string $method, mixed ...$methodArgs): mixed
     {
         if (method_exists($this, $method)) {
             return $this->$method(...$methodArgs);
