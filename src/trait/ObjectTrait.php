@@ -143,7 +143,7 @@ trait ObjectTrait
      */
     public function isTypeOf(string $class): bool
     {
-        return (static::class == $class);
+        return (static::class === $class);
     }
 
     /**
@@ -153,7 +153,7 @@ trait ObjectTrait
      */
     public function isTypeOfSelf(): bool
     {
-        return (static::class == self::class);
+        return (static::class === self::class);
     }
 
     /**
@@ -187,6 +187,6 @@ trait ObjectTrait
      */
     public function isEqualHashOf(object $object): bool
     {
-        return Objects::getSerializedHash($this) == Objects::getSerializedHash($object);
+        return Objects::getSerializedHash($this) === Objects::getSerializedHash($object);
     }
 }

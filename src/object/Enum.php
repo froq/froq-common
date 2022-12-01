@@ -55,7 +55,7 @@ class Enum
      */
     public function __call(string $name, array $arguments): bool
     {
-        if (!str_starts_with($name, 'is') || strlen($name) == 2) {
+        if (!str_starts_with($name, 'is') || strlen($name) === 2) {
             throw new EnumException(
                 'No valid call as %s::%s(), call must be prefixed '.
                 'with "is" and followed by an existing constant name',
@@ -87,7 +87,7 @@ class Enum
      */
     public static function __callStatic(string $name, array $arguments): bool
     {
-        if (!str_starts_with($name, 'is') || strlen($name) == 2) {
+        if (!str_starts_with($name, 'is') || strlen($name) === 2) {
             throw new EnumException(
                 'No valid call as %s::%s(), call must be prefixed '.
                 'with "is" and followed by an existing constant name',

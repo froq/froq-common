@@ -27,7 +27,7 @@ trait SealTrait
      */
     private static function seal(string ...$permits): void
     {
-        if (get_parent_class(static::class) != self::class) {
+        if (get_parent_class(static::class) !== self::class) {
             return;
         }
 
