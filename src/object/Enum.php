@@ -38,7 +38,7 @@ class Enum
     public function __toString(): string
     {
         if (is_array($this->value)) {
-            throw new EnumException('Cannot cast array value to string');
+            throw EnumException::forNoArrayCast();
         }
 
         return (string) $this->value;
@@ -56,21 +56,14 @@ class Enum
     public function __call(string $name, array $arguments): bool
     {
         if (!str_starts_with($name, 'is') || strlen($name) === 2) {
-            throw new EnumException(
-                'No valid call as %s::%s(), call must be prefixed '.
-                'with "is" and followed by an existing constant name',
-                [static::class, $name]
-            );
+            throw EnumException::forNoValidCall(static::class, $name);
         }
 
         $constant  = strtoupper(substr($name, 2));
         $constants = self::toArray();
 
         if (!array_key_exists($constant, $constants)) {
-            throw new EnumException(
-                'No constant exists such %s::%s',
-                [static::class, $constant]
-            );
+            throw EnumException::forNoValidConstant(static::class, $constant);
         }
 
         return ($this->value === $constants[$constant]);
@@ -88,24 +81,17 @@ class Enum
     public static function __callStatic(string $name, array $arguments): bool
     {
         if (!str_starts_with($name, 'is') || strlen($name) === 2) {
-            throw new EnumException(
-                'No valid call as %s::%s(), call must be prefixed '.
-                'with "is" and followed by an existing constant name',
-                [static::class, $name]
-            );
+            throw EnumException::forNoValidCall(static::class, $name);
         }
 
         $constant  = strtoupper(substr($name, 2));
         $constants = self::toArray();
 
         if (!array_key_exists($constant, $constants)) {
-            throw new EnumException(
-                'No constant exists such %s::%s',
-                [static::class, $constant]
-            );
+            throw EnumException::forNoValidConstant(static::class, $constant);
         }
         if (!array_key_exists(0, $arguments)) {
-            throw new EnumException('No value given in arguments');
+            throw EnumException::forNoValueGiven();
         }
 
         return ($arguments[0] === $constants[$constant]);
@@ -211,7 +197,7 @@ class Enum
             $name = match ($case) {
                 'upper' => strtoupper($name),
                 'lower' => strtolower($name),
-                default => throw new EnumException('Invalid case: %q', $case),
+                default => throw EnumException::forInvalidCase($case),
             };
         };
 
@@ -246,7 +232,7 @@ class Enum
             $name = match ($case) {
                 'upper' => strtoupper($name),
                 'lower' => strtolower($name),
-                default => throw new EnumException('Invalid case: %q', $case),
+                default => throw EnumException::forInvalidCase($case),
             };
         };
 
@@ -268,7 +254,7 @@ class Enum
             $name = match ($case) {
                 'upper' => strtoupper($name),
                 'lower' => strtolower($name),
-                default => throw new EnumException('Invalid case: %q', $case),
+                default => throw EnumException::forInvalidCase($case),
             };
         };
 
