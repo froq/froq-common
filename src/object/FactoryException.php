@@ -12,4 +12,9 @@ namespace froq\common\object;
  * @since   6.0
  */
 class FactoryException extends \froq\common\Exception
-{}
+{
+    public static function forNoClassExists(string $class): static
+    {
+        return new static('No class exists such %q', $class);
+    }
+}

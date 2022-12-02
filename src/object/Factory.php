@@ -33,7 +33,7 @@ class Factory
             return new $class(...$classArgs);
         }
 
-        throw new FactoryException('No class exists such ' . $class);
+        throw FactoryException::forNoClassExists($class);
     }
 
     /**
@@ -51,6 +51,6 @@ class Factory
             return self::$instances[$class] ??= new $class(...$classArgs);
         }
 
-        throw new FactoryException('No class exists such ' . $class);
+        throw FactoryException::forNoClassExists($class);
     }
 }
