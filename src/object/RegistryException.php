@@ -12,4 +12,13 @@ namespace froq\common\object;
  * @since   6.0
  */
 class RegistryException extends \froq\common\Exception
-{}
+{
+    public static function forUsedIdAndLockedState(string $givenId, string $objectId): static
+    {
+        return new static(
+            'Id %q is used for object %q with locked state, '.
+            'call replace() instead to force it to change.',
+            [$givenId, $objectId]
+        );
+    }
+}

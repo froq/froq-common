@@ -53,10 +53,8 @@ class Registry
         $current = self::$stack[$id] ?? null;
 
         if ($current && $current['locked']) {
-            throw new RegistryException(
-                'Object %q is already registered and locked with id %q, '.
-                'call replace() instead to force it to change with set().',
-                [get_object_id($current['object']), $id]
+            throw RegistryException::forUsedIdAndLockedState(
+                $id, get_object_id($current['object'])
             );
         }
 
