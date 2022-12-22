@@ -89,7 +89,7 @@ trait ThrownableTrait
         // Try to detect that this created via some static::for*() method.
         // Eg: if ($id < 0) throw UserError::forInvalidId($id).
         if ($reduce === null) {
-            $trace =@ $this->getTrace()[0];
+            $trace = $this->getTrace()[0] ?? [];
             if (isset($trace['class'], $trace['function'])
                 && is_class_of($trace['class'], Throwable::class)
                 && str_starts_with($trace['function'], 'for')) {
