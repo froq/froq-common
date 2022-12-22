@@ -16,15 +16,17 @@ interface Serializable
     /**
      * Serialize.
      *
-     * @return string|null
+     * @return string
+     * @throws Error|Exception
      */
-    public function serialize(): string|null;
+    public function serialize(): string;
 
     /**
      * Unserialize.
      *
      * @param  string $data
-     * @return bool @todo Use "true" type.
+     * @return bool
+     * @throws Error|Exception
      */
     public function unserialize(string $data): bool;
 }
