@@ -76,7 +76,7 @@ class Config extends Collection
             throw ConfigException::forAbsentDotEnvFile($path);
         }
 
-        $lines = file($file);
+        $lines = @file($file);
         if ($lines === false) {
             throw ConfigException::forReadDotEnvFileError($file);
         }
