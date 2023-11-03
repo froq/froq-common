@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 /**
@@ -12,7 +10,7 @@ namespace froq\common\trait;
  * property as array and implementing `ArrayAccess` interface.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\DataAccessTrait
+ * @class   froq\common\trait\DataAccessTrait
  * @author  Kerem Güneş
  * @since   5.0
  */
@@ -25,18 +23,23 @@ trait DataAccessTrait
     }
 
     /** @inheritDoc ArrayAccess */
-    public function &offsetGet(mixed $key): mixed
+    public function offsetSet(mixed $key, mixed $value): void
     {
-        return $this->data[$key];
+        // Calls like `items[] = item`.
+        if ($key === null) {
+            $this->data[] = $value;
+        } else {
+            $this->data[$key] = $value;
+        }
     }
 
     /** @inheritDoc ArrayAccess */
-    public function offsetSet(mixed $key, mixed $value): void
+    public function &offsetGet(mixed $key): mixed
     {
-        // For calls like `items[] = item`.
-        $key ??= count($this->data);
-
-        $this->data[$key] = $value;
+        // Calls like `items[][] = item` will put
+        // all nested items into a `["]` field.
+        // So $key must be provided for base array.
+        return $this->data[$key];
     }
 
     /** @inheritDoc ArrayAccess */

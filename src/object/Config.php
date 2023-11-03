@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\object;
 
 use froq\collection\Collection;
@@ -13,7 +11,7 @@ use froq\collection\Collection;
  * A config collection class.
  *
  * @package froq\common\object
- * @object  froq\common\object\Config
+ * @class   froq\common\object\Config
  * @author  Kerem Güneş
  * @since   1.0, 5.0
  */
@@ -41,7 +39,7 @@ class Config extends Collection
      * @return array
      * @since  1.0, 4.0
      */
-    public static final function mergeSources(array $source1, array $source2): array
+    public static function mergeSources(array $source1, array $source2): array
     {
         $ret = $source2;
 
@@ -62,54 +60,43 @@ class Config extends Collection
     }
 
     /**
-     * Parse a dot-env file and return its options as array.
+     * Parse a dot-env file and return its entries as options.
      *
      * @param  string $file
      * @return array
      * @throws froq\common\object\ConfigException
      * @since  4.1
      */
-    public static final function parseDotenv(string $file): array
+    public static function parseDotEnv(string $file): array
     {
         $ret = [];
 
-        if (!is_file($file)) {
-            throw new ConfigException(
-                'No .env file exists such `%s`',
-                $file
-            );
+        $path = $file;
+        if (!$file = realpath($file)) {
+            throw ConfigException::forAbsentDotEnvFile($path);
         }
 
-        $lines = file($file);
+        $lines = @file($file);
         if ($lines === false) {
-            throw new ConfigException(
-                'Cannot read .env file `%s`, [error: %s]',
-                [$file, '@error']
-            );
+            throw ConfigException::forReadDotEnvFileError($file);
         }
 
         foreach ($lines as $i => $line) {
             $line = trim($line);
 
             // Skip empty & comment lines.
-            if (!$line || $line[0] == '#') {
+            if (!$line || $line[0] === '#') {
                 continue;
             }
 
             $pairs = array_map('trim', explode('=', $line, 2));
-            if (count($pairs) != 2) {
-                throw new ConfigException(
-                    'Invalid .env entry `%s` at file `%s:%s`',
-                    [$line, $file, $i + 1]
-                );
+            if (count($pairs) !== 2) {
+                throw ConfigException::forInvalidDotEnvEntry($line, $file, $i + 1);
             }
 
             [$name, $value] = $pairs;
             if (isset($ret[$name])) {
-                throw new ConfigException(
-                    'Duplicated .env entry `%s` at file `%s:%s`',
-                    [$name, $file, $i + 1]
-                );
+                throw ConfigException::forDuplicatedDotEnvEntry($name, $file, $i + 1);
             }
 
             $ret[$name] = $value;

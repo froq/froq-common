@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 use froq\common\exception\ReadOnlyException;
@@ -14,13 +12,13 @@ use froq\util\Objects;
  * A trait, provides read-only state check and other read-only utilities.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\ReadOnlyTrait
+ * @class   froq\common\trait\ReadOnlyTrait
  * @author  Kerem Güneş
  * @since   5.4, 5.7
  */
 trait ReadOnlyTrait
 {
-    /** @var array */
+    /** State map. */
     private static array $__READ_ONLY_STATES;
 
     /**

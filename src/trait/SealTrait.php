@@ -1,17 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 /**
  * A trait, partly provides "sealed class" mechanism via `seal()` method.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\SealTrait
+ * @class   froq\common\trait\SealTrait
  * @author  Kerem Güneş
  * @since   6.0
  */
@@ -29,7 +27,7 @@ trait SealTrait
      */
     private static function seal(string ...$permits): void
     {
-        if (get_parent_class(static::class) != self::class) {
+        if (get_parent_class(static::class) !== self::class) {
             return;
         }
 

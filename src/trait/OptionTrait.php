@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 /**
@@ -12,13 +10,13 @@ namespace froq\common\trait;
  * options on user object.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\OptionTrait
+ * @class   froq\common\trait\OptionTrait
  * @author  Kerem Güneş
  * @since   4.0
  */
 trait OptionTrait
 {
-    /** @var array<string, mixed> */
+    /** Option map. */
     protected array $options = [];
 
     /**
@@ -30,8 +28,7 @@ trait OptionTrait
      */
     public final function option(string $key, mixed $value = null): mixed
     {
-        return func_num_args() == 1 ? $this->getOption($key)
-                                    : $this->setOption($key, $value);
+        return func_num_args() === 1 ? $this->getOption($key) : $this->setOption($key, $value);
     }
 
     /**
@@ -43,17 +40,6 @@ trait OptionTrait
     public final function hasOption(string $key): bool
     {
         return array_key_exists($key, $this->options);
-    }
-
-    /**
-     * Check whether an option was set with given key.
-     *
-     * @param  string $key
-     * @return bool
-     */
-    public final function hasOptionValue(string $key): bool
-    {
-        return isset($this->options[$key]);
     }
 
     /**
@@ -124,7 +110,7 @@ trait OptionTrait
      *
      * @param  array<string>|null $keys
      * @param  bool               $combine
-     * @return array<mixed>
+     * @return array
      */
     public final function getOptions(array $keys = null, bool $combine = false): array
     {

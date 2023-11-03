@@ -1,23 +1,21 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\object;
 
 /**
  * A registry class, able to store/unstore objects only.
  *
  * @package froq\common\object
- * @object  froq\common\object\Registry
+ * @class   froq\common\object\Registry
  * @author  Kerem Güneş
  * @since   4.0
  */
 class Registry
 {
-    /** @var array<string, object> */
+    /** Object map. */
     private static array $stack = [];
 
     /**
@@ -55,10 +53,8 @@ class Registry
         $current = self::$stack[$id] ?? null;
 
         if ($current && $current['locked']) {
-            throw new RegistryException(
-                'Object `%s` is already registered and locked with id `%s`, '.
-                'call replace() instead to force it to change with set().',
-                [get_object_id($current['object']), $id]
+            throw RegistryException::forUsedIdAndLockedState(
+                $id, get_object_id($current['object'])
             );
         }
 

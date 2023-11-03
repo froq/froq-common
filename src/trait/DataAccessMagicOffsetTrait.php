@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 /**
@@ -12,7 +10,7 @@ namespace froq\common\trait;
  * `$data` property as array and implementing `ArrayAccess` interface.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\DataAccessMagicOffsetTrait
+ * @class   froq\common\trait\DataAccessMagicOffsetTrait
  * @author  Kerem Güneş
  * @since   6.0
  */
@@ -25,15 +23,15 @@ trait DataAccessMagicOffsetTrait
     }
 
     /** @magic */
-    public function &__get(int|string $key): mixed
-    {
-        return $this->offsetGet($key);
-    }
-
-    /** @magic */
     public function __set(int|string $key, mixed $value): void
     {
         $this->offsetSet($key, $value);
+    }
+
+    /** @magic */
+    public function &__get(int|string $key): mixed
+    {
+        return $this->offsetGet($key);
     }
 
     /** @magic */

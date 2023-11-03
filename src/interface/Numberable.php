@@ -1,22 +1,20 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\interface;
 
 /**
  * @package froq\common\interface
- * @object  froq\common\interface\Cloneable
+ * @class   froq\common\interface\Numberable
  * @author  Kerem Güneş
- * @since   4.0
+ * @since   7.0
  */
-interface Cloneable
+interface Numberable
 {
     /**
-     * @return static
+     * @return int|float
      */
-    public function clone(): static;
+    public function toNumber(): int|float;
 }

@@ -7,14 +7,19 @@ namespace froq\common\interface;
 
 /**
  * @package froq\common\interface
- * @class   froq\common\interface\Boolable
+ * @class   froq\common\interface\Thrownable
  * @author  Kerem Güneş
- * @since   5.0
+ * @since   7.0
  */
-interface Boolable
+interface Thrownable
 {
     /**
-     * @return bool
+     * @return Throwable|null
      */
-    public function toBool(): bool;
+    public function getCause(): \Throwable|null;
+
+    /**
+     * @return array<Throwable>
+     */
+    public function getCauses(): array;
 }

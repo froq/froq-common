@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 /**
@@ -12,13 +10,13 @@ namespace froq\common\trait;
  * attributes on user object.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\AttributeTrait
+ * @class   froq\common\trait\AttributeTrait
  * @author  Kerem Güneş
  * @since   4.0
  */
 trait AttributeTrait
 {
-    /** @var array<string, mixed> */
+    /** Attribute map. */
     protected array $attributes = [];
 
     /**
@@ -30,8 +28,7 @@ trait AttributeTrait
      */
     public final function attribute(string $name, mixed $value = null): mixed
     {
-        return func_num_args() == 1 ? $this->getAttribute($name)
-                                    : $this->setAttribute($name, $value);
+        return func_num_args() === 1 ? $this->getAttribute($name) : $this->setAttribute($name, $value);
     }
 
     /**
@@ -43,17 +40,6 @@ trait AttributeTrait
     public final function hasAttribute(string $name): bool
     {
         return array_key_exists($name, $this->attributes);
-    }
-
-    /**
-     * Check whether an attribute was set with given name.
-     *
-     * @param  string $name
-     * @return bool
-     */
-    public final function hasAttributeValue(string $name): bool
-    {
-        return isset($this->attributes[$name]);
     }
 
     /**
@@ -124,7 +110,7 @@ trait AttributeTrait
      *
      * @param  array<string>|null $names
      * @param  bool               $combine
-     * @return array<mixed>
+     * @return array
      */
     public final function getAttributes(array $names = null, bool $combine = false): array
     {

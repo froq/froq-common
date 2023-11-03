@@ -1,10 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 use Closure;
@@ -14,7 +12,7 @@ use Closure;
  * in owner class.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\ApplyTrait
+ * @class   froq\common\trait\ApplyTrait
  * @author  Kerem Güneş
  * @since   4.0
  */
@@ -26,7 +24,7 @@ trait ApplyTrait
      * @param  callable $func
      * @return self
      */
-    public final function apply(callable $func): self
+    public function apply(callable $func): self
     {
         $func instanceof Closure || $func = Closure::fromCallable($func);
 

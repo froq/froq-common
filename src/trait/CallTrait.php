@@ -1,17 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2015 · Kerem Güneş
  * Apache License 2.0 · http://github.com/froq/froq-common
  */
-declare(strict_types=1);
-
 namespace froq\common\trait;
 
 /**
  * A trait, provides `call()` method to call if user class has given method.
  *
  * @package froq\common\trait
- * @object  froq\common\trait\CallTrait
+ * @class   froq\common\trait\CallTrait
  * @author  Kerem Güneş
  * @since   6.0
  */
@@ -24,7 +22,7 @@ trait CallTrait
      * @param  mixed  ...$methodArgs
      * @return mixed
      */
-    public final function call(string $method, mixed ...$methodArgs): mixed
+    public function call(string $method, mixed ...$methodArgs): mixed
     {
         if (method_exists($this, $method)) {
             return $this->$method(...$methodArgs);
