@@ -6,7 +6,7 @@
 namespace froq\common\trait;
 
 use froq\common\interface\Thrownable;
-use Throwable, Error, Exception, TraceStack;
+use Throwable, Error, Exception, Trace, TraceStack;
 
 /**
  * A trait, used by error & exception classes, provides a relaxation getting rid
@@ -120,15 +120,14 @@ trait ThrownableTrait
             try {
                 return $this->$property;
             } catch (Throwable) {
-                // If subclasses define the property as "private".
+                // If subclasses define property as "private".
                 $ref = new \ReflectionProperty($this, $property);
                 return $ref->isInitialized($this) ? $ref->getValue($this) : $ref->getDefaultValue();
             }
         }
 
-        // Act as original.
-        $message = sprintf('Undefined property: %s::$%s', $this::class, $property);
-        trigger_error($message, E_USER_WARNING);
+        // Act as original just triggering an undefined property error.
+        trigger_error(sprintf('Undefined property: %s::$%s', $this::class, $property), E_USER_WARNING);
 
         return null;
     }
@@ -159,6 +158,59 @@ trait ThrownableTrait
         }
 
         return $ret;
+    }
+
+    /**
+     * Set message.
+     *
+     * @param  string    $message
+     * @param  mixed  ...$messageParams
+     * @return self
+     */
+    public function setMessage(string $message, mixed ...$messageParams): self
+    {
+        $this->message = format($message, ...$messageParams);
+
+        return $this;
+    }
+
+    /**
+     * Set code.
+     *
+     * @param  int|string $code
+     * @return self
+     */
+    public function setCode(int|string $code): self
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Set file.
+     *
+     * @param  string $file
+     * @return self
+     */
+    public function setFile(string $file): self
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * Set line.
+     *
+     * @param  int $line
+     * @return self
+     */
+    public function setLine(int $line): self
+    {
+        $this->line = $line;
+
+        return $this;
     }
 
     /**
@@ -221,12 +273,12 @@ trait ThrownableTrait
     }
 
     /**
-     * Get a trace by given index.
+     * Get a trace item by given index.
      *
      * @param  int $index
      * @return array|null
      */
-    public function getTraceAt(int $index): array|null
+    public function getTraceItem(int $index): array|null
     {
         return $this->getTrace()[$index] ?? null;
     }
@@ -241,6 +293,19 @@ trait ThrownableTrait
         $ret = $this->getTrace();
 
         return $ret ? new TraceStack($ret) : null;
+    }
+
+    /**
+     * Get a trace item by given index.
+     *
+     * @param  int $index
+     * @return Trace|null
+     */
+    public function getTraceStackItem(int $index): Trace|null
+    {
+        $ret = $this->getTraceItem($index);
+
+        return $ret ? new Trace($ret, $index) : null;
     }
 
     /**
