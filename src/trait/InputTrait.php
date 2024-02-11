@@ -48,6 +48,10 @@ trait InputTrait
      */
     public function hasInput(): bool
     {
+        if (isset($this->input)) {
+            return true;
+        }
+
         try {
             // Just check for: "Typed property ... $input
             // must not be accessed before initialization".

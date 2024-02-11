@@ -48,6 +48,10 @@ trait OutputTrait
      */
     public function hasOutput(): bool
     {
+        if (isset($this->output)) {
+            return true;
+        }
+
         try {
             // Just check for: "Typed property ... $output
             // must not be accessed before initialization".
