@@ -31,7 +31,7 @@ trait ThrownableTrait
      * @param int|null              $code
      * @param Throwable|null        $previous
      * @param Throwable|null        $cause
-     * @param mixed              ...$options
+     * @param mixed              ...$options Defaults extract:false, lower:false, reduce:null(true|int).
      */
     public function __construct(string|Throwable $message = null, mixed $messageParams = null, int $code = null,
         Throwable $previous = null, Throwable $cause = null, mixed ...$options)
