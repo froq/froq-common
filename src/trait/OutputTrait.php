@@ -19,6 +19,16 @@ trait OutputTrait
     protected mixed $output;
 
     /**
+     * Reset output.
+     *
+     * @return void
+     */
+    public function resetOutput(): void
+    {
+        unset($this->output);
+    }
+
+    /**
      * Set output.
      *
      * @param  mixed $output

@@ -19,6 +19,16 @@ trait InputTrait
     protected mixed $input;
 
     /**
+     * Reset input.
+     *
+     * @return void
+     */
+    public function resetInput(): void
+    {
+        unset($this->input);
+    }
+
+    /**
      * Set input.
      *
      * @param  mixed $input
