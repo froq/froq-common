@@ -73,16 +73,16 @@ trait ThrownableTrait
                     $message = format($message, ...$messageParams);
                 }
             } else {
-                $cause   ??= $message;
-                $code    ??= $message->getCode();
-                $message   = $message->getMessage();
+                $cause   = $message;
+                $code  ??= $message->getCode();
+                $message = $message->getMessage();
             }
 
             // Drop eg: "RegexIterator::__construct():" part.
             $extract && $message = self::extractMessage($message);
         }
 
-        $this->cause  = $cause;
+        $this->cause = $cause;
 
         parent::__construct((string) $message, (int) $code, $previous);
 
@@ -331,11 +331,26 @@ trait ThrownableTrait
      */
     public function toArray(bool $string = false): array
     {
+        if ($this->cause instanceof Thrownable) {
+            $cause = $this->cause->toArray($string);
+        } elseif ($cause = $this->cause) {
+            $traceString = $string ? $cause->getTraceAsString() : null;
+
+            $cause = [
+                'message' => $cause->getMessage(), 'code'        => $cause->getCode(),
+                'file'    => $cause->getFile(),    'line'        => $cause->getLine(),
+                'class'   => get_class_name($cause),
+                'trace'   => $cause->getTrace(),   'traceString' => $traceString
+            ];
+        }
+
+        $traceString = $string ? $this->getTraceString() : null;
+
         return [
-            'message' => $this->getMessage(), 'code' => $this->getCode(),
-            'file' => $this->getFile(), 'line' => $this->getLine(),
-            'class' => $this->getClass(), 'trace' => $this->getTrace(),
-            'traceString' => $string ? $this->getTraceString() : null,
+            'message' => $this->getMessage(), 'code'        => $this->getCode(),
+            'file'    => $this->getFile(),    'line'        => $this->getLine(),
+            'class'   => $this->getClass(),   'cause'       => $cause,
+            'trace'   => $this->getTrace(),   'traceString' => $traceString
         ];
     }
 
