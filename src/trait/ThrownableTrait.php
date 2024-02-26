@@ -34,12 +34,16 @@ trait ThrownableTrait
      * @param int|null                  $code
      * @param Throwable|null            $previous
      * @param Throwable|null            $cause
-     * @param mixed                  ...$options Defaults extract:false, lower:false, reduce:null(true|int).
+     * @param mixed                  ...$options Valids extract, lower, reduce, state.
      */
     public function __construct(string|int|Throwable $message = null, mixed $messageParams = null, int|string $code = null,
         Throwable $previous = null, Throwable $cause = null, mixed ...$options)
     {
-        [$extract, $lower, $reduce] = $this->prepareOptions($options);
+        [$extract, $lower, $reduce, $state] = $this->prepareOptions($options);
+
+        if ($state !== null) {
+            $this->state = new State((array) $state);
+        }
 
         // Shortcut for code.
         if (is_int($message)) {
@@ -48,7 +52,9 @@ trait ThrownableTrait
 
         // Store string code in state.
         if (is_string($code)) {
-            $this->state = new State(code: $code);
+            $this->state ??= new State();
+            $this->state->code = $code;
+
             $code = ctype_digit($code) ? intval($code) : 0;
         }
 
@@ -528,6 +534,9 @@ trait ThrownableTrait
      */
     private function prepareOptions(array $options): array
     {
-        return array_select($options, ['extract', 'lower', 'reduce'], default: [false, false, null]);
+        return array_select($options,
+            ['extract', 'lower', 'reduce', 'state'],
+            [false, false, null, null]
+        );
     }
 }
