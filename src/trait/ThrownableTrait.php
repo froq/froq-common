@@ -6,7 +6,7 @@
 namespace froq\common\trait;
 
 use froq\common\interface\Thrownable;
-use Throwable, Error, Exception, Trace, TraceStack;
+use Throwable, Trace, TraceStack, State;
 
 /**
  * A trait, used by error & exception classes, provides a relaxation getting rid
@@ -23,20 +23,34 @@ trait ThrownableTrait
     /** Cause of this error/exception. */
     private ?Throwable $cause = null;
 
+    /** State holder. */
+    private ?State $state = null;
+
     /**
      * Constructor.
      *
-     * @param string|Throwable|null $message
-     * @param mixed|null            $messageParams
-     * @param int|null              $code
-     * @param Throwable|null        $previous
-     * @param Throwable|null        $cause
-     * @param mixed              ...$options Defaults extract:false, lower:false, reduce:null(true|int).
+     * @param string|int|Throwable|null $message
+     * @param mixed|null                $messageParams
+     * @param int|null                  $code
+     * @param Throwable|null            $previous
+     * @param Throwable|null            $cause
+     * @param mixed                  ...$options Defaults extract:false, lower:false, reduce:null(true|int).
      */
-    public function __construct(string|Throwable $message = null, mixed $messageParams = null, int $code = null,
+    public function __construct(string|int|Throwable $message = null, mixed $messageParams = null, int|string $code = null,
         Throwable $previous = null, Throwable $cause = null, mixed ...$options)
     {
         [$extract, $lower, $reduce] = $this->prepareOptions($options);
+
+        // Shortcut for code.
+        if (is_int($message)) {
+            [$code, $message] = [$message, null];
+        }
+
+        // Store string code in state.
+        if (is_string($code)) {
+            $this->state = new State(code: $code);
+            $code = ctype_digit($code) ? intval($code) : 0;
+        }
 
         if ($message) {
             if (is_string($message)) {
@@ -89,7 +103,7 @@ trait ThrownableTrait
         // Try to detect that this created via some static::for*() method.
         // Eg: if ($id < 0) throw UserError::forInvalidId($id).
         if ($reduce === null) {
-            $trace = $this->getTrace()[0] ?? [];
+            $trace = $this->getTraceItem(0);
             if (isset($trace['class'], $trace['function'])
                 && is_class_of($trace['class'], Throwable::class)
                 && str_starts_with($trace['function'], 'for')) {
@@ -215,7 +229,6 @@ trait ThrownableTrait
 
     /**
      * @inheritDoc froq\common\interface\Thrownable
-     * @since      5.0
      */
     public function getCause(): Throwable|null
     {
@@ -224,7 +237,6 @@ trait ThrownableTrait
 
     /**
      * @inheritDoc froq\common\interface\Thrownable
-     * @since      5.0
      */
     public function getCauses(): array
     {
@@ -242,13 +254,21 @@ trait ThrownableTrait
     }
 
     /**
+     * @inheritDoc froq\common\interface\Thrownable
+     */
+    public function getState(): \State|null
+    {
+        return $this->state;
+    }
+
+    /**
      * Get class name of user object.
      *
      * @return string
      */
     public function getName(): string
     {
-        return $this::class;
+        return get_class_name($this::class);
     }
 
     /**
@@ -259,7 +279,7 @@ trait ThrownableTrait
      */
     public function getClass(bool $short = false): string
     {
-        return get_class_name($this::class, short: $short);
+        return get_class_name($this::class, $short);
     }
 
     /**
@@ -407,7 +427,7 @@ trait ThrownableTrait
      */
     public function isError(): bool
     {
-        return ($this instanceof Error);
+        return ($this instanceof \Error);
     }
 
     /**
@@ -417,7 +437,7 @@ trait ThrownableTrait
      */
     public function isException(): bool
     {
-        return ($this instanceof Exception);
+        return ($this instanceof \Exception);
     }
 
     /**

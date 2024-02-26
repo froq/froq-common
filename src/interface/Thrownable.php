@@ -22,4 +22,9 @@ interface Thrownable
      * @return array<Throwable>
      */
     public function getCauses(): array;
+
+    /**
+     * @return State|null
+     */
+    public function getState(): \State|null;
 }
