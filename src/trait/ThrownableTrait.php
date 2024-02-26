@@ -147,7 +147,7 @@ trait ThrownableTrait
         }
 
         // Act as original just triggering an undefined property error.
-        trigger_error(sprintf('Undefined property: %s::$%s', $this::class, $property), E_USER_WARNING);
+        trigger_error(format('Undefined property: %S::$%s', $this::class, $property), E_USER_WARNING);
 
         return null;
     }
@@ -162,7 +162,7 @@ trait ThrownableTrait
         $trace = $this->getTraceString();
 
         $ret = sprintf(
-            "%s(%d): %s in %s:%d\nTrace:\n%s",
+            "%s(%s): %s in %s:%d\nTrace:\n%s",
             $this->getClass(), $this->getCode(), $this->getMessage(),
             $this->getFile(), $this->getLine(), $trace
         );
@@ -274,7 +274,7 @@ trait ThrownableTrait
      */
     public function getName(): string
     {
-        return get_class_name($this::class);
+        return get_class_name($this, escape: true);
     }
 
     /**
@@ -285,7 +285,7 @@ trait ThrownableTrait
      */
     public function getClass(bool $short = false): string
     {
-        return get_class_name($this::class, $short);
+        return get_class_name($this, $short, escape: true);
     }
 
     /**
@@ -352,32 +352,14 @@ trait ThrownableTrait
     /**
      * Get array representation.
      *
-     * @param  bool $string
+     * @param  bool $withTrace
+     * @param  bool $withTraceString
+     * @param  bool $slashes
      * @return array
      */
-    public function toArray(bool $string = false): array
+    public function toArray(bool $withTrace = true, bool $withTraceString = false, bool $slashes = true): array
     {
-        if ($this->cause instanceof Thrownable) {
-            $cause = $this->cause->toArray($string);
-        } elseif ($cause = $this->cause) {
-            $traceString = $string ? $cause->getTraceAsString() : null;
-
-            $cause = [
-                'message' => $cause->getMessage(), 'code'        => $cause->getCode(),
-                'file'    => $cause->getFile(),    'line'        => $cause->getLine(),
-                'class'   => get_class_name($cause),
-                'trace'   => $cause->getTrace(),   'traceString' => $traceString
-            ];
-        }
-
-        $traceString = $string ? $this->getTraceString() : null;
-
-        return [
-            'message' => $this->getMessage(), 'code'        => $this->getCode(),
-            'file'    => $this->getFile(),    'line'        => $this->getLine(),
-            'class'   => $this->getClass(),   'cause'       => $cause,
-            'trace'   => $this->getTrace(),   'traceString' => $traceString
-        ];
+        return self::debug($this, $withTrace, $withTraceString, $slashes);
     }
 
     /**
@@ -416,10 +398,10 @@ trait ThrownableTrait
         }
 
         $messageLine = $message ? trim($message, '.') . ".\n" : '';
-        $detailsLine = sprintf("Class: %s | Code: %d | File: %s | Line: %d\n", $class, $code, $file, $line);
+        $detailsLine = sprintf("Class: %s | Code: %s | File: %s | Line: %d\n", $class, $code, $file, $line);
 
         return sprintf(
-            "%s%s\n%s(%d): %s at %s:%d\n-\n%s",
+            "%s%s\n%s(%s): %s at %s:%d\n-\n%s",
             $messageLine, $detailsLine,
             $class, $code, $message,
             $file, $line, $trace
@@ -444,6 +426,47 @@ trait ThrownableTrait
     public function isException(): bool
     {
         return ($this instanceof \Exception);
+    }
+
+    /**
+     * Make a debug array for given throwable.
+     *
+     * @param  Throwable $e
+     * @param  bool      $withTrace
+     * @param  bool      $withTraceString
+     * @param  bool      $slashes
+     * @return array
+     */
+    public static function debug(Throwable $e, bool $withTrace = true, bool $withTraceString = false,
+        bool $slashes = true): array
+    {
+        /** @var Throwable|null */
+        $cause = $e->cause ?? null;
+
+        if ($cause instanceof Throwable) {
+            $cause = self::debug($cause, $withTrace, $withTraceString, $slashes);
+        }
+
+        $class = get_class_name($e, escape: true);
+        $path  = $e->getFile() .':'. $e->getLine();
+
+        $slashes || $class = str_replace('\\', '.', $class);
+
+        $ret = [
+            'string' => sprintf('%s(%s): %s @ %s', $class, $e->getCode(), $e->getMessage(), $path),
+            'class'  => $class, 'message' => $e->getMessage(), 'code' => $e->getCode(),
+            'path'   => $path,  'file'    => $e->getFile(),    'line' => $e->getLine(),
+            'cause'  => $cause,
+        ];
+
+        if ($withTrace) {
+            $ret += ['trace' => $e->getTrace()];
+        }
+        if ($withTraceString) {
+            $ret += ['traceString' => $e->getTraceAsString()];
+        }
+
+        return $ret;
     }
 
     /**
