@@ -401,7 +401,7 @@ trait ThrownableTrait
         $detailsLine = sprintf("Class: %s | Code: %s | File: %s | Line: %d\n", $class, $code, $file, $line);
 
         return sprintf(
-            "%s%s\n%s(%s): %s at %s:%d\n-\n%s",
+            "%s%s\n%s(%s): %s @ %s:%d\n-\n%s",
             $messageLine, $detailsLine,
             $class, $code, $message,
             $file, $line, $trace
