@@ -159,25 +159,9 @@ trait ThrownableTrait
     {
         // Must call here/first for reduce since reduce
         // option changes file & line in applyReduce().
-        $trace = $this->getTraceString();
+        $traceString = $this->getTraceString();
 
-        $ret = sprintf(
-            "%s(%s): %s in %s:%d\nTrace:\n%s",
-            $this->getClass(), $this->getCode(), $this->getMessage(),
-            $this->getFile(), $this->getLine(), $trace
-        );
-
-        // Add previous.
-        if ($previous = $this->getPrevious()) {
-            $ret .= "\n\n". 'Previous:' . "\n" . $previous;
-        }
-
-        // Add cause.
-        if ($cause = $this->getCause()) {
-            $ret .= "\n\n". 'Cause:' . "\n" . $cause;
-        }
-
-        return $ret;
+        return $traceString;
     }
 
     /**
@@ -341,12 +325,7 @@ trait ThrownableTrait
      */
     public function getTraceString(): string
     {
-        $ret = $this->getTraceStack();
-
-        // Act as original.
-        $ret ??= '#0 {main}';
-
-        return (string) $ret;
+        return self::debugString($this);
     }
 
     /**
@@ -372,7 +351,7 @@ trait ThrownableTrait
     {
         // Must call here/first for reduce since reduce
         // option changes file & line in applyReduce().
-        $trace = $this->getTraceString();
+        $traceString = $this->getTraceString();
 
         [$class, $code, $file, $line, $message] = [
             $this->getClass(), $this->getCode(),
@@ -390,22 +369,17 @@ trait ThrownableTrait
                 ['\1.\2', ''],
                 $message
             );
-            $trace   = preg_replace_callback(
+            $traceString   = preg_replace_callback(
                 '~(?:\.php[(]|(?:\\\|::|->))~',
                 fn($m): string => $m[0] === '.php(' ? '(' : '.',
-                $trace
+                $traceString
             );
         }
 
-        $messageLine = $message ? trim($message, '.') . ".\n" : '';
-        $detailsLine = sprintf("Class: %s | Code: %s | File: %s | Line: %d\n", $class, $code, $file, $line);
+        $messageLine = $message ? trim($message, '.') : '';
+        $detailsLine = sprintf("Class: %s | Code: %s | File: %s | Line: %d", $class, $code, $file, $line);
 
-        return sprintf(
-            "%s%s\n%s(%s): %s @ %s:%d\n-\n%s",
-            $messageLine, $detailsLine,
-            $class, $code, $message,
-            $file, $line, $trace
-        );
+        return sprintf("%s\n\n%s\n-\n%s", $messageLine, $detailsLine, $traceString);
     }
 
     /**
@@ -446,6 +420,9 @@ trait ThrownableTrait
         if ($cause instanceof Throwable) {
             $cause = self::debug($cause, $withTrace, $withTraceString, $slashes);
         }
+        if ($previous = $e->getPrevious()) {
+            $previous = self::debug($previous, $withTrace, $withTraceString, $slashes);
+        }
 
         $class = get_class_name($e, escape: true);
         $path  = $e->getFile() .':'. $e->getLine();
@@ -454,19 +431,59 @@ trait ThrownableTrait
 
         $ret = [
             'string' => sprintf('%s(%s): %s @ %s', $class, $e->getCode(), $e->getMessage(), $path),
-            'class'  => $class, 'message' => $e->getMessage(), 'code' => $e->getCode(),
-            'path'   => $path,  'file'    => $e->getFile(),    'line' => $e->getLine(),
-            'cause'  => $cause,
+            'class'  => $class, 'message'  => $e->getMessage(), 'code' => $e->getCode(),
+            'path'   => $path,  'file'     => $e->getFile(),    'line' => $e->getLine(),
+            'cause'  => $cause, 'previous' => $previous,
         ];
 
         if ($withTrace) {
             $ret += ['trace' => $e->getTrace()];
         }
         if ($withTraceString) {
-            $ret += ['traceString' => $e->getTraceAsString()];
+            $ret += ['traceString' => self::debugTraceString($e)];
         }
 
         return $ret;
+    }
+
+    /**
+     * Make a debug string for given throwable.
+     *
+     * @param  Throwable $e
+     * @return string
+     */
+    public static function debugString(Throwable $e): string
+    {
+        /** @var Throwable|null */
+        $cause = $e->cause ?? null;
+
+        $class = get_class_name($e, escape: true);
+
+        $ret = sprintf(
+            "%s(%s): %s @ %s:%d\nTrace:\n%s",
+            $class, $e->getCode(), $e->getMessage(),
+            $e->getFile(), $e->getLine(), self::debugTraceString($e)
+        );
+
+        if ($cause instanceof Throwable) {
+            $ret .= "\n\nCause:\n" . self::debugString($cause);
+        }
+        if ($previous = $e->getPrevious()) {
+            $ret .= "\n\nPrevious:\n" . self::debugString($previous);
+        }
+
+        return $ret;
+    }
+
+    /**
+     * Make a trace string for given throwable.
+     *
+     * @param  Throwable $e
+     * @return string
+     */
+    public static function debugTraceString(Throwable $e): string
+    {
+        return (string) new TraceStack($e->getTrace());
     }
 
     /**
