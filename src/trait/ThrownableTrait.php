@@ -332,13 +332,15 @@ trait ThrownableTrait
      * Get array representation.
      *
      * @param  bool $withTrace
+     * @param  bool $withTracePath
      * @param  bool $withTraceString
-     * @param  bool $slashes
+     * @param  bool $dots
      * @return array
      */
-    public function toArray(bool $withTrace = true, bool $withTraceString = false, bool $slashes = true): array
+    public function toArray(bool $withTrace = true, bool $withTraceString = false, bool $withTracePath = false,
+        bool $dots = false): array
     {
-        return self::debug($this, $withTrace, $withTraceString, $slashes);
+        return self::debug($this, $withTrace, $withTraceString, $withTracePath, $dots);
     }
 
     /**
@@ -407,27 +409,28 @@ trait ThrownableTrait
      *
      * @param  Throwable $e
      * @param  bool      $withTrace
+     * @param  bool      $withTracePath
      * @param  bool      $withTraceString
-     * @param  bool      $slashes
+     * @param  bool      $dots
      * @return array
      */
-    public static function debug(Throwable $e, bool $withTrace = true, bool $withTraceString = false,
-        bool $slashes = true): array
+    public static function debug(Throwable $e, bool $withTrace = true, bool $withTracePath = false,
+        bool $withTraceString = false, bool $dots = false): array
     {
         /** @var Throwable|null */
         $cause = $e->cause ?? null;
 
         if ($cause instanceof Throwable) {
-            $cause = self::debug($cause, $withTrace, $withTraceString, $slashes);
+            $cause = self::debug($cause, $withTrace, $withTracePath, $withTraceString, $dots);
         }
         if ($previous = $e->getPrevious()) {
-            $previous = self::debug($previous, $withTrace, $withTraceString, $slashes);
+            $previous = self::debug($previous, $withTrace, $withTracePath, $withTraceString, $dots);
         }
 
         $class = get_class_name($e, escape: true);
         $path  = $e->getFile() .':'. $e->getLine();
 
-        $slashes || $class = str_replace('\\', '.', $class);
+        $dots && $class = str_replace('\\', '.', $class);
 
         $ret = [
             'string' => sprintf('%s(%s): %s @ %s', $class, $e->getCode(), $e->getMessage(), $path),
@@ -439,8 +442,11 @@ trait ThrownableTrait
         if ($withTrace) {
             $ret += ['trace' => $e->getTrace()];
         }
+        if ($withTracePath) {
+            $ret += ['tracePath' => self::debugTracePath($e, $dots)];
+        }
         if ($withTraceString) {
-            $ret += ['traceString' => self::debugTraceString($e)];
+            $ret += ['traceString' => self::debugTraceString($e, $dots)];
         }
 
         return $ret;
@@ -450,9 +456,10 @@ trait ThrownableTrait
      * Make a debug string for given throwable.
      *
      * @param  Throwable $e
+     * @param  bool      $dots
      * @return string
      */
-    public static function debugString(Throwable $e): string
+    public static function debugString(Throwable $e, bool $dots = false): string
     {
         /** @var Throwable|null */
         $cause = $e->cause ?? null;
@@ -462,14 +469,40 @@ trait ThrownableTrait
         $ret = sprintf(
             "%s(%s): %s @ %s:%d\nTrace:\n%s",
             $class, $e->getCode(), $e->getMessage(),
-            $e->getFile(), $e->getLine(), self::debugTraceString($e)
+            $e->getFile(), $e->getLine(), self::debugTraceString($e, $dots)
         );
 
         if ($cause instanceof Throwable) {
-            $ret .= "\n\nCause:\n" . self::debugString($cause);
+            $ret .= "\n\nCause:\n" . self::debugString($cause, $dots);
         }
         if ($previous = $e->getPrevious()) {
-            $ret .= "\n\nPrevious:\n" . self::debugString($previous);
+            $ret .= "\n\nPrevious:\n" . self::debugString($previous, $dots);
+        }
+
+        return $ret;
+    }
+
+    /**
+     * Make a trace paths for given throwable.
+     *
+     * @param  Throwable $e
+     * @param  bool      $dots
+     * @return array
+     */
+    public static function debugTracePath(Throwable $e, bool $dots = false): array
+    {
+        $traces = new TraceStack($e->getTrace());
+
+        $ret = [];
+
+        foreach ($traces as $trace) {
+            $path = $trace->callPathFull();
+
+            if ($dots) {
+                $path = str_replace(['\\', '::', '->'], '.', $path);
+            }
+
+            $ret[] = $path;
         }
 
         return $ret;
@@ -479,11 +512,18 @@ trait ThrownableTrait
      * Make a trace string for given throwable.
      *
      * @param  Throwable $e
+     * @param  bool      $dots
      * @return string
      */
-    public static function debugTraceString(Throwable $e): string
+    public static function debugTraceString(Throwable $e, bool $dots = false): string
     {
-        return (string) new TraceStack($e->getTrace());
+        $traces = (string) new TraceStack($e->getTrace());
+
+        if ($dots) {
+            $traces = str_replace(['\\', '::', '->'], '.', $traces);
+        }
+
+        return $traces;
     }
 
     /**
