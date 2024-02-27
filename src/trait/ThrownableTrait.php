@@ -54,7 +54,7 @@ trait ThrownableTrait
 
         if ($message) {
             if (is_string($message)) {
-                $error = self::getLastError();
+                $error = self::lastError();
 
                 // Drop eg: "mkdir():" part & lowerize.
                 $extract && $error['message'] = self::extractMessage($error['message']);
@@ -368,11 +368,11 @@ trait ThrownableTrait
     }
 
     /**
-     * Get last internal error if exists.
+     * Get last internal error.
      *
      * @return array
      */
-    protected static function getLastError(): array
+    protected static function lastError(): array
     {
         // Better calling when sure there is an error happened.
         $error = error_get_last();
