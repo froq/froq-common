@@ -131,20 +131,20 @@ trait ThrownableTrait
                 return $this->getTrace();
             case 'traceStack':
                 return $this->getTraceStack();
+            case 'tracePath':
+                return $this->getTracePath();
             case 'traceString':
                 return $this->getTraceString();
             case 'cause':
                 return $this->getCause();
+            case 'state':
+                return $this->getState();
         }
 
+        // If subclasses define property as "private".
         if (property_exists($this, $property)) {
-            try {
-                return $this->$property;
-            } catch (Throwable) {
-                // If subclasses define property as "private".
-                $ref = new \ReflectionProperty($this, $property);
-                return $ref->isInitialized($this) ? $ref->getValue($this) : $ref->getDefaultValue();
-            }
+            $ref = new \ReflectionProperty($this, $property);
+            return $ref->isInitialized($this) ? $ref->getValue($this) : $ref->getDefaultValue();
         }
 
         // Act as original just triggering an undefined property error.
@@ -158,11 +158,7 @@ trait ThrownableTrait
      */
     public function __toString(): string
     {
-        // Must call here/first for reduce since reduce
-        // option changes file & line in applyReduce().
-        $traceString = $this->getTraceString();
-
-        return $traceString;
+        return Debugger::debugString($this);
     }
 
     /**
@@ -320,17 +316,27 @@ trait ThrownableTrait
     }
 
     /**
+     * Get trace path.
+     *
+     * @return array
+     */
+    public function getTracePath(): array
+    {
+        return Debugger::debugTracePath($this);
+    }
+
+    /**
      * Get trace string.
      *
      * @return string
      */
     public function getTraceString(): string
     {
-        return Debugger::debugString($this);
+        return Debugger::debugTraceString($this);
     }
 
     /**
-     * Get array representation.
+     * Debug.
      *
      * @param  bool $withTrace
      * @param  bool $withTracePath
@@ -338,51 +344,10 @@ trait ThrownableTrait
      * @param  bool $dots
      * @return array
      */
-    public function toArray(bool $withTrace = true, bool $withTraceString = false, bool $withTracePath = false,
+    public function debug(bool $withTrace = true, bool $withTracePath = false, bool $withTraceString = false,
         bool $dots = false): array
     {
-        return Debugger::debug($this, $withTrace, $withTraceString, $withTracePath, $dots);
-    }
-
-    /**
-     * Get string representation with some details.
-     *
-     * @param  bool $pretty
-     * @return string
-     */
-    public function toString(bool $pretty = false): string
-    {
-        // Must call here/first for reduce since reduce
-        // option changes file & line in applyReduce().
-        $traceString = $this->getTraceString();
-
-        [$class, $code, $file, $line, $message] = [
-            $this->getClass(), $this->getCode(),
-            $this->getFile(), $this->getLine(),
-            $this->getMessage(),
-        ];
-
-        if ($pretty) {
-            $file  = str_replace('.php', '', $file);
-            $class = str_replace('\\', '.', $class);
-
-            // Change dotable stuff and remove php extensions.
-            $message = preg_replace(
-                ['~(\w)(?:\\\|::|->)(\w)~', '~\.php~'],
-                ['\1.\2', ''],
-                $message
-            );
-            $traceString   = preg_replace_callback(
-                '~(?:\.php[(]|(?:\\\|::|->))~',
-                fn($m): string => $m[0] === '.php(' ? '(' : '.',
-                $traceString
-            );
-        }
-
-        $messageLine = $message ? trim($message, '.') : '';
-        $detailsLine = sprintf("Class: %s | Code: %s | File: %s | Line: %d", $class, $code, $file, $line);
-
-        return sprintf("%s\n\n%s\n-\n%s", $messageLine, $detailsLine, $traceString);
+        return Debugger::debug($this, $withTrace, $withTracePath, $withTraceString, $dots);
     }
 
     /**
