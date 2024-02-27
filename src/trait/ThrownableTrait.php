@@ -42,21 +42,14 @@ trait ThrownableTrait
     {
         [$extract, $lower, $reduce, $state] = $this->prepareOptions($options);
 
-        if ($state !== null) {
-            $this->state = new State((array) $state);
-        }
-
         // Shortcut for code.
         if (is_int($message)) {
             [$code, $message] = [$message, null];
         }
 
-        // Store string code in state.
+        // Works here only.
         if (is_string($code)) {
-            $this->state ??= new State();
-            $this->state->code = $code;
-
-            $code = ctype_digit($code) ? intval($code) : 0;
+            $this->setCode($code);
         }
 
         if ($message) {
@@ -104,6 +97,10 @@ trait ThrownableTrait
         }
 
         $this->cause = $cause;
+
+        if ($state !== null) {
+            $this->state = new State((array) $state);
+        }
 
         parent::__construct((string) $message, (int) $code, $previous);
 
