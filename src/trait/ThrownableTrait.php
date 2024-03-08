@@ -44,12 +44,14 @@ trait ThrownableTrait
 
         // Shortcut for code.
         if (is_int($message)) {
-            [$code, $message] = [$message, null];
+            $code = $message;
+            $message = null;
         }
 
         // Works here only.
         if (is_string($code)) {
             $this->setCode($code);
+            $code = null;
         }
 
         if ($message) {
@@ -224,23 +226,23 @@ trait ThrownableTrait
      */
     public function getCauses(): array
     {
-        $causes = [];
+        $ret = [];
 
         if ($cause = $this->getCause()) {
-            $causes[] = $cause;
+            $ret[] = $cause;
 
             while ($cause instanceof Thrownable && ($root = $cause?->getCause())) {
-                $causes[] = $cause = $root;
+                $ret[] = $cause = $root;
             }
         }
 
-        return $causes;
+        return $ret;
     }
 
     /**
      * @inheritDoc froq\common\interface\Thrownable
      */
-    public function getState(): \State|null
+    public function getState(): State|null
     {
         return $this->state;
     }
@@ -391,13 +393,13 @@ trait ThrownableTrait
      */
     protected static function extractMessage(string|Throwable $e): string
     {
-        $message = is_string($e) ? $e : $e->getMessage();
+        $ret = is_string($e) ? $e : $e->getMessage();
 
-        if (strsrc($message, '):')) {
-            $message = stracut($message, '):');
+        if (strsrc($ret, '):')) {
+            $ret = stracut($ret, '):');
         }
 
-        return trim($message);
+        return trim($ret);
     }
 
     /**
