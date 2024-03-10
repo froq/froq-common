@@ -7,14 +7,14 @@ namespace froq\common\interface;
 
 /**
  * @package froq\common\interface
- * @class   froq\common\interface\Stringable
+ * @class   froq\common\interface\Lengthable
  * @author  Kerem Güneş
- * @since   1.0
+ * @since   7.3
  */
-interface Stringable
+interface Lengthable
 {
     /**
-     * @return string
+     * @return int
      */
-    public function toString(): string;
+    public function length(): int;
 }
