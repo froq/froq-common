@@ -91,7 +91,7 @@ trait StateTrait
      */
     public function setStates(mixed ...$states): self
     {
-        $this->state->reset(...$states);
+        $this->state->update(...$states);
 
         return $this;
     }
@@ -100,13 +100,11 @@ trait StateTrait
      * Get states.
      *
      * @param  bool $object
-     * @return array|object
+     * @return object|array
      */
-    public function getStates(bool $object = false): array|object
+    public function getStates(bool $object = false): object|array
     {
-        $states = (array) $this->state;
-
-        return $object ? (object) $states : $states;
+        return $object ? $this->state->toObject() : $this->state->toArray();
     }
 
     /**
