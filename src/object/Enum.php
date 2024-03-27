@@ -262,14 +262,15 @@ class Enum
     }
 
     /**
-     * Generate an array copy of defined constants with key/value pairs or return cached one.
+     * Generate an array copy of defined (public) constants with key/value pairs or return cached one.
      *
      * @return array<string, int|float|string|bool|array|null>
      */
     public static final function toArray(): array
     {
         return self::$cache[static::class] ??= (
-            (new \ReflectionClass(static::class))->getConstants()
+            (new \ReflectionClass(static::class))
+                ->getConstants(\ReflectionClassConstant::IS_PUBLIC)
         );
     }
 
