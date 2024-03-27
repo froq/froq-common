@@ -41,7 +41,12 @@ class Enum
             throw EnumException::forNoArrayCast();
         }
 
-        return (string) $this->value;
+        return match (true) {
+            is_string($this->value) => $this->value,
+            is_number($this->value) => format_number($this->value, true, '.', ''),
+            is_bool($this->value)   => format_bool($this->value, false),
+            default                 => '', // Null.
+        };
     }
 
     /**
