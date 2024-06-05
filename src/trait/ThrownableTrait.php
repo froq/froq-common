@@ -7,7 +7,7 @@ namespace froq\common\trait;
 
 use froq\common\interface\Thrownable;
 use froq\util\Debugger;
-use Throwable, TraceStack, Trace, State;
+use Throwable, State, TraceStack, Trace;
 
 /**
  * A trait, used by error & exception classes, provides a relaxation getting rid

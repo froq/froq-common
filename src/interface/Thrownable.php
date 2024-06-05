@@ -5,6 +5,8 @@
  */
 namespace froq\common\interface;
 
+use Throwable, State;
+
 /**
  * @package froq\common\interface
  * @class   froq\common\interface\Thrownable
@@ -16,7 +18,7 @@ interface Thrownable
     /**
      * @return Throwable|null
      */
-    public function getCause(): \Throwable|null;
+    public function getCause(): Throwable|null;
 
     /**
      * @return array<Throwable>
@@ -26,5 +28,5 @@ interface Thrownable
     /**
      * @return State|null
      */
-    public function getState(): \State|null;
+    public function getState(): State|null;
 }
