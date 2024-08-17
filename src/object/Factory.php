@@ -20,6 +20,16 @@ class Factory
     private static array $instances = [];
 
     /**
+     * Get instances.
+     *
+     * @return array
+     */
+    public static function instances(): array
+    {
+        return self::$instances;
+    }
+
+    /**
      * Create an instance from given class with/without its arguments.
      *
      * @param  string   $class
