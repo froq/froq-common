@@ -63,12 +63,20 @@ class Config extends Collection
      * Parse a dot-env file and return its entries as options.
      *
      * @param  string $file
+     * @param  bool   $cache
      * @return array
      * @throws froq\common\object\ConfigException
      * @since  4.1
      */
-    public static function parseDotEnv(string $file): array
+    public static function parseDotEnv(string $file, bool $cache = false): array
     {
+        if ($cache = $cache && function_exists('apcu_fetch')) {
+            $key = md5('dotenv@' . $file);
+            if ($ret = apcu_fetch($key)) {
+                return $ret;
+            }
+        }
+
         $ret = [];
 
         $path = $file;
@@ -106,6 +114,8 @@ class Config extends Collection
 
             $ret[$name] = $value;
         }
+
+        $cache && apcu_store($key, $ret);
 
         return $ret;
     }
