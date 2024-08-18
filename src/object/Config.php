@@ -99,6 +99,11 @@ class Config extends Collection
                 throw ConfigException::forDuplicatedDotEnvEntry($name, $file, $i + 1);
             }
 
+            // Evaluate constant expressions to replace.
+            if (preg_match('~\$\{(\w+)\}~', $value, $match) && defined($match[1])) {
+                $value = str_replace($match[0], constant($match[1]), $value);
+            }
+
             $ret[$name] = $value;
         }
 
