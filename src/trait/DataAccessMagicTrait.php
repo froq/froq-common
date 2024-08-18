@@ -31,7 +31,17 @@ trait DataAccessMagicTrait
     /** @magic */
     public function &__get(int|string $key): mixed
     {
-        return $this->data[$key];
+        if (isset($this->data[$key])) {
+            $value = &$this->data[$key];
+        } else {
+            $value = null;
+        }
+
+        // @tome: Without isset() check, issued key
+        // will be created in data field as "null".
+        // eg: x = foo[absent] => foo[absent] = null
+
+        return $value;
     }
 
     /** @magic */

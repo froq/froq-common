@@ -39,7 +39,17 @@ trait DataAccessTrait
         // Calls like `items[][] = item` will put
         // all nested items into a `["]` field.
         // So $key must be provided for base array.
-        return $this->data[$key];
+        if (isset($this->data[$key])) {
+            $value = &$this->data[$key];
+        } else {
+            $value = null;
+        }
+
+        // @tome: Without isset() check, issued key
+        // will be created in data field as "null".
+        // eg: x = foo[absent] => foo[absent] = null
+
+        return $value;
     }
 
     /** @inheritDoc ArrayAccess */
