@@ -32,4 +32,9 @@ class ConfigException extends \froq\common\Exception
     {
         return new static('Duplicated .env entry %q at %s:%s', [$entry, $file, $line]);
     }
+
+    public static function forNonScalarValue(string $name, mixed $value): static
+    {
+        return new static('Non-scalar value given for name %q, got type %s', [$name, get_type($value)]);
+    }
 }

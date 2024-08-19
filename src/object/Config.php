@@ -66,9 +66,8 @@ class Config extends Collection
      * @param  bool   $cache
      * @return array
      * @throws froq\common\object\ConfigException
-     * @since  4.1
      */
-    public static function parseDotEnv(string $file, bool $cache = false): array
+    public static function parseDotEnvFile(string $file, bool $cache = false): array
     {
         if ($cache = $cache && function_exists('apcu_fetch')) {
             $key = md5('dotenv@' . $file);
@@ -77,7 +76,7 @@ class Config extends Collection
             }
         }
 
-        $ret = [];
+        $configs = [];
 
         $path = $file;
         if (!$file = realpath($file)) {
@@ -103,7 +102,7 @@ class Config extends Collection
             }
 
             [$name, $value] = $pairs;
-            if (isset($ret[$name])) {
+            if (isset($configs[$name])) {
                 throw ConfigException::forDuplicatedDotEnvEntry($name, $file, $i + 1);
             }
 
@@ -112,11 +111,42 @@ class Config extends Collection
                 $value = str_replace($match[0], constant($match[1]), $value);
             }
 
-            $ret[$name] = $value;
+            // Trim double quotes.
+            $value = trim($value, '"');
+
+            $configs[$name] = $value;
         }
 
-        $cache && apcu_store($key, $ret);
+        $cache && apcu_store($key, $configs);
 
-        return $ret;
+        return $configs;
+    }
+
+    /**
+     * Apply given dot-env configs.
+     *
+     * @param  array $configs
+     * @param  bool  $global
+     * @return void
+     * @throws froq\common\object\ConfigException
+     */
+    public static function applyDotEnvConfigs(array $configs, bool $global = false): void
+    {
+        foreach ($configs as $name => $value) {
+            if (!is_scalar($value)) {
+                throw ConfigException::forNonScalarValue($name, $value);
+            }
+
+            if (is_number($value)) {
+                $value = format_number($value);
+            } elseif (is_bool($value)) {
+                $value = format_bool($value);
+            }
+
+            putenv($name . '=' . $value);
+
+            // When it was set as true.
+            $global && $_ENV[$name] = $value;
+        }
     }
 }
