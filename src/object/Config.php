@@ -137,11 +137,7 @@ class Config extends Collection
                 throw ConfigException::forNonScalarValue($name, $value);
             }
 
-            if (is_number($value)) {
-                $value = format_number($value);
-            } elseif (is_bool($value)) {
-                $value = format_bool($value);
-            }
+            $value = format_scalar($value, tsep: '');
 
             putenv($name . '=' . $value);
 
