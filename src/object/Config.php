@@ -69,18 +69,17 @@ class Config extends Collection
      */
     public static function parseDotEnvFile(string $file, bool $cache = false): array
     {
-        if ($cache = $cache && function_exists('apcu_fetch')) {
+        if ($cache && function_exists('apcu_fetch')) {
             $key = md5('dotenv@' . $file);
             if ($ret = apcu_fetch($key)) {
                 return $ret;
             }
         }
 
-        $configs = [];
+        $ret = [];
 
-        $path = $file;
-        if (!$file = realpath($file)) {
-            throw ConfigException::forAbsentDotEnvFile($path);
+        if (!$file = realpath($ofile = $file)) {
+            throw ConfigException::forAbsentDotEnvFile($ofile);
         }
 
         $lines = @file($file);
@@ -102,7 +101,7 @@ class Config extends Collection
             }
 
             [$name, $value] = $pairs;
-            if (isset($configs[$name])) {
+            if (isset($ret[$name])) {
                 throw ConfigException::forDuplicatedDotEnvEntry($name, $file, $i + 1);
             }
 
@@ -114,12 +113,12 @@ class Config extends Collection
             // Trim double quotes.
             $value = trim($value, '"');
 
-            $configs[$name] = $value;
+            $ret[$name] = $value;
         }
 
-        $cache && apcu_store($key, $configs);
+        $cache && apcu_store($key, $ret);
 
-        return $configs;
+        return $ret;
     }
 
     /**
@@ -141,7 +140,7 @@ class Config extends Collection
 
             putenv($name . '=' . $value);
 
-            // When it was set as true.
+            // Put into global too.
             $global && $_ENV[$name] = $value;
         }
     }
